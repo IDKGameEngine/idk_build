@@ -3,6 +3,7 @@ set -e
 
 THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+opt_target=""
 opt_clean=0
 opt_debug=0
 opt_release=0
@@ -10,6 +11,11 @@ opt_run=0
 
 while [[ $# -gt 0 ]]; do
     case $1 in
+        --target)
+            opt_target="$2"
+            shift
+            shift
+            ;;
         --clean)
             opt_clean=1
             shift
@@ -34,27 +40,43 @@ while [[ $# -gt 0 ]]; do
 done
 
 
+export IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
+
+if [[ "${opt_target}" == "" ]]; then
+    echo "Must supply --target"
+    exit
+fi
+
+if [[ ! -d "${IDK_ROOT_DIR}/${opt_target}" ]]; then
+    echo "No such target: ${IDK_ROOT_DIR}/${opt_target}"
+    exit
+fi
+
+
 
 build_idk()
 {
-    build_type="$1"
-    build_clean="$2"
+    target_name="$1"
+    build_type="$2"
+    build_clean="$3"
 
-    export IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
-    export IDK_BUILD_DIR="${IDK_ROOT_DIR}/build-${build_type,,}/cmake"
-    export IDK_OUTPUT_DIR="${IDK_ROOT_DIR}/build-${build_type,,}"
-
-    echo "IDK_ROOT_DIR=${IDK_ROOT_DIR}"
-    echo "IDK_BUILD_DIR=${IDK_BUILD_DIR}"
-    echo "IDK_OUTPUT_DIR=${IDK_OUTPUT_DIR}"
-    echo ""
+    IDK_TARGET_NAME="${target_name}"
+    IDK_TARGET_DIR="${IDK_ROOT_DIR}/${IDK_TARGET_NAME}"
+    IDK_BUILD_DIR="${IDK_ROOT_DIR}/build-${build_type,,}/cmake"
+    IDK_OUTPUT_DIR="${IDK_ROOT_DIR}/build-${build_type,,}"
 
     if [[ "$build_clean" == "1" ]]; then
         rm -rf "${IDK_BUILD_DIR}"
     fi
 
     mkdir -p "${IDK_BUILD_DIR}" && cd "${IDK_BUILD_DIR}"
-    cmake "${IDK_ROOT_DIR}" -DCMAKE_BUILD_TYPE="${build_type}"
+    cmake "${IDK_ROOT_DIR}/idk_build" \
+        -DCMAKE_BUILD_TYPE="${build_type}" \
+        -DIDK_ROOT_DIR="${IDK_ROOT_DIR}" \
+        -DIDK_BUILD_DIR="${IDK_BUILD_DIR}" \
+        -DIDK_OUTPUT_DIR="${IDK_OUTPUT_DIR}" \
+        -DIDK_TARGET_NAME="${IDK_TARGET_NAME}" \
+        -DIDK_TARGET_DIR="${IDK_TARGET_DIR}"
     make -j$(nproc)
 
     mkdir -p "${IDK_OUTPUT_DIR}"
@@ -67,11 +89,11 @@ if [[ "$opt_debug" == "0" && "$opt_release" == "0" ]]; then
 fi
 
 if [[ "$opt_debug" == "1" ]]; then
-    build_idk "Debug" "$opt_clean"
+    build_idk "$opt_target" "Debug" "$opt_clean"
 fi
 
 if [[ "$opt_release" == "1" ]]; then
-    build_idk "Release" "$opt_clean"
+    build_idk "$opt_target" "Release" "$opt_clean"
 fi
 
 
