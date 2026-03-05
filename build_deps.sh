@@ -2,11 +2,10 @@
 set -e
 
 THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-cd $THIS_DIR && source env.sh
+THIRDPARTY_DIR="${THIS_DIR}/external"
+INSTALL_PREFIX="${THIS_DIR}/install"
 
-INSTALL_PREFIX="${THIRDPARTY_PREFIX}"
-
-mkdir -p $VANE_ROOT_DIR/external/repo
+mkdir -p $THIRDPARTY_DIR
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 
 # # GLM
@@ -36,27 +35,25 @@ mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 # # ------------------------------------------------------------------
 
 # Vulkan SDK
-# # ------------------------------------------------------------------
-# cd $VANE_ROOT_DIR/external/repo
+# ------------------------------------------------------------------
+VK_VERSION="1.4.304.0"
+VK_CPUARCH="x86_64"
+VK_FILENAME="vulkansdk-linux-${VK_CPUARCH}-${VK_VERSION}.tar.xz"
 
-# mkdir -p vulkan && cd vulkan
-# VK_VERSION=$THIRDPARTY_VK_VERSION
-# VK_CPUARCH="x86_64"
-# VK_FILENAME="vulkansdk-linux-${VK_CPUARCH}-${VK_VERSION}.tar.xz"
+mkdir -p $THIRDPARTY_DIR/vulkan
+cd $THIRDPARTY_DIR/vulkan
+if [[ ! -f "$VK_FILENAME" ]]; then
+    wget "https://sdk.lunarg.com/sdk/download/${VK_VERSION}/linux/${VK_FILENAME}"
+fi
+tar -xvf $VK_FILENAME
 
-# if [[ ! -f "$VK_FILENAME" ]]; then
-#     wget "https://sdk.lunarg.com/sdk/download/${VK_VERSION}/linux/${VK_FILENAME}"
-# fi
-# tar -xvf $VK_FILENAME
+cd ./$VK_VERSION/$VK_CPUARCH
+cp -v -r ./bin/* $INSTALL_PREFIX/bin/
+cp -v -r ./include/* $INSTALL_PREFIX/include/
+cp -v -r ./lib/* $INSTALL_PREFIX/lib/
+cp -v -r ./share/* $INSTALL_PREFIX/share/
 
-# cd $VK_VERSION/$VK_CPUARCH
-# cp -v -r ./bin/* $INSTALL_PREFIX/bin/
-# cp -v -r ./include/* $INSTALL_PREFIX/include/
-# cp -v -r ./lib/* $INSTALL_PREFIX/lib/
-# cp -v -r ./share/* $INSTALL_PREFIX/share/
-
-# cd $VANE_ROOT_DIR/external/repo
-# rm -rf ./vulkan/$VK_VERSION/$VK_CPUARCH
+rm -rf $THIRDPARTY_DIR/vulkan/$VK_VERSION
 # ------------------------------------------------------------------
 
 
@@ -75,17 +72,17 @@ mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 
 
 
-# Assimp
-# ------------------------------------------------------------------
-cd $VANE_ROOT_DIR/external/repo
-if [[ ! -d "assimp" ]]; then
-    git clone --depth=1 --branch v6.0.4 https://github.com/assimp/assimp.git
-fi
+# # Assimp
+# # ------------------------------------------------------------------
+# cd $VANE_ROOT_DIR/external/repo
+# if [[ ! -d "assimp" ]]; then
+#     git clone --depth=1 --branch v6.0.4 https://github.com/assimp/assimp.git
+# fi
 
-cd assimp
-cmake CMakeLists.txt -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="${THIRDPARTY_PREFIX}"
-cmake --build .
+# cd assimp
+# cmake CMakeLists.txt -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="${THIRDPARTY_PREFIX}"
+# cmake --build .
 
-cp -r ./lib/* $THIRDPARTY_PREFIX/lib/
-cp -r ./include/* $THIRDPARTY_PREFIX/include/
-# ------------------------------------------------------------------
+# cp -r ./lib/* $THIRDPARTY_PREFIX/lib/
+# cp -r ./include/* $THIRDPARTY_PREFIX/include/
+# # ------------------------------------------------------------------

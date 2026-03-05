@@ -66,7 +66,7 @@ build_idk()
     IDK_OUTPUT_DIR="${IDK_ROOT_DIR}/build-${build_type,,}"
 
     if [[ "$build_clean" == "1" ]]; then
-        rm -rf "${IDK_BUILD_DIR}"
+        rm -rf "${IDK_OUTPUT_DIR}"
     fi
 
     mkdir -p "${IDK_BUILD_DIR}" && cd "${IDK_BUILD_DIR}"
@@ -75,12 +75,18 @@ build_idk()
         -DIDK_ROOT_DIR="${IDK_ROOT_DIR}" \
         -DIDK_BUILD_DIR="${IDK_BUILD_DIR}" \
         -DIDK_OUTPUT_DIR="${IDK_OUTPUT_DIR}" \
-        -DIDK_TARGET_NAME="${IDK_TARGET_NAME}" \
-        -DIDK_TARGET_DIR="${IDK_TARGET_DIR}"
+        -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"
     make -j$(nproc)
 
-    mkdir -p "${IDK_OUTPUT_DIR}"
-    mv  "${IDK_BUILD_DIR}/idk_game" "${IDK_OUTPUT_DIR}/"
+    cd $IDK_OUTPUT_DIR/assets/gfx/shader
+    PATH="${PATH}:${THIS_DIR}/install/bin"
+    $THIS_DIR/script/glslc.sh -C *.vert *.frag *.comp
+
+    for stage in vert frag comp; do
+        for file in *."$stage"; do
+            rm "${file}"
+        done
+    done
 }
 
 
