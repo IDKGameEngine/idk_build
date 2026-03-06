@@ -15,16 +15,9 @@ if [[ "$mode" == "-C" ]]; then
         glslc --target-env=opengl ${1} -o ${1}.spv
         shift
     done
-
 elif [[ "$mode" == "-P" ]]; then
     while [ $# -gt 0 ]; do
         glslc -E ${1} > ${1}.p
         shift
     done
-    # for stage in vert frag comp; do
-    #     for file in *."$stage".pp; do
-    #         mv -- "$file" "${file%.$stage.pp}.pp.$stage"
-    #     done
-    # done
-
 fi
