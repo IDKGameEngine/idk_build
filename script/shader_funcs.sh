@@ -11,19 +11,19 @@ slang_to_target()
     filepath="$2"
 
     if grep -q "vertmain" "$filepath"; then
-        slangc -matrix-layout-column-major -profile glsl_460 -target $target \
+        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
                "${filepath}" -entry vertmain -o "${filepath%.*}".vert
         sed -i 's/gl_VertexIndex/gl_VertexID/g' "${filepath%.*}".vert
     fi
 
     if grep -q "fragmain" "$filepath"; then
-        slangc -matrix-layout-column-major -profile glsl_460 -target $target \
+        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
                "${filepath}" -entry fragmain -o "${filepath%.*}".frag
         sed -i 's/gl_VertexIndex/gl_VertexID/g' "${filepath%.*}".frag
     fi
 
     if grep -q "compmain" "$filepath"; then
-        slangc -matrix-layout-column-major -profile glsl_460 -target $target \
+        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
                "${filepath}" -entry compmain -o "${filepath%.*}".comp
         sed -i 's/gl_VertexIndex/gl_VertexID/g' "${filepath%.*}".comp
     fi
