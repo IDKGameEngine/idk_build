@@ -77,7 +77,13 @@ build_assimp()
     fi
 
     cd assimp
-    cmake CMakeLists.txt -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX"
+    cmake CMakeLists.txt -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" \
+        -DBUILD_SHARED_LIBS=ON \
+        -DASSIMP_NO_EXPORT=ON \
+        -DASSIMP_BUILD_TESTS=OFF \
+        -DASSIMP_BUILD_ZLIB=ON \
+        -DASSIMP_USE_HUNTER=ON
     cmake --build . && cmake --install .
 
     # cp -r ./lib/* $INSTALL_PREFIX/lib/

@@ -77,7 +77,7 @@ build_idk()
 
     source $THIS_DIR/script/shader_funcs.sh
     cd $IDK_OUTPUT_DIR/assets/shader
-    slang_to_spirv ./*.slang
+    slang_to_glsl ./*.slang
     rm $IDK_OUTPUT_DIR/assets/shader/*.slang
 }
 

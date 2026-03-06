@@ -18,14 +18,8 @@ message(STATUS "IDK_BUILD_DIR: ${IDK_BUILD_DIR}")
 message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
 message(STATUS "IDK_TARGET_NAME: ${IDK_TARGET_NAME}")
 
-set(OpenGL_GL_PREFERENCE "GLVND")
+include("${CMAKE_CURRENT_SOURCE_DIR}/cmakelibs.cmake")
 
-add_library(glm INTERFACE)
-target_include_directories(
-    glm INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-)
 
 add_subdirectory("${IDK_ROOT_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
 add_subdirectory("${IDK_ROOT_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
