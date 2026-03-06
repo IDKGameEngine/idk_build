@@ -20,7 +20,13 @@ message(STATUS "IDK_TARGET_NAME: ${IDK_TARGET_NAME}")
 
 set(OpenGL_GL_PREFERENCE "GLVND")
 
-add_subdirectory("${IDK_ROOT_DIR}/libidk" "${IDK_BUILD_DIR}/libidk")
+add_library(glm INTERFACE)
+target_include_directories(
+    glm INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
 add_subdirectory("${IDK_ROOT_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
 add_subdirectory("${IDK_ROOT_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
 add_subdirectory("${IDK_ROOT_DIR}/idk_platform" "${IDK_BUILD_DIR}/idk_platform")

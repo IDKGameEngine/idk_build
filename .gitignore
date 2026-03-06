@@ -1,2 +1,5 @@
-external
-install
+bin
+include
+lib
+repo
+share

@@ -78,10 +78,8 @@ build_idk()
         -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"
     make -j$(nproc)
 
-    cd $IDK_OUTPUT_DIR/assets/gfx/shader
-    PATH="${PATH}:${THIS_DIR}/install/bin"
+    cd $IDK_OUTPUT_DIR/assets/shader
     $THIS_DIR/script/glslc.sh -C *.vert *.frag *.comp
-
     for stage in vert frag comp; do
         for file in *."$stage"; do
             rm "${file}"
@@ -101,11 +99,4 @@ fi
 if [[ "$opt_release" == "1" ]]; then
     build_idk "$opt_target" "Release" "$opt_clean"
 fi
-
-
-# mkdir -p $IDK_OUTPUT_DIR/data
-# cp -r $IDK_ROOT_DIR/vane/data/* $IDK_OUTPUT_DIR/data/
-
-# cd $IDK_OUTPUT_DIR/data/shader
-# $VANE_SCRIPT_DIR/glslc.sh -C *.vert *.frag *.comp
 
