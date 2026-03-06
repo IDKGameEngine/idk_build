@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/idk_build/include",
+                "${workspaceFolder}/idk_core/h",
+                "${workspaceFolder}/idk_gfx/h",
+                "${workspaceFolder}/idk_gfx/external/glad/include",
+                "${workspaceFolder}/idk_platform/h"
+            ],
+            "defines": [
+                "MACRO_NAME=\"value\""
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c99",
+            "cppStandard": "c++23",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

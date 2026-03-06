@@ -2,6 +2,7 @@
 set -e
 
 THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+export IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
 
 opt_target=""
 opt_clean=0
@@ -40,8 +41,6 @@ while [[ $# -gt 0 ]]; do
 done
 
 
-export IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
-
 if [[ "${opt_target}" == "" ]]; then
     echo "Must supply --target"
     exit
@@ -52,8 +51,6 @@ if [[ ! -d "${IDK_ROOT_DIR}/${opt_target}" ]]; then
     exit
 fi
 
-
-
 build_idk()
 {
     target_name="$1"
@@ -62,8 +59,8 @@ build_idk()
 
     IDK_TARGET_NAME="${target_name}"
     IDK_TARGET_DIR="${IDK_ROOT_DIR}/${IDK_TARGET_NAME}"
-    IDK_BUILD_DIR="${IDK_ROOT_DIR}/build-${build_type,,}/cmake"
     IDK_OUTPUT_DIR="${IDK_ROOT_DIR}/build-${build_type,,}"
+    IDK_BUILD_DIR="${IDK_OUTPUT_DIR}/cmake"
 
     if [[ "$build_clean" == "1" ]]; then
         rm -rf "${IDK_OUTPUT_DIR}"
@@ -78,13 +75,10 @@ build_idk()
         -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"
     make -j$(nproc)
 
+    source $THIS_DIR/script/shader_funcs.sh
     cd $IDK_OUTPUT_DIR/assets/shader
-    $THIS_DIR/script/glslc.sh -C *.vert *.frag *.comp
-    for stage in vert frag comp; do
-        for file in *."$stage"; do
-            rm "${file}"
-        done
-    done
+    slang_to_spirv ./*.slang
+    rm $IDK_OUTPUT_DIR/assets/shader/*.slang
 }
 
 

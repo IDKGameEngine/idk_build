@@ -2,6 +2,7 @@
 
 THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 PATH="${PATH}:${THIS_DIR}/../bin"
+LD_LIBRARY_PATH="${PATH}:${THIS_DIR}/../lib"
 
 if [[ "$#" == "0" ]]; then
     exit
