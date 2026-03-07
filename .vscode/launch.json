@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/output/vanegame",
+            "program": "${workspaceFolder}/build-debug/game",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
