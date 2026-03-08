@@ -1,8 +1,8 @@
 {
     "files.associations": {
-        "*.vs.p":   "glsl",
+        "*.vs.p": "glsl",
         "*.vert.p": "glsl",
-        "*.fs.p":   "glsl",
+        "*.fs.p": "glsl",
         "*.frag.p": "glsl",
         "vector": "cpp",
         "array": "cpp",
@@ -83,7 +83,10 @@
         "vanelayerimpl": "cpp",
         "vanemedialayer": "cpp",
         "time": "cpp",
-        "vane": "cpp"
+        "vane": "cpp",
+        "bitset": "cpp",
+        "forward_list": "cpp",
+        "regex": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,

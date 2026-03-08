@@ -24,6 +24,7 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/cmakelibs.cmake")
 add_subdirectory("${IDK_ROOT_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
 add_subdirectory("${IDK_ROOT_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
 add_subdirectory("${IDK_ROOT_DIR}/idk_platform" "${IDK_BUILD_DIR}/idk_platform")
+add_subdirectory("${IDK_ROOT_DIR}/idk_engine" "${IDK_BUILD_DIR}/idk_engine")
 add_subdirectory("${IDK_ROOT_DIR}/${IDK_TARGET_NAME}" "${IDK_BUILD_DIR}/${IDK_TARGET_NAME}")
 
 set_target_properties(

@@ -5,28 +5,28 @@ export PATH="${PATH}:${THIS_DIR}/../bin"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/home/michael/devel/idk/idk_build/lib"
 
 
+__slang_to_target()
+{
+    target="$1"
+    stage="$2"
+    srcpath="$3"
+    dstpath="${srcpath%.*}".$stage
+    entryname="${stage}main"
+
+    if grep -q "$entryname" "$srcpath"; then
+        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
+               "${srcpath}" -entry $entryname -o $dstpath
+        sed -i 's/gl_VertexIndex/gl_VertexID/g' $dstpath
+    fi
+}
+
 slang_to_target()
 {
     target="$1"
     filepath="$2"
-
-    if grep -q "vertmain" "$filepath"; then
-        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
-               "${filepath}" -entry vertmain -o "${filepath%.*}".vert
-        sed -i 's/gl_VertexIndex/gl_VertexID/g' "${filepath%.*}".vert
-    fi
-
-    if grep -q "fragmain" "$filepath"; then
-        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
-               "${filepath}" -entry fragmain -o "${filepath%.*}".frag
-        sed -i 's/gl_VertexIndex/gl_VertexID/g' "${filepath%.*}".frag
-    fi
-
-    if grep -q "compmain" "$filepath"; then
-        slangc -O3 -matrix-layout-column-major -profile glsl_460 -target $target \
-               "${filepath}" -entry compmain -o "${filepath%.*}".comp
-        sed -i 's/gl_VertexIndex/gl_VertexID/g' "${filepath%.*}".comp
-    fi
+    __slang_to_target "${target}" "vert" "${filepath}"
+    __slang_to_target "${target}" "frag" "${filepath}"
+    __slang_to_target "${target}" "comp" "${filepath}"
 }
 
 slang_to_glsl()
@@ -44,16 +44,4 @@ slang_to_spirv()
         shift
     done
 }
-
-
-# slang_to_glsl_comp()
-# {
-#     filepath="$1"
-#     target="glsl"
-
-#     slangc \
-#         -matrix-layout-column-major \
-#         -profile glsl_460 -target $target \
-#         "${filepath}" -entry compmain -o "${filepath%.*}".comp
-# }
 
