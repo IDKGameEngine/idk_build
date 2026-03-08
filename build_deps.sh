@@ -145,3 +145,15 @@ if [[ "$opt_assimp" == "1" ]]; then
     build_assimp
 fi
 
+
+
+
+
+clone_sdl3_repos()
+{
+    cd $THIRDPARTY_DIR
+    git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL.git
+    git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL_image.git
+}
+
+clone_sdl3_repos

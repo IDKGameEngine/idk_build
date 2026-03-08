@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(idk_build VERSION 0.0.1)
-add_compile_options(-Werror -Wall -Wextra)
 
 if (NOT DEFINED IDK_ROOT_DIR)
     message(FATAL_ERROR "IDK_ROOT_DIR must be defined!")
@@ -20,18 +19,23 @@ message(STATUS "IDK_TARGET_NAME: ${IDK_TARGET_NAME}")
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmakelibs.cmake")
 
-
 add_subdirectory("${IDK_ROOT_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
+add_subdirectory("${IDK_ROOT_DIR}/idk_game" "${IDK_BUILD_DIR}/idk_game")
 add_subdirectory("${IDK_ROOT_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
-add_subdirectory("${IDK_ROOT_DIR}/idk_platform" "${IDK_BUILD_DIR}/idk_platform")
 add_subdirectory("${IDK_ROOT_DIR}/idk_engine" "${IDK_BUILD_DIR}/idk_engine")
 add_subdirectory("${IDK_ROOT_DIR}/${IDK_TARGET_NAME}" "${IDK_BUILD_DIR}/${IDK_TARGET_NAME}")
+
+
+target_compile_options(
+    ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra
+)
 
 set_target_properties(
     ${IDK_TARGET_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}"
     RUNTIME_OUTPUT_NAME "game"
 )
+
 
 # configure_file(
 #     "${PROJECT_SOURCE_DIR}/version.h.in"
