@@ -102,5 +102,8 @@
         "${workspaceFolder}/idk_build/repo/**": true,
         "${workspaceFolder}/idk_build/share/**": true,
     },
-    "files.participants.timeout": 100
+    "files.participants.timeout": 100,
+    "slang.additionalSearchPaths": [
+        "/home/michael/devel/idk/idk_gfx/h"
+    ]
 }

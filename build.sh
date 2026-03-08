@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-export IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
+THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT_DIR="${THIS_DIR}/script"
+IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
 
 opt_target=""
 opt_clean=0
@@ -75,10 +76,9 @@ build_idk()
         -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"
     make -j$(nproc)
 
-    source $THIS_DIR/script/shader_funcs.sh
-    cd $IDK_OUTPUT_DIR/assets/shader
-    slang_to_glsl ./*.slang
-    rm $IDK_OUTPUT_DIR/assets/shader/*.slang
+
+    SHADER_DIR="${IDK_OUTPUT_DIR}/assets/shader"
+    $SCRIPT_DIR/shader_build.sh "${SHADER_DIR}"
 }
 
 

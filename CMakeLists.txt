@@ -17,10 +17,35 @@ message(STATUS "IDK_BUILD_DIR: ${IDK_BUILD_DIR}")
 message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
 message(STATUS "IDK_TARGET_NAME: ${IDK_TARGET_NAME}")
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmakelibs.cmake")
+
+
+# Thirdparty Libraries
+# ----------------------------------------------------------------------------------------------
+set(OpenGL_GL_PREFERENCE "GLVND")
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/repo/SDL" EXCLUDE_FROM_ALL)
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/repo/SDL_image" EXCLUDE_FROM_ALL)
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/repo/glm" EXCLUDE_FROM_ALL)
+# find_package(glm CONFIG REQUIRED)
+# target_link_libraries(main PRIVATE glm::glm-header-only)
+
+# add_library(glm INTERFACE)
+# target_include_directories(
+#     glm INTERFACE
+#     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#     $<INSTALL_INTERFACE:include>
+# )
+
+find_package(Jolt REQUIRED PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake" NO_DEFAULT_PATH)
+# ----------------------------------------------------------------------------------------------
+
+
 
 add_subdirectory("${IDK_ROOT_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
-add_subdirectory("${IDK_ROOT_DIR}/idk_game" "${IDK_BUILD_DIR}/idk_game")
 add_subdirectory("${IDK_ROOT_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
 add_subdirectory("${IDK_ROOT_DIR}/idk_engine" "${IDK_BUILD_DIR}/idk_engine")
 add_subdirectory("${IDK_ROOT_DIR}/${IDK_TARGET_NAME}" "${IDK_BUILD_DIR}/${IDK_TARGET_NAME}")
