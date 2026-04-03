@@ -6,13 +6,15 @@ if [[ "$#" != "1" ]]; then
 fi
 
 THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+IDK_POLY_DIR=$(cd ${THIS_DIR}/../.. && pwd)
+IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
 SHADER_DIR=$1
 
 
 __slang_to_spirv()
 {
-    export PATH="${PATH}:${THIS_DIR}/../bin"
-    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${THIS_DIR}/../lib"
+    export PATH="${PATH}:${IDK_ROOT_DIR}/bin"
+    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${IDK_ROOT_DIR}/lib"
 
     stage="$1"
     srcpath="$2"

@@ -1,14 +1,6 @@
 #!/bin/bash
 set -e
 
-THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-THIRDPARTY_DIR="${THIS_DIR}/../repo"
-INSTALL_PREFIX="${THIS_DIR}/../"
-
-mkdir -p $THIRDPARTY_DIR
-mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
-
-
 PLATFORM=$(uname -s)
 
 if [ "$PLATFORM" == "Linux" ]; then
@@ -20,6 +12,79 @@ else
     exit 1
 fi
 
+opt_glm=""
+opt_vulkan=""
+opt_jolt=""
+opt_assimp=""
+opt_sdl3=""
+build_type="Release"
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --all)
+            opt_glm=1
+            opt_vulkan=1
+            opt_jolt=1
+            opt_assimp=1
+            opt_sdl3=1
+            shift
+            ;;
+        --glm)
+            opt_glm=1
+            shift
+            ;;
+        --vulkan)
+            opt_vulkan=1
+            shift
+            ;;
+        --jolt)
+            opt_jolt=1
+            shift
+            ;;
+        --assimp)
+            opt_assimp=1
+            shift
+            ;;
+        --sdl3)
+            opt_sdl3=1
+            shift
+            ;;
+        --type)
+            build_type="${2}"
+            shift
+            shift
+            ;;
+        *)
+            echo "Unknown option $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+
+THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+IDK_POLY_DIR=$(cd ${THIS_DIR}/../.. && pwd)
+IDK_ROOT_DIR=""
+
+case "$build_type" in
+    Release)
+        IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
+        ;;
+    Debug)
+        IDK_ROOT_DIR="${IDK_POLY_DIR}/idk_d"
+        ;;
+    *)
+        echo "--type must be either \"Debug\" or \"Release\""
+        exit 1
+        ;;
+esac
+
+INSTALL_PREFIX=$IDK_ROOT_DIR
+THIRDPARTY_DIR="${IDK_POLY_DIR}/idk_build/repo"
+
+mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
+mkdir -p $THIRDPARTY_DIR
+
 
 build_glm()
 {
@@ -28,8 +93,19 @@ build_glm()
         git clone --depth=1 --branch 1.0.3 https://github.com/g-truc/glm.git
     fi
 
-    mkdir -p $INSTALL_PREFIX/include/glm
-    cp -r $THIRDPARTY_DIR/glm/glm/* $INSTALL_PREFIX/include/glm/
+    # mkdir -p $INSTALL_PREFIX/include/glm
+    # cp -r $THIRDPARTY_DIR/glm/glm/* $INSTALL_PREFIX/include/glm/
+
+    cd glm
+
+    cmake \
+        -DGLM_BUILD_TESTS=OFF \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" \
+        -B build .
+
+    cmake --build build -- all
+    cmake --build build -- install
 }
 
 
@@ -91,42 +167,34 @@ build_assimp()
 }
 
 
-opt_glm=""
-opt_vulkan=""
-opt_jolt=""
-opt_assimp=""
+build_sdl3()
+{
+    cd $THIRDPARTY_DIR
+    if [[ ! -d "SDL" ]]; then
+        git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL.git
+    fi
+    if [[ ! -d "SDL_image" ]]; then
+        git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL_image.git
+    fi
+    if [[ ! -d "SDL_mixer" ]]; then
+        git clone --depth=1 --branch release-3.2.0 --single-branch https://github.com/libsdl-org/SDL_mixer.git
+    fi
 
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --all)
-            opt_glm=1
-            opt_vulkan=1
-            opt_jolt=1
-            opt_assimp=1
-            shift
-            ;;
-        --glm)
-            opt_glm=1
-            shift
-            ;;
-        --vulkan)
-            opt_vulkan=1
-            shift
-            ;;
-        --jolt)
-            opt_jolt=1
-            shift
-            ;;
-        --assimp)
-            opt_assimp=1
-            shift
-            ;;
-        *)
-            echo "Unknown option $1" >&2
-            exit 1
-            ;;
-    esac
-done
+    cd SDL
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=$build_type
+    cmake --build build --config $build_type
+    cmake --install build --prefix "$INSTALL_PREFIX"
+
+    cd ../SDL_image
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=$build_type
+    cmake --build build --config $build_type
+    cmake --install build --prefix "$INSTALL_PREFIX"
+
+    cd ../SDL_mixer
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=$build_type
+    cmake --build build --config $build_type
+    cmake --install build --prefix "$INSTALL_PREFIX"
+}
 
 
 if [[ "$opt_glm" == "1" ]]; then
@@ -145,15 +213,6 @@ if [[ "$opt_assimp" == "1" ]]; then
     build_assimp
 fi
 
-
-
-
-
-clone_sdl3_repos()
-{
-    cd $THIRDPARTY_DIR
-    git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL.git
-    git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL_image.git
-}
-
-clone_sdl3_repos
+if [[ "$opt_sdl3" == "1" ]]; then
+    build_sdl3
+fi

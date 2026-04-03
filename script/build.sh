@@ -2,7 +2,8 @@
 set -e
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-IDK_ROOT_DIR=$(cd ${THIS_DIR}/../../ && pwd)
+IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
+IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_target=""
 opt_clean=0
@@ -40,14 +41,13 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-
 if [[ "${opt_target}" == "" ]]; then
     echo "Must supply --target"
     exit
 fi
 
-if [[ ! -d "${IDK_ROOT_DIR}/${opt_target}" ]]; then
-    echo "No such target: ${IDK_ROOT_DIR}/${opt_target}"
+if [[ ! -d "${IDK_POLY_DIR}/${opt_target}" ]]; then
+    echo "No such target: ${IDK_POLY_DIR}/${opt_target}"
     exit
 fi
 
@@ -58,8 +58,8 @@ build_idk()
     build_clean="$3"
 
     IDK_TARGET_NAME="${target_name}"
-    IDK_TARGET_DIR="${IDK_ROOT_DIR}/${IDK_TARGET_NAME}"
-    IDK_OUTPUT_DIR="${IDK_ROOT_DIR}/build-${build_type,,}"
+    IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
+    IDK_OUTPUT_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
     IDK_BUILD_DIR="${IDK_OUTPUT_DIR}/cmake"
 
     if [[ "$build_clean" == "1" ]]; then
@@ -67,12 +67,14 @@ build_idk()
     fi
 
     source "${THIS_DIR}/version.sh"
-    gen_version_header "$IDK_ROOT_DIR"
+    gen_version_header "$IDK_ROOT_DIR/include/idk/version"
+    printf "\n\n"
 
     mkdir -p "${IDK_BUILD_DIR}" && cd "${IDK_BUILD_DIR}"
-    cmake "${IDK_ROOT_DIR}/idk_build" \
+    cmake "${IDK_POLY_DIR}/idk_build" \
         -DCMAKE_BUILD_TYPE="${build_type}" \
-        -DIDK_ROOT_DIR="${IDK_ROOT_DIR}" \
+        -DCMAKE_PREFIX_PATH="${IDK_ROOT_DIR}" \
+        -DIDK_POLY_DIR="${IDK_POLY_DIR}" \
         -DIDK_BUILD_DIR="${IDK_BUILD_DIR}" \
         -DIDK_OUTPUT_DIR="${IDK_OUTPUT_DIR}" \
         -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"

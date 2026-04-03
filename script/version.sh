@@ -18,20 +18,29 @@
 
 gen_version_header()
 {
-    if [[ "$#" != "1" ]]; then
-        echo "Usage: gen_version_header [IDK_ROOT_DIR]"
+    if [[ "$IDK_POLY_DIR" == "" ]]; then
+        echo "IDK_POLY_DIR must be defined"
         exit 1
     fi
 
-    search_path="${1}"
+    outdir="${1}"
+    outfile="${outdir}/version.h"
+    mkdir -p "${outdir}" && touch "${outfile}"
+
+    echo "[gen_version_header] IDK_POLY_DIR=${IDK_POLY_DIR}"
+    echo "[gen_version_header] OUTPUT_FILE=${outfile}"
 
     cvar_list=()
     cdef_list=()
 
-    for path in $search_path/idk_*; do
-        if [[ ! -d "$path" ]]; then
+    for path in $IDK_POLY_DIR/idk_*; do
+        if [[ "${path}" == "${IDK_POLY_DIR}/idk_build" ]]; then
+            continue
+        elif [[ ! -d "$path" ]]; then
             continue
         fi
+
+        echo "found repo: ${path}"
 
         cd $path
         name=$(basename "$PWD") && NAME="${name^^}"
@@ -45,30 +54,32 @@ gen_version_header()
 
     done
 
-    # echo "repo_list: ${repo_list[*]}"
-    version_path="${THIS_DIR}/../src/h/idk/version/version.h"
 
     printf "%s\n" \
         "#pragma once" \
         "" \
         "#ifndef IDK_VERSION_H" \
-        "    #define IDK_VERSION_H" \
-        "#endif" \
+        "#define IDK_VERSION_H" \
         "" \
-        > "${version_path}"
+        > "${outfile}"
 
     for cdef in "${cdef_list[@]}"; do
-        echo "${cdef}" >> "${version_path}"
+        echo "${cdef}" >> "${outfile}"
     done
+
+    printf "%s\n" \
+        "" \
+        "#endif // IDK_VERSION_H" \
+        >> "${outfile}"
 
     # printf "%s\n" \
     #     "" \
     #     "namespace idk::version" \
     #     "{" \
-    #     >> "${version_path}"
+    #     >> "${outfile}"
     # for cvar in "${cvar_list[@]}"; do
-    #     echo "    ${cvar}" >> "${version_path}"
+    #     echo "    ${cvar}" >> "${outfile}"
     # done
-    # echo "}" >> "${version_path}"
+    # echo "}" >> "${outfile}"
 
 }
