@@ -67,8 +67,7 @@ build_idk()
     fi
 
     source "${THIS_DIR}/version.sh"
-    gen_version_header "$IDK_ROOT_DIR/include/idk/version"
-    printf "\n\n"
+    gen_version_header --outpath "$IDK_ROOT_DIR/include/idk"
 
     mkdir -p "${IDK_BUILD_DIR}" && cd "${IDK_BUILD_DIR}"
     cmake "${IDK_POLY_DIR}/idk_build" \

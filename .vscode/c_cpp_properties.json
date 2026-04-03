@@ -4,9 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/idk_build/include",
-                "${workspaceFolder}/idk_build/repo/SDL/include",
-                "${workspaceFolder}/idk_build/repo/SDL_image/include",
+                "${workspaceFolder}/idk/include",
+                "${workspaceFolder}/idk/repo/SDL/include",
+                "${workspaceFolder}/idk/repo/SDL_image/include",
                 "${workspaceFolder}/idk_core/h",
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",

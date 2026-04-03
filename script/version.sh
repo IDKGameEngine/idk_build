@@ -16,6 +16,20 @@
 #     > "${2}"
 
 
+skip_names=()
+
+__should_skip()
+{
+    found=0
+    for name in "${skip_names[@]}"; do
+        if [[ "$name" == "$1" ]]; then
+            found=1
+            break
+        fi
+    done
+    echo $found
+}
+
 gen_version_header()
 {
     if [[ "$IDK_POLY_DIR" == "" ]]; then
@@ -23,7 +37,31 @@ gen_version_header()
         exit 1
     fi
 
-    outdir="${1}"
+    outdir=""
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            --outpath)
+                outdir="${2}"
+                shift
+                shift
+                ;;
+            --skip)
+                skip_names+=("${2}")
+                shift
+                shift
+                ;;
+            *)
+                echo "Unknown option $1" >&2
+                exit 1
+                ;;
+        esac
+    done
+
+    if [[ "$outdir" == "" ]]; then
+        echo "Must supply --outpath"
+        exit 1
+    fi
+
     outfile="${outdir}/version.h"
     mkdir -p "${outdir}" && touch "${outfile}"
 
@@ -34,17 +72,20 @@ gen_version_header()
     cdef_list=()
 
     for path in $IDK_POLY_DIR/idk_*; do
-        if [[ "${path}" == "${IDK_POLY_DIR}/idk_build" ]]; then
+        cd $path
+        name=$(basename "$PWD") && NAME="${name^^}"
+        skip=$(__should_skip "${name}")
+        if [[ "$skip" == "1" ]]; then
             continue
         elif [[ ! -d "$path" ]]; then
             continue
         fi
 
-        echo "found repo: ${path}"
-
-        cd $path
-        name=$(basename "$PWD") && NAME="${name^^}"
         hash="$(git rev-parse HEAD)"
+
+        if [[ "$name" == "$skip_name" ]]; then
+            continue
+        fi
 
         cvar_name="${name}_hash"
         cvar_list+=("static const char $cvar_name[] = \"$hash\";")
@@ -82,4 +123,5 @@ gen_version_header()
     # done
     # echo "}" >> "${outfile}"
 
+    printf "\n\n"
 }
