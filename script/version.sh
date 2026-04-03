@@ -20,9 +20,13 @@ gen_version_header()
     if [[ "$IDK_POLY_DIR" == "" ]]; then
         echo "IDK_POLY_DIR must be defined"
         exit 1
+    elif [[ "$IDK_ROOT_DIR" == "" ]]; then
+        echo "IDK_ROOT_DIR must be defined"
+        exit 1
     fi
 
-    outdir=$(cd ${1} && pwd)
+    # outdir=$(cd ${1} && pwd)
+    outdir="${IDK_ROOT_DIR}/include/idk"
     outfile="${outdir}/version.h"
     mkdir -p "${outdir}" && touch "${outfile}"
 
@@ -73,9 +77,13 @@ gen_version_txt()
     if [[ "$IDK_POLY_DIR" == "" ]]; then
         echo "IDK_POLY_DIR must be defined"
         exit 1
+    elif [[ "$IDK_OUTPUT_DIR" == "" ]]; then
+        echo "IDK_OUTPUT_DIR must be defined"
+        exit 1
     fi
 
-    outdir=$(cd ${1} && pwd)
+    # outdir=$(cd ${1} && pwd)
+    outdir="$IDK_OUTPUT_DIR"
     outfile="${outdir}/version.txt"
     mkdir -p "${outdir}" && touch "${outfile}"
 
@@ -104,19 +112,11 @@ gen_version_txt()
 while [[ $# -gt 0 ]]; do
     case $1 in
         --header)
-            res=$(gen_version_header "$2")
-            if [[ "$res" == "1" ]]; then
-                exit 1
-            fi
-            shift
+            gen_version_header
             shift
             ;;
         --text)
-            res=$(gen_version_txt "$2")
-            if [[ "$res" == "1" ]]; then
-                exit 1
-            fi
-            shift
+            gen_version_txt
             shift
             ;;
         *)

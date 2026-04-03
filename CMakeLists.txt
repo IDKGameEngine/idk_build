@@ -52,8 +52,8 @@ set_target_properties(
 )
 
 execute_process(
-    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header" "./include/idk"
-    WORKING_DIRECTORY "${IDK_POLY_DIR}/idk"
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header"
+    WORKING_DIRECTORY "${IDK_POLY_DIR}"
     RESULT_VARIABLE hpp_ret
     OUTPUT_VARIABLE hpp_out
 )
@@ -63,7 +63,7 @@ endif()
 
 
 execute_process(
-    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--text" "./"
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--text"
     WORKING_DIRECTORY "${IDK_OUTPUT_DIR}"
     RESULT_VARIABLE txt_ret
     OUTPUT_VARIABLE txt_out
