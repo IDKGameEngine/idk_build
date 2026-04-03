@@ -59,9 +59,9 @@ build_idk()
 
     IDK_TARGET_NAME="${target_name}"
     IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
-    IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
-    IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
-    IDK_OUTPUT_DIR="${IDK_BUILD_DIR}/output"
+    export IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
+    export IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
+    export IDK_OUTPUT_DIR="${IDK_BUILD_DIR}/output"
 
     if [[ "$build_clean" == "1" ]]; then
         rm -rf "${IDK_BUILD_DIR}"
@@ -79,9 +79,6 @@ build_idk()
         -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
         -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
     cmake --build . && cmake --install .
-
-    SHADER_DIR="${IDK_OUTPUT_DIR}/assets/shader"
-    $THIS_DIR/shader_build.sh "${SHADER_DIR}"
 }
 
 if [[ "$opt_debug" == "0" && "$opt_release" == "0" ]]; then
