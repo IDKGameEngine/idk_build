@@ -30,21 +30,19 @@ __should_skip()
     echo $found
 }
 
-gen_version_header()
-{
+# gen_version_header()
+# {
     if [[ "$IDK_POLY_DIR" == "" ]]; then
         echo "IDK_POLY_DIR must be defined"
         exit 1
     fi
 
-    outdir=""
+    outdir="${1}"; shift;
+    outfile="${outdir}/version.h"
+    mkdir -p "${outdir}" && touch "${outfile}"
+
     while [[ $# -gt 0 ]]; do
         case $1 in
-            --outpath)
-                outdir="${2}"
-                shift
-                shift
-                ;;
             --skip)
                 skip_names+=("${2}")
                 shift
@@ -56,17 +54,6 @@ gen_version_header()
                 ;;
         esac
     done
-
-    if [[ "$outdir" == "" ]]; then
-        echo "Must supply --outpath"
-        exit 1
-    fi
-
-    outfile="${outdir}/version.h"
-    mkdir -p "${outdir}" && touch "${outfile}"
-
-    echo "[gen_version_header] IDK_POLY_DIR=${IDK_POLY_DIR}"
-    echo "[gen_version_header] OUTPUT_FILE=${outfile}"
 
     cvar_list=()
     cdef_list=()
@@ -124,4 +111,4 @@ gen_version_header()
     # echo "}" >> "${outfile}"
 
     printf "\n\n"
-}
+# }

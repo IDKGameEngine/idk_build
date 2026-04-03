@@ -2,8 +2,8 @@
 set -e
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
-IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
+export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
+export IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_target=""
 opt_clean=0
@@ -66,8 +66,8 @@ build_idk()
         rm -rf "${IDK_OUTPUT_DIR}"
     fi
 
-    source "${THIS_DIR}/version.sh"
-    gen_version_header --outpath "$IDK_ROOT_DIR/include/idk"
+    # source "${THIS_DIR}/version.sh"
+    # gen_version_header --outpath "$IDK_ROOT_DIR/include/idk"
 
     mkdir -p "${IDK_BUILD_DIR}" && cd "${IDK_BUILD_DIR}"
     cmake "${IDK_POLY_DIR}/idk_build" \

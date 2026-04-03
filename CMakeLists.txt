@@ -27,11 +27,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
 find_package(SDL3 REQUIRED)
 find_package(glm CONFIG REQUIRED PATHS "${CMAKE_PREFIX_PATH}/share" NO_DEFAULT_PATH)
-find_package(Jolt REQUIRED)
+# find_package(Jolt REQUIRED)
 
 message(STATUS "SDL3 found at: ${SDL3_DIR}")
 message(STATUS "glm found at: ${glm_DIR}")
-message(STATUS "Jolt found at: ${Jolt_DIR}")
+# message(STATUS "Jolt found at: ${Jolt_DIR}")
 
 # find_package(Jolt REQUIRED PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake" NO_DEFAULT_PATH)
 # ----------------------------------------------------------------------------------------------
@@ -65,3 +65,14 @@ set_target_properties(
 # target_link_libraries(
 #     ${PROJECT_NAME} PUBLIC idk_platform idk_gfx
 # )
+
+execute_process(
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "/home/michael/devel/idk/idk/include/idk"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    RESULT_VARIABLE ret_code
+    OUTPUT_VARIABLE out_var
+)
+
+if(NOT ret_code EQUAL 0)
+    message(FATAL_ERROR "Script failed: ${ret_code}, result: ${out_var}")
+endif()
