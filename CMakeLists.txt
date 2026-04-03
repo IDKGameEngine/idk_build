@@ -43,13 +43,10 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/repo/glm" EXCLUDE_FROM_ALL)
 find_package(Jolt REQUIRED PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake" NO_DEFAULT_PATH)
 # ----------------------------------------------------------------------------------------------
 
-
-
 add_subdirectory("${IDK_ROOT_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
 add_subdirectory("${IDK_ROOT_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
 add_subdirectory("${IDK_ROOT_DIR}/idk_engine" "${IDK_BUILD_DIR}/idk_engine")
 add_subdirectory("${IDK_ROOT_DIR}/${IDK_TARGET_NAME}" "${IDK_BUILD_DIR}/${IDK_TARGET_NAME}")
-
 
 target_compile_options(
     ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra
@@ -58,9 +55,7 @@ target_compile_options(
 set_target_properties(
     ${IDK_TARGET_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}"
-    RUNTIME_OUTPUT_NAME "game"
 )
-
 
 # configure_file(
 #     "${PROJECT_SOURCE_DIR}/version.h.in"

@@ -2,8 +2,7 @@
 set -e
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-SCRIPT_DIR="${THIS_DIR}/script"
-IDK_ROOT_DIR=$(cd ${THIS_DIR}/../ && pwd)
+IDK_ROOT_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 
 opt_target=""
 opt_clean=0
@@ -76,15 +75,67 @@ build_idk()
         -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"
     make -j$(nproc)
 
-
     SHADER_DIR="${IDK_OUTPUT_DIR}/assets/shader"
-    $SCRIPT_DIR/shader_build.sh "${SHADER_DIR}"
+    $THIS_DIR/shader_build.sh "${SHADER_DIR}"
 }
 
 
 if [[ "$opt_debug" == "0" && "$opt_release" == "0" ]]; then
     opt_release=1
 fi
+
+
+cvar_list=()
+cdef_list=()
+
+for path in $IDK_ROOT_DIR/idk_*; do
+    if [[ "${path}" == "${IDK_ROOT_DIR}/idk_build" ]]; then
+        continue
+    elif [[ ! -d "$path" ]]; then
+        continue
+    fi
+
+    cd $path
+    name=$(basename "$PWD") && NAME="${name^^}"
+    hash="$(git rev-parse HEAD)"
+
+    cvar_name="${name}_hash"
+    cvar_list+=("static const char $cvar_name[] = \"$hash\";")
+
+    cdef_name="${NAME}_REPO_VERSION"
+    cdef_list+=("#define $cdef_name \"$hash\"")
+
+done
+
+# echo "repo_list: ${repo_list[*]}"
+version_path="${THIS_DIR}/../src/h/idk/version/version.h"
+
+printf "%s\n" \
+    "#pragma once" \
+    "" \
+    "#ifndef IDK_VERSION_H" \
+    "    #define IDK_VERSION_H" \
+    "#endif" \
+    "" \
+    > "${version_path}"
+
+for cdef in "${cdef_list[@]}"; do
+    echo "${cdef}" >> "${version_path}"
+done
+
+# printf "%s\n" \
+#     "" \
+#     "namespace idk::version" \
+#     "{" \
+#     >> "${version_path}"
+# for cvar in "${cvar_list[@]}"; do
+#     echo "    ${cvar}" >> "${version_path}"
+# done
+# echo "}" >> "${version_path}"
+
+exit
+
+
 
 if [[ "$opt_debug" == "1" ]]; then
     build_idk "$opt_target" "Debug" "$opt_clean"

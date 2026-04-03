@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-THIS_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-THIRDPARTY_DIR="${THIS_DIR}/repo"
-INSTALL_PREFIX="${THIS_DIR}"
+THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+THIRDPARTY_DIR="${THIS_DIR}/../repo"
+INSTALL_PREFIX="${THIS_DIR}/../"
 
 mkdir -p $THIRDPARTY_DIR
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
