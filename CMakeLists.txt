@@ -42,12 +42,13 @@ add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_BUILD_DIR}/idk_engine")
 add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_BUILD_DIR}/${IDK_TARGET_NAME}")
 
 target_compile_options(
-    ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra
+    ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra -Wl,-rpath,'$ORIGIN/lib'
 )
 
 set_target_properties(
     ${IDK_TARGET_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}"
+    BUILD_RPATH "$ORIGIN/lib"
 )
 
 # configure_file(

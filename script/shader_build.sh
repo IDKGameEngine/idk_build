@@ -22,16 +22,17 @@ __slang_to_spirv()
     entryname="${stage}main"
 
     if grep -q "$entryname" "$srcpath"; then
-
-        slangc "${srcpath}" -I "${THIS_DIR}/../../idk_gfx/h" \
-                -O3 \
-                -matrix-layout-column-major \
-                -fvk-use-gl-layout -fspv-reflect \
-                -emit-spirv-directly \
-                -target spirv \
-                -profile glsl_460 \
-                -entry $entryname \
-                -o $dstpath
+            # -D__SLANG__ \
+        slangc "${srcpath}" \
+            -I "${IDK_POLY_DIR}/idk_gfx/h" \
+            -O3 \
+            -matrix-layout-column-major \
+            -fvk-use-gl-layout -fspv-reflect \
+            -emit-spirv-directly \
+            -target spirv \
+            -profile glsl_460 \
+            -entry $entryname \
+            -o $dstpath
 
         # sed -i 's/gl_VertexIndex/gl_VertexID/g' $dstpath
 
