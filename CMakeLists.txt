@@ -52,24 +52,13 @@ set_target_properties(
 )
 
 execute_process(
-    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header"
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header" "--text"
     WORKING_DIRECTORY "${IDK_POLY_DIR}"
     RESULT_VARIABLE hpp_ret
     OUTPUT_VARIABLE hpp_out
 )
 if(NOT hpp_ret EQUAL 0)
     message(FATAL_ERROR "Script failed: ${hpp_ret}, result: ${hpp_out}")
-endif()
-
-
-execute_process(
-    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--text"
-    WORKING_DIRECTORY "${IDK_OUTPUT_DIR}"
-    RESULT_VARIABLE txt_ret
-    OUTPUT_VARIABLE txt_out
-)
-if(NOT txt_ret EQUAL 0)
-    message(FATAL_ERROR "Script failed: ${txt_ret}, result: ${txt_out}")
 endif()
 
 
