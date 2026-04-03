@@ -141,7 +141,7 @@ build_jolt()
     fi
 
     cd JoltPhysics/Build
-    ./cmake_linux_clang_gcc.sh Release g++ ${COMMON_CMAKE_DEFS}
+    ./cmake_linux_clang_gcc.sh Release g++ ${COMMON_CMAKE_DEFS} -DBUILD_SHARED_LIBS=ON
     cd Linux_Release && make -j$(nproc) && ./UnitTests && make install
 }
 

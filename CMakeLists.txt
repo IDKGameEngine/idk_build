@@ -4,8 +4,8 @@ project(idk_build VERSION 0.0.1)
 
 if (NOT DEFINED IDK_POLY_DIR)
     message(FATAL_ERROR "IDK_POLY_DIR must be defined!")
-elseif (NOT DEFINED IDK_BUILD_DIR)
-    message(FATAL_ERROR "IDK_BUILD_DIR must be defined!")
+elseif (NOT DEFINED IDK_CMAKE_DIR)
+    message(FATAL_ERROR "IDK_CMAKE_DIR must be defined!")
 elseif (NOT DEFINED IDK_OUTPUT_DIR)
     message(FATAL_ERROR "IDK_OUTPUT_DIR must be defined!")
 elseif (NOT DEFINED IDK_TARGET_NAME)
@@ -13,7 +13,7 @@ elseif (NOT DEFINED IDK_TARGET_NAME)
 endif()
 
 message(STATUS "IDK_POLY_DIR: ${IDK_POLY_DIR}")
-message(STATUS "IDK_BUILD_DIR: ${IDK_BUILD_DIR}")
+message(STATUS "IDK_CMAKE_DIR: ${IDK_CMAKE_DIR}")
 message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
 message(STATUS "IDK_TARGET_NAME: ${IDK_TARGET_NAME}")
 
@@ -27,22 +27,22 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
 find_package(SDL3 REQUIRED)
 find_package(glm CONFIG REQUIRED PATHS "${CMAKE_PREFIX_PATH}/share" NO_DEFAULT_PATH)
-# find_package(Jolt REQUIRED)
+find_package(Jolt REQUIRED)
 
 message(STATUS "SDL3 found at: ${SDL3_DIR}")
 message(STATUS "glm found at: ${glm_DIR}")
-# message(STATUS "Jolt found at: ${Jolt_DIR}")
+message(STATUS "Jolt found at: ${Jolt_DIR}")
 
 # find_package(Jolt REQUIRED PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake" NO_DEFAULT_PATH)
 # ----------------------------------------------------------------------------------------------
 
-add_subdirectory("${IDK_POLY_DIR}/idk_core" "${IDK_BUILD_DIR}/idk_core")
-add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_BUILD_DIR}/idk_gfx")
-add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_BUILD_DIR}/idk_engine")
-add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_BUILD_DIR}/${IDK_TARGET_NAME}")
+add_subdirectory("${IDK_POLY_DIR}/idk_core" "${IDK_CMAKE_DIR}/idk_core")
+add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
+add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")
+add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_CMAKE_DIR}/${IDK_TARGET_NAME}")
 
 target_compile_options(
-    ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra -Wl,-rpath,'$ORIGIN/lib'
+    ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra
 )
 
 set_target_properties(
@@ -51,28 +51,32 @@ set_target_properties(
     BUILD_RPATH "$ORIGIN/lib"
 )
 
-# configure_file(
-#     "${PROJECT_SOURCE_DIR}/version.h.in"
-#     "${PROJECT_BINARY_DIR}/version.h"
-# )
+execute_process(
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header" "./include/idk"
+    WORKING_DIRECTORY "${IDK_POLY_DIR}/idk"
+    RESULT_VARIABLE hpp_ret
+    OUTPUT_VARIABLE hpp_out
+)
+if(NOT hpp_ret EQUAL 0)
+    message(FATAL_ERROR "Script failed: ${hpp_ret}, result: ${hpp_out}")
+endif()
 
-# add_executable(
-#     ${PROJECT_NAME} "src/main.cpp"
-# )
-# target_compile_features(
-#     ${PROJECT_NAME} PUBLIC cxx_std_23
-# )
-# target_link_libraries(
-#     ${PROJECT_NAME} PUBLIC idk_platform idk_gfx
-# )
 
 execute_process(
-    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "/home/michael/devel/idk/idk/include/idk"
-    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-    RESULT_VARIABLE ret_code
-    OUTPUT_VARIABLE out_var
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--text" "./"
+    WORKING_DIRECTORY "${IDK_OUTPUT_DIR}"
+    RESULT_VARIABLE txt_ret
+    OUTPUT_VARIABLE txt_out
 )
-
-if(NOT ret_code EQUAL 0)
-    message(FATAL_ERROR "Script failed: ${ret_code}, result: ${out_var}")
+if(NOT txt_ret EQUAL 0)
+    message(FATAL_ERROR "Script failed: ${txt_ret}, result: ${txt_out}")
 endif()
+
+
+install(
+    IMPORTED_RUNTIME_ARTIFACTS
+        SDL3::SDL3-shared
+        Jolt::Jolt
+    RUNTIME DESTINATION ${IDK_OUTPUT_DIR}/bin
+    LIBRARY DESTINATION ${IDK_OUTPUT_DIR}/lib
+)

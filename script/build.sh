@@ -59,25 +59,26 @@ build_idk()
 
     IDK_TARGET_NAME="${target_name}"
     IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
-    IDK_OUTPUT_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
-    IDK_BUILD_DIR="${IDK_OUTPUT_DIR}/cmake"
+    IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
+    IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
+    IDK_OUTPUT_DIR="${IDK_BUILD_DIR}/output"
 
     if [[ "$build_clean" == "1" ]]; then
-        rm -rf "${IDK_OUTPUT_DIR}"
+        rm -rf "${IDK_BUILD_DIR}"
     fi
 
-    # source "${THIS_DIR}/version.sh"
-    # gen_version_header --outpath "$IDK_ROOT_DIR/include/idk"
+    mkdir -p "$IDK_CMAKE_DIR" "$IDK_OUTPUT_DIR"
+    cd "$IDK_CMAKE_DIR"
 
-    mkdir -p "${IDK_BUILD_DIR}" && cd "${IDK_BUILD_DIR}"
-    cmake "${IDK_POLY_DIR}/idk_build" \
-        -DCMAKE_BUILD_TYPE="${build_type}" \
-        -DCMAKE_PREFIX_PATH="${IDK_ROOT_DIR}" \
-        -DIDK_POLY_DIR="${IDK_POLY_DIR}" \
-        -DIDK_BUILD_DIR="${IDK_BUILD_DIR}" \
-        -DIDK_OUTPUT_DIR="${IDK_OUTPUT_DIR}" \
-        -DIDK_TARGET_NAME="${IDK_TARGET_NAME}"
-    make -j$(nproc)
+    cmake "$IDK_POLY_DIR/idk_build" \
+        -DCMAKE_BUILD_TYPE="$build_type" \
+        -DCMAKE_PREFIX_PATH="$IDK_ROOT_DIR" \
+        -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
+        -DIDK_POLY_DIR="$IDK_POLY_DIR" \
+        -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
+        -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
+        -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
+    cmake --build . && cmake --install .
 
     SHADER_DIR="${IDK_OUTPUT_DIR}/assets/shader"
     $THIS_DIR/shader_build.sh "${SHADER_DIR}"

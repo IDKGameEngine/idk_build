@@ -15,73 +15,16 @@
 #     "#define IDK_REPO_VERSION \"${1}\"" \
 #     > "${2}"
 
-
-skip_names=()
-
-__should_skip()
+gen_version_header()
 {
-    found=0
-    for name in "${skip_names[@]}"; do
-        if [[ "$name" == "$1" ]]; then
-            found=1
-            break
-        fi
-    done
-    echo $found
-}
-
-# gen_version_header()
-# {
     if [[ "$IDK_POLY_DIR" == "" ]]; then
         echo "IDK_POLY_DIR must be defined"
         exit 1
     fi
 
-    outdir="${1}"; shift;
+    outdir=$(cd ${1} && pwd)
     outfile="${outdir}/version.h"
     mkdir -p "${outdir}" && touch "${outfile}"
-
-    while [[ $# -gt 0 ]]; do
-        case $1 in
-            --skip)
-                skip_names+=("${2}")
-                shift
-                shift
-                ;;
-            *)
-                echo "Unknown option $1" >&2
-                exit 1
-                ;;
-        esac
-    done
-
-    cvar_list=()
-    cdef_list=()
-
-    for path in $IDK_POLY_DIR/idk_*; do
-        cd $path
-        name=$(basename "$PWD") && NAME="${name^^}"
-        skip=$(__should_skip "${name}")
-        if [[ "$skip" == "1" ]]; then
-            continue
-        elif [[ ! -d "$path" ]]; then
-            continue
-        fi
-
-        hash="$(git rev-parse HEAD)"
-
-        if [[ "$name" == "$skip_name" ]]; then
-            continue
-        fi
-
-        cvar_name="${name}_hash"
-        cvar_list+=("static const char $cvar_name[] = \"$hash\";")
-
-        cdef_name="${NAME}_REPO_VER"
-        cdef_list+=("#define $cdef_name \"$hash\"")
-
-    done
-
 
     printf "%s\n" \
         "#pragma once" \
@@ -91,24 +34,94 @@ __should_skip()
         "" \
         > "${outfile}"
 
-    for cdef in "${cdef_list[@]}"; do
-        echo "${cdef}" >> "${outfile}"
+    dirty_repo="0"
+    for path in $IDK_POLY_DIR/idk_*; do
+        if [[ ! -d "$path" ]]; then
+            continue
+        fi
+        cd $path
+        name=$(basename "$PWD") && name="${name^^}"
+        hash="$(git rev-parse HEAD)"
+        porcelain="dirty"
+        if [[ -z "$(git status --porcelain)" ]]; then
+            porcelain="clean"
+            dirty_repo="1"
+        fi
+
+        printf "%s\t%s\n" \
+            "#define ${name}_REPO_VER" \
+            "\"$hash\" // $porcelain" \
+            >> "$outfile"
     done
+
+    if [[ "$dirty_repo" == "1" ]]; then
+        printf "\n#error woop" >> "$outfile"
+    fi
 
     printf "%s\n" \
         "" \
         "#endif // IDK_VERSION_H" \
         >> "${outfile}"
+}
 
-    # printf "%s\n" \
-    #     "" \
-    #     "namespace idk::version" \
-    #     "{" \
-    #     >> "${outfile}"
-    # for cvar in "${cvar_list[@]}"; do
-    #     echo "    ${cvar}" >> "${outfile}"
-    # done
-    # echo "}" >> "${outfile}"
 
-    printf "\n\n"
-# }
+gen_version_txt()
+{
+    if [[ "$IDK_POLY_DIR" == "" ]]; then
+        echo "IDK_POLY_DIR must be defined"
+        exit 1
+    fi
+
+    outdir=$(cd ${1} && pwd)
+    outfile="${outdir}/version.txt"
+    mkdir -p "${outdir}" && touch "${outfile}"
+
+    printf "" > "$outfile"
+    for path in $IDK_POLY_DIR/idk_*; do
+        if [[ ! -d "$path" ]]; then
+            continue
+        fi
+    
+        cd $path
+        name=$(basename "$PWD")
+        hash="$(git rev-parse HEAD)"
+        porcelain="dirty"
+        if [[ -z "$(git status --porcelain)" ]]; then
+            porcelain="clean"
+        fi
+
+        printf "%s \t%s\n" \
+            "$name" "$hash $porcelain" \
+            >> "$outfile"
+    
+    done
+}
+
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --header)
+            res=$(gen_version_header "$2")
+            if [[ "$res" == "1" ]]; then
+                exit 1
+            fi
+            shift
+            shift
+            ;;
+        --text)
+            res=$(gen_version_txt "$2")
+            if [[ "$res" == "1" ]]; then
+                exit 1
+            fi
+            shift
+            shift
+            ;;
+        *)
+            echo "Unknown option $1" >&2
+            exit 1
+            ;;
+    esac
+done
+
+
+
