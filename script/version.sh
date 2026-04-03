@@ -34,18 +34,21 @@ gen_version_header()
         "" \
         > "${outfile}"
 
-    dirty_repo="0"
+    porcelain_fail="0"
     for path in $IDK_POLY_DIR/idk_*; do
         if [[ ! -d "$path" ]]; then
             continue
         fi
+
         cd $path
+
         name=$(basename "$PWD") && name="${name^^}"
         hash="$(git rev-parse HEAD)"
-        porcelain="dirty"
-        if [[ -z "$(git status --porcelain)" ]]; then
-            porcelain="clean"
-            dirty_repo="1"
+        porcelain="clean"
+    
+        if [[ ! -z "$(git status --porcelain)" ]]; then
+            porcelain="dirty"
+            porcelain_fail="1"
         fi
 
         printf "%s\t%s\n" \
@@ -54,8 +57,8 @@ gen_version_header()
             >> "$outfile"
     done
 
-    if [[ "$dirty_repo" == "1" ]]; then
-        printf "\n#error woop" >> "$outfile"
+    if [[ "$porcelain_fail" == "1" ]]; then
+        printf "\n// #error All repositories must pass git porcelain check!\n" >> "$outfile"
     fi
 
     printf "%s\n" \

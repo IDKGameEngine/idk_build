@@ -81,7 +81,7 @@ esac
 
 INSTALL_PREFIX=$IDK_ROOT_DIR
 THIRDPARTY_DIR="${IDK_POLY_DIR}/idk_build/repo"
-COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
+COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
 
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 mkdir -p $THIRDPARTY_DIR
@@ -141,7 +141,7 @@ build_jolt()
     fi
 
     cd JoltPhysics/Build
-    ./cmake_linux_clang_gcc.sh Release g++ ${COMMON_CMAKE_DEFS} -DBUILD_SHARED_LIBS=ON
+    ./cmake_linux_clang_gcc.sh Release g++ ${COMMON_CMAKE_DEFS} -DBUILD_SHARED_LIBS=OFF
     cd Linux_Release && make -j$(nproc) && ./UnitTests && make install
 }
 
@@ -182,17 +182,17 @@ build_sdl3()
     fi
 
     cd SDL
-    cmake -S . -B build ${COMMON_CMAKE_DEFS}
+    cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_STATIC=ON
     cmake --build build --config $build_type
     cmake --install build --prefix "$INSTALL_PREFIX"
 
     cd ../SDL_image
-    cmake -S . -B build ${COMMON_CMAKE_DEFS}
+    cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_STATIC=ON
     cmake --build build --config $build_type
     cmake --install build --prefix "$INSTALL_PREFIX"
 
     cd ../SDL_mixer
-    cmake -S . -B build ${COMMON_CMAKE_DEFS}
+    cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_STATIC=ON
     cmake --build build --config $build_type
     cmake --install build --prefix "$INSTALL_PREFIX"
 }

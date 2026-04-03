@@ -73,10 +73,10 @@ if(NOT txt_ret EQUAL 0)
 endif()
 
 
-install(
-    IMPORTED_RUNTIME_ARTIFACTS
-        SDL3::SDL3-shared
-        Jolt::Jolt
-    RUNTIME DESTINATION ${IDK_OUTPUT_DIR}/bin
-    LIBRARY DESTINATION ${IDK_OUTPUT_DIR}/lib
-)
+# install(
+#     IMPORTED_RUNTIME_ARTIFACTS
+#         SDL3::SDL3-shared
+#         Jolt::Jolt
+#     RUNTIME DESTINATION ${IDK_OUTPUT_DIR}/bin
+#     LIBRARY DESTINATION ${IDK_OUTPUT_DIR}/lib
+# )
