@@ -12,6 +12,7 @@ else
     exit 1
 fi
 
+opt_asio=""
 opt_glm=""
 opt_vulkan=""
 opt_jolt=""
@@ -27,6 +28,10 @@ while [[ $# -gt 0 ]]; do
             opt_jolt=1
             opt_assimp=1
             opt_sdl3=1
+            shift
+            ;;
+        --asio)
+            opt_asio=1
             shift
             ;;
         --glm)
@@ -80,12 +85,23 @@ case "$build_type" in
 esac
 
 INSTALL_PREFIX=$IDK_ROOT_DIR
-THIRDPARTY_DIR="${IDK_POLY_DIR}/idk_build/repo"
+THIRDPARTY_DIR="${IDK_POLY_DIR}/idk_build/thirdparty"
 COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
 
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 mkdir -p $THIRDPARTY_DIR
 
+
+build_asio()
+{
+    cd $THIRDPARTY_DIR
+    if [[ ! -d "asio" ]]; then
+        git clone --depth=1 --branch boost-1.90.0 https://github.com/boostorg/asio.git
+    fi
+
+    mkdir -p "$INSTALL_PREFIX/include/boost"
+    cp -r ./asio/include/boost/* "$INSTALL_PREFIX/include/boost/"
+}
 
 build_glm()
 {
@@ -197,6 +213,10 @@ build_sdl3()
     cmake --install build --prefix "$INSTALL_PREFIX"
 }
 
+
+if [[ "$opt_asio" == "1" ]]; then
+    build_asio
+fi
 
 if [[ "$opt_glm" == "1" ]]; then
     build_glm

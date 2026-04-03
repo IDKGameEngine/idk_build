@@ -25,6 +25,9 @@ set(OpenGL_GL_PREFERENCE "GLVND")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}")
+set(CMAKE_BUILD_RPATH "$ORIGIN/lib")
+
 find_package(SDL3 REQUIRED)
 find_package(glm CONFIG REQUIRED PATHS "${CMAKE_PREFIX_PATH}/share" NO_DEFAULT_PATH)
 find_package(Jolt REQUIRED)
@@ -45,21 +48,16 @@ target_compile_options(
     ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra
 )
 
-set_target_properties(
-    ${IDK_TARGET_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}"
-    BUILD_RPATH "$ORIGIN/lib"
-)
+# set_target_properties(
+#     ${IDK_TARGET_NAME} PROPERTIES
+#     RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}"
+#     BUILD_RPATH "$ORIGIN/lib"
+# )
 
 execute_process(
     COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header" "--text"
     WORKING_DIRECTORY "${IDK_POLY_DIR}"
-    RESULT_VARIABLE hpp_ret
-    OUTPUT_VARIABLE hpp_out
 )
-if(NOT hpp_ret EQUAL 0)
-    message(FATAL_ERROR "Script failed: ${hpp_ret}, result: ${hpp_out}")
-endif()
 
 
 # install(
