@@ -90,7 +90,7 @@ gen_version_header()
         cvar_name="${name}_hash"
         cvar_list+=("static const char $cvar_name[] = \"$hash\";")
 
-        cdef_name="${NAME}_REPO_VERSION"
+        cdef_name="${NAME}_REPO_VER"
         cdef_list+=("#define $cdef_name \"$hash\"")
 
     done
