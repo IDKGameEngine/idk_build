@@ -86,7 +86,7 @@ esac
 
 INSTALL_PREFIX=$IDK_ROOT_DIR
 THIRDPARTY_DIR="${IDK_POLY_DIR}/idk_build/thirdparty"
-COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
+COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
 
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 mkdir -p $THIRDPARTY_DIR
@@ -110,17 +110,8 @@ build_glm()
         git clone --depth=1 --branch 1.0.3 https://github.com/g-truc/glm.git
     fi
 
-    # mkdir -p $INSTALL_PREFIX/include/glm
-    # cp -r $THIRDPARTY_DIR/glm/glm/* $INSTALL_PREFIX/include/glm/
-
     cd glm
-
-    cmake \
-        -DGLM_BUILD_TESTS=OFF \
-        -DBUILD_SHARED_LIBS=OFF \
-        $COMMON_CMAKE_DEFS \
-        -B build .
-
+    cmake -B build . -DGLM_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF $COMMON_CMAKE_DEFS
     cmake --build build -- all
     cmake --build build -- install
 }

@@ -88,7 +88,10 @@
         "forward_list": "cpp",
         "regex": "cpp",
         "cfenv": "cpp",
-        "barrier": "cpp"
+        "barrier": "cpp",
+        "coroutine": "cpp",
+        "source_location": "cpp",
+        "future": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,
