@@ -13,34 +13,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 
+      - name: Checkout idk_build
         uses: actions/checkout@v4
-        with:
-          path: idk_build
 
       - name: Checkout idk_core
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_core
-          path: idk_core
+          path: ../idk_core
     
       - name: Checkout idk_gfx
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_gfx
-          path: idk_gfx
+          path: ../idk_gfx
     
       - name: Checkout idk_engine
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_engine
-          path: idk_engine
+          path: ../idk_engine
     
       - name: Checkout idk_game
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_game
-          path: idk_game
+          path: ../idk_game
 
       - name: Run a multiline script
         run: idk_build/script/build.sh --target idk_game --debug
