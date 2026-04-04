@@ -12,72 +12,34 @@ else
     exit 1
 fi
 
-opt_asio=""
-opt_glm=""
-opt_vulkan=""
-opt_jolt=""
-opt_assimp=""
-opt_sdl3=""
-opt_slang=""
-build_type="Release"
+declare -A repo_opts=(
+    [asio]=0
+    [assimp]=0
+    [glad]=0
+    [glm]=0
+    [jolt]=0
+    [sdl3]=0
+    [slang]=0
+    [vulkan]=0
+    [build_type]="Release"
+)
 
 while [[ $# -gt 0 ]]; do
-    case $1 in
-        --all)
-            opt_glm=1
-            opt_vulkan=1
-            opt_jolt=1
-            opt_assimp=1
-            opt_sdl3=1
-            opt_slang=1
-            shift
-            ;;
-        --asio)
-            opt_asio=1
-            shift
-            ;;
-        --glm)
-            opt_glm=1
-            shift
-            ;;
-        --vulkan)
-            opt_vulkan=1
-            shift
-            ;;
-        --jolt)
-            opt_jolt=1
-            shift
-            ;;
-        --assimp)
-            opt_assimp=1
-            shift
-            ;;
-        --sdl3)
-            opt_sdl3=1
-            shift
-            ;;
-        --slang)
-            opt_slang=1
-            shift
-            ;;
-        --type)
-            build_type="${2}"
-            shift
-            shift
-            ;;
-        *)
-            echo "Unknown option $1" >&2
-            exit 1
-            ;;
-    esac
+    key="${1:2}"
+    if [[ -v repo_opts[$key] ]]; then
+        repo_opts[$key]=1
+        shift
+    else
+        echo "Unknown option $1" >&2
+        exit 1
+    fi
 done
-
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 IDK_POLY_DIR=$(cd ${THIS_DIR}/../.. && pwd)
 IDK_ROOT_DIR=""
 
-case "$build_type" in
+case "${repo_opts[build_type]}" in
     Release)
         IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
         ;;
@@ -97,7 +59,6 @@ COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 mkdir -p $THIRDPARTY_DIR
 
-
 build_asio()
 {
     cd $THIRDPARTY_DIR
@@ -109,11 +70,40 @@ build_asio()
     cp -r ./asio/include/boost/* "$INSTALL_PREFIX/include/boost/"
 }
 
+woop_boop()
+{
+    repo_owner="$1"
+    repo_name="$2"
+    repo_branch="$3"
+    repo_url="https://github.com/$repo_owner/$repo_name.git"
+    args="--recursive --depth=1 "
+
+    if [[ "$repo_branch" != "" ]]; then
+        args+="--branch $repo_branch "
+    fi
+
+    cd $THIRDPARTY_DIR
+    if [[ ! -d "$repo_name" ]]; then
+       git clone $repo_url $args
+    fi
+}
+
+
+build_glad()
+{
+    woop_boop Dav1dde glad v2.0.8
+    # cd $THIRDPARTY_DIR
+    # if [[ ! -d "glm" ]]; then
+    #     git clone --depth=1 --branch v2.0.8 https://github.com/Dav1dde/glad.git --recursive
+    # fi
+}
+
+
 build_glm()
 {
     cd $THIRDPARTY_DIR
     if [[ ! -d "glm" ]]; then
-        git clone --depth=1 --branch 1.0.3 https://github.com/g-truc/glm.git
+        git clone --depth=1 --branch 1.0.3 https://github.com/g-truc/glm.git --recursive
     fi
 
     cd glm
@@ -226,30 +216,8 @@ build_slang()
 }
 
 
-if [[ "$opt_asio" == "1" ]]; then
-    build_asio
-fi
-
-if [[ "$opt_glm" == "1" ]]; then
-    build_glm
-fi
-
-if [[ "$opt_vulkan" == "1" ]]; then
-    build_vulkan
-fi
-
-if [[ "$opt_jolt" == "1" ]]; then
-    build_jolt
-fi
-
-if [[ "$opt_assimp" == "1" ]]; then
-    build_assimp
-fi
-
-if [[ "$opt_sdl3" == "1" ]]; then
-    build_sdl3
-fi
-
-if [[ "$opt_slang" == "1" ]]; then
-    build_slang
-fi
+for key in "${!repo_opts[@]}"; do
+    if [[ "${repo_opts[$key]}" == "1" ]]; then
+        build_$key
+    fi
+done

@@ -8,7 +8,6 @@
                 "${workspaceFolder}/idk_core/h",
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",
-                "${workspaceFolder}/idk_gfx/h_",
                 "${workspaceFolder}/idk_gfx/external/glad/include",
                 "${workspaceFolder}/idk_game/h"
             ],
