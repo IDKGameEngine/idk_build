@@ -47,4 +47,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ls ./ ../ $GITHUB_WORKSPACE  #/script/build.sh --target idk_game --debug
+        run: |
+          echo "github.workspace=${{ github.workspace }}"
+          echo "GITHUB_WORKSPACE=${GITHUB_WORKSPACE}"
+
+          
+#/script/build.sh --target idk_game --debug
