@@ -175,9 +175,6 @@ build_assimp()
         -DASSIMP_BUILD_ZLIB=ON \
         -DASSIMP_USE_HUNTER=ON
     cmake --build . && cmake --install .
-
-    # cp -r ./lib/* $INSTALL_PREFIX/lib/
-    # cp -r ./include/* $INSTALL_PREFIX/include/
 }
 
 
@@ -215,17 +212,17 @@ build_slang()
 {
     cd $THIRDPARTY_DIR
     if [[ ! -d "slang" ]]; then
-        git clone https://github.com/shader-slang/slang.git  --recursive
+        git clone --depth=1 --branch v2026.5.2 --single-branch https://github.com/shader-slang/slang.git --recursive
         # git clone --depth=1 --branch v2026.5.2 --single-branch https://github.com/shader-slang/slang.git
     fi
 
     cd slang
     git fetch https://github.com/shader-slang/slang.git 'refs/tags/*:refs/tags/*'
 
-    cmake --preset default -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX"
-    cmake --build --preset release
-    cmake --build . --target install
-    # cmake --build --preset <debug|release|releaseWithDebugInfo>
+    # cmake --preset default -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX"
+    # cmake --build --preset release
+    # cmake --build . --target install
+    # # cmake --build --preset <debug|release|releaseWithDebugInfo>
 }
 
 

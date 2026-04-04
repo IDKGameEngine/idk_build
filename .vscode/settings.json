@@ -91,7 +91,9 @@
         "barrier": "cpp",
         "coroutine": "cpp",
         "source_location": "cpp",
-        "future": "cpp"
+        "future": "cpp",
+        "strstream": "cpp",
+        "ranges": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,
@@ -99,11 +101,8 @@
         "**/.hg/store/**": true,
         "${workspaceFolder}/build-debug/**": true,
         "${workspaceFolder}/build-release/**": true,
-        "${workspaceFolder}/idk_build/bin/**": true,
-        "${workspaceFolder}/idk_build/include/**": true,
-        "${workspaceFolder}/idk_build/lib/**": true,
-        "${workspaceFolder}/idk_build/repo/**": true,
-        "${workspaceFolder}/idk_build/share/**": true,
+        "${workspaceFolder}/idk/**": true,
+        "${workspaceFolder}/idk_build/thirdparty/**": true,
     },
     "files.participants.timeout": 100,
     "slang.additionalSearchPaths": [
