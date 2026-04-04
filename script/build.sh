@@ -70,17 +70,14 @@ build_idk()
     mkdir -p "$IDK_CMAKE_DIR" "$IDK_OUTPUT_DIR"
     cd "$IDK_CMAKE_DIR"
 
-    if [[ "$build_clean" == "1" ]]; then
-        cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
-            -DCMAKE_BUILD_TYPE="$build_type" \
-            -DCMAKE_PREFIX_PATH="$IDK_ROOT_DIR" \
-            -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
-            -DIDK_POLY_DIR="$IDK_POLY_DIR" \
-            -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
-            -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
-            -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
-    fi
-
+    cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
+        -DCMAKE_BUILD_TYPE="$build_type" \
+        -DCMAKE_PREFIX_PATH="$IDK_ROOT_DIR" \
+        -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
+        -DIDK_POLY_DIR="$IDK_POLY_DIR" \
+        -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
+        -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
+        -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
     cmake --build . && cmake --install .
 }
 
