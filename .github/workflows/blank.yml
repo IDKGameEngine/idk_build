@@ -53,8 +53,12 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a multiline script
         run: |
-          echo "ls ../"
+          printf "AAAA\n\n"
+          ls ./
+          printf "BBBB\n\n"
           ls ../
+          printf "CCCC\n\n"
+          ls *
 
           
 #/script/build.sh --target idk_game --debug
