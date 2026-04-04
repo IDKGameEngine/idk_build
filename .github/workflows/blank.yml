@@ -23,27 +23,32 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout 
+        uses: actions/checkout@v4
 
-      - uses: actions/checkout@v3
+      - name: Checkout idk_core
+        uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_core
-          path: $GITHUB_WORKSPACE/idk_core
+          path: idk_core
     
-      - uses: actions/checkout@v3
+      - name: Checkout idk_gfx
+        uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_gfx
-          path: $GITHUB_WORKSPACE/idk_gfx
+          path: idk_gfx
     
-      - uses: actions/checkout@v3
+      - name: Checkout idk_engine
+        uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_engine
-          path: $GITHUB_WORKSPACE/idk_engine
+          path: ${GITHUB_WORKSPACE}/idk_engine
     
-      - uses: actions/checkout@v3
+      - name: Checkout idk_game
+        uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_game
-          path: $GITHUB_WORKSPACE/idk_game
+          path: ${GITHUB_WORKSPACE}/idk_game
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
