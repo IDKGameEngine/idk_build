@@ -51,10 +51,10 @@ jobs:
           path: ${GITHUB_WORKSPACE}/idk_game
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Run a multiline script
         run: |
-          echo "YEAH BOYEEE"
-          ls ./
+          echo "ls ../"
+          ls ../
 
           
 #/script/build.sh --target idk_game --debug
