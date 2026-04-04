@@ -22,21 +22,23 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout 
         uses: actions/checkout@v4
+        with:
+          repository: IDKGameEngine/idk_build
+          path: ${GITHUB_WORKSPACE}/idk_build
 
       - name: Checkout idk_core
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_core
-          path: idk_core
+          path: ${GITHUB_WORKSPACE}/idk_core
     
       - name: Checkout idk_gfx
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_gfx
-          path: idk_gfx
+          path: ${GITHUB_WORKSPACE}/idk_gfx
     
       - name: Checkout idk_engine
         uses: actions/checkout@v4
@@ -53,11 +55,11 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a multiline script
         run: |
-          printf "AAAA\n\n"
+          printf "\n\nAAAA"
           ls ./
-          printf "BBBB\n\n"
+          printf "\n\nBBBB"
           ls ../
-          printf "CCCC\n\n"
+          printf "\n\nCCCC"
           ls *
 
           
