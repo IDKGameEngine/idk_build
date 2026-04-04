@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout 
         uses: actions/checkout@v4
-        with:
-          repository: IDKGameEngine/idk_build
-          path: ${GITHUB_WORKSPACE}/idk_build
 
       - name: Checkout idk_core
         uses: actions/checkout@v4
@@ -44,7 +41,7 @@ jobs:
           path: ${GITHUB_WORKSPACE}/idk_game
 
       - name: Run a multiline script
-        run: ${GITHUB_WORKSPACE}/idk_build/script/build.sh --target idk_game --debug
+        run: ${GITHUB_WORKSPACE}/script/build.sh --target idk_game --debug
           # printf "\n\nAAAA\n%s" "$(ls ./)"
           # printf "\n\nBBBB\n%s" "$(ls ../)"
           # printf "\n\nCCCC\n%s" "$(ls *)"
