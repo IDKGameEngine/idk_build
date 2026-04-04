@@ -28,23 +28,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           owner: IDKGameEngine
-          repository: idk_core
+          repository: IDKGameEngine/idk_core
     
       - uses: actions/checkout@v3
         with:
           owner: IDKGameEngine
-          repository: idk_gfx
+          repository: IDKGameEngine/idk_gfx
     
       - uses: actions/checkout@v3
         with:
           owner: IDKGameEngine
-          repository: idk_engine
+          repository: IDKGameEngine/idk_engine
     
       - uses: actions/checkout@v3
         with:
           owner: IDKGameEngine
-          repository: idk_game
+          repository: IDKGameEngine/idk_game
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ls ./
+        run: ls ./ # $GITHUB_WORKSPACE/script/build.sh --target idk_game --debug
