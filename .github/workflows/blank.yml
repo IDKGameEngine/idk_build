@@ -55,12 +55,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a multiline script
         run: |
-          printf "\n\nAAAA"
-          ls ./
-          printf "\n\nBBBB"
-          ls ../
-          printf "\n\nCCCC"
-          ls *
+          printf "\n\nAAAA\n%s" "$(ls ./)"
+          printf "\n\nBBBB\n%s" "$(ls ../)"
+          printf "\n\nCCCC\n%s" "$(ls *)"
 
           
 #/script/build.sh --target idk_game --debug
