@@ -61,7 +61,7 @@ build_idk()
     IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
     export IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
     export IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
-    export IDK_OUTPUT_DIR="${IDK_BUILD_DIR}/output"
+    export IDK_OUTPUT_DIR="${IDK_BUILD_DIR}"
 
     if [[ "$build_clean" == "1" ]]; then
         rm -rf "${IDK_BUILD_DIR}"
