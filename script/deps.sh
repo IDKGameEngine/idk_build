@@ -18,6 +18,7 @@ opt_vulkan=""
 opt_jolt=""
 opt_assimp=""
 opt_sdl3=""
+opt_slang=""
 build_type="Release"
 
 while [[ $# -gt 0 ]]; do
@@ -28,6 +29,7 @@ while [[ $# -gt 0 ]]; do
             opt_jolt=1
             opt_assimp=1
             opt_sdl3=1
+            opt_slang=1
             shift
             ;;
         --asio)
@@ -52,6 +54,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --sdl3)
             opt_sdl3=1
+            shift
+            ;;
+        --slang)
+            opt_slang=1
             shift
             ;;
         --type)
@@ -205,6 +211,24 @@ build_sdl3()
 }
 
 
+build_slang()
+{
+    cd $THIRDPARTY_DIR
+    if [[ ! -d "slang" ]]; then
+        git clone https://github.com/shader-slang/slang.git  --recursive
+        # git clone --depth=1 --branch v2026.5.2 --single-branch https://github.com/shader-slang/slang.git
+    fi
+
+    cd slang
+    git fetch https://github.com/shader-slang/slang.git 'refs/tags/*:refs/tags/*'
+
+    cmake --preset default -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX"
+    cmake --build --preset release
+    cmake --build . --target install
+    # cmake --build --preset <debug|release|releaseWithDebugInfo>
+}
+
+
 if [[ "$opt_asio" == "1" ]]; then
     build_asio
 fi
@@ -227,4 +251,8 @@ fi
 
 if [[ "$opt_sdl3" == "1" ]]; then
     build_sdl3
+fi
+
+if [[ "$opt_slang" == "1" ]]; then
+    build_slang
 fi
