@@ -1,6 +1,7 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 4.2)
 
 project(idk_build VERSION 0.0.1)
+set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 if (NOT DEFINED IDK_POLY_DIR)
     message(FATAL_ERROR "IDK_POLY_DIR must be defined!")
@@ -29,10 +30,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}")
 set(CMAKE_BUILD_RPATH "$ORIGIN/lib")
 
 find_package(SDL3 REQUIRED)
+find_package(SDL3_image REQUIRED)
 find_package(glm CONFIG REQUIRED PATHS "${CMAKE_PREFIX_PATH}/share" NO_DEFAULT_PATH)
 find_package(Jolt REQUIRED)
 
 message(STATUS "SDL3 found at: ${SDL3_DIR}")
+message(STATUS "SDL3_image found at: ${SDL3_image_DIR}")
 message(STATUS "glm found at: ${glm_DIR}")
 message(STATUS "Jolt found at: ${Jolt_DIR}")
 

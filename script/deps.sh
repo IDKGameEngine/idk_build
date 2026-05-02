@@ -13,7 +13,7 @@ else
 fi
 
 declare -A repo_opts=(
-    [asio]=0
+    # [asio]=0
     [assimp]=0
     [glad]=0
     [glm]=0
@@ -59,16 +59,16 @@ COMMON_CMAKE_DEFS="-DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=${IDK_ROOT_DIR
 mkdir -p $INSTALL_PREFIX/{bin,include,lib,share}
 mkdir -p $THIRDPARTY_DIR
 
-build_asio()
-{
-    cd $THIRDPARTY_DIR
-    if [[ ! -d "asio" ]]; then
-        git clone --depth=1 --branch boost-1.90.0 https://github.com/boostorg/asio.git
-    fi
+# build_asio()
+# {
+#     cd $THIRDPARTY_DIR
+#     if [[ ! -d "asio" ]]; then
+#         git clone --depth=1 --branch boost-1.90.0 https://github.com/boostorg/asio.git
+#     fi
 
-    mkdir -p "$INSTALL_PREFIX/include/boost"
-    cp -r ./asio/include/boost/* "$INSTALL_PREFIX/include/boost/"
-}
+#     mkdir -p "$INSTALL_PREFIX/include/boost"
+#     cp -r ./asio/include/boost/* "$INSTALL_PREFIX/include/boost/"
+# }
 
 woop_boop()
 {

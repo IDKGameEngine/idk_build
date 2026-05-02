@@ -101,10 +101,48 @@ gen_version_txt()
             porcelain="clean"
         fi
 
-        printf "%s \t%s\n" \
+        printf "%s %s\n" \
             "$name" "$hash $porcelain" \
             >> "$outfile"
     
+    done
+}
+
+gen_version_thirdparty_txt()
+{
+    if [[ "$IDK_POLY_DIR" == "" ]]; then
+        echo "IDK_POLY_DIR must be defined"
+        exit 1
+    elif [[ "$IDK_OUTPUT_DIR" == "" ]]; then
+        echo "IDK_OUTPUT_DIR must be defined"
+        exit 1
+    fi
+
+    thirdparty_repo_names=(
+        "assimp"
+        "glm"
+        "JoltPhysics"
+        "SDL"
+        "SDL_image"
+        "SDL_mixer"
+        "slang"
+    )
+    outdir="$IDK_OUTPUT_DIR"
+    outfile="${outdir}/version.txt"
+
+    printf "" >> "$outfile"
+    for name in "${thirdparty_repo_names[@]}"; do
+        cd $IDK_POLY_DIR/idk_build/thirdparty/$name
+
+        hash="$(git rev-parse HEAD)"
+        porcelain="dirty"
+        if [[ -z "$(git status --porcelain)" ]]; then
+            porcelain="clean"
+        fi
+
+        printf "%s %s\n" \
+            "$name" "$hash $porcelain" \
+            >> "$outfile"
     done
 }
 
@@ -117,6 +155,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --text)
             gen_version_txt
+            gen_version_thirdparty_txt
             shift
             ;;
         *)
@@ -125,6 +164,4 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
-
-
 
