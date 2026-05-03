@@ -97,14 +97,13 @@ gen_version_txt()
         name=$(basename "$PWD")
         hash="$(git rev-parse HEAD)"
         porcelain="dirty"
-        if [[ -z "$(git status --porcelain)" ]]; then
+        if [[ -z "$(git status --porcelain -- . ':!$IDK_POLY_DIR/idk_build/version.txt')" ]]; then
             porcelain="clean"
         fi
 
         printf "%s %s\n" \
             "$name" "$hash $porcelain" \
             >> "$outfile"
-    
     done
 }
 

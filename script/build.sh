@@ -93,6 +93,8 @@ build_idk()
         -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
         -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
     cmake --build . && cmake --install .
+
+    cp $IDK_OUTPUT_DIR/version.txt $IDK_POLY_DIR/idk_build/version.txt
 }
 
 if [[ "$opt_debug" == "0" && "$opt_release" == "0" ]]; then
