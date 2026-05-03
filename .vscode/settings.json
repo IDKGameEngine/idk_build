@@ -93,7 +93,10 @@
         "source_location": "cpp",
         "future": "cpp",
         "strstream": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "enum_set": "cpp",
+        "*.in": "cpp",
+        "*.def": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,

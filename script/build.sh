@@ -6,8 +6,8 @@ export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 export IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_target=""
-opt_c_compiler="gcc"
-opt_cxx_compiler="g++"
+opt_c_compiler=gcc
+opt_cxx_compiler=g++
 opt_clean=0
 opt_debug=0
 opt_release=0
@@ -83,8 +83,8 @@ build_idk()
     cd "$IDK_CMAKE_DIR"
 
     cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
-        -DCMAKE_C_COMPILER=$opt_c_compiler \
-        -DCMAKE_CXX_COMPILER=$opt_cxx_compiler \
+        -DCMAKE_C_COMPILER=clang \
+        -DCMAKE_CXX_COMPILER=clang++ \
         -DCMAKE_BUILD_TYPE="$build_type" \
         -DCMAKE_PREFIX_PATH="$IDK_ROOT_DIR" \
         -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
