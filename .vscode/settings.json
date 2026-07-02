@@ -96,7 +96,8 @@
         "ranges": "cpp",
         "enum_set": "cpp",
         "*.in": "cpp",
-        "*.def": "cpp"
+        "*.def": "cpp",
+        "queue": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,
