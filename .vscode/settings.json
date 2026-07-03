@@ -111,5 +111,6 @@
     "files.participants.timeout": 100,
     "slang.additionalSearchPaths": [
         "/home/michael/devel/idk/idk_gfx/h"
-    ]
+    ],
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
