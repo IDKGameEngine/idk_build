@@ -74,6 +74,7 @@ build_idk()
     export IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
     export IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
     export IDK_OUTPUT_DIR="${IDK_BUILD_DIR}"
+    export IDK_ASSETS_DIRNAME="assets"
 
     if [[ "$build_clean" == "1" ]]; then
         rm -rf "${IDK_BUILD_DIR}"
@@ -91,6 +92,7 @@ build_idk()
         -DIDK_POLY_DIR="$IDK_POLY_DIR" \
         -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
         -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
+        -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
         -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
     cmake --build . && cmake --install .
 

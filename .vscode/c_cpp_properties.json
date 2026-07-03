@@ -12,7 +12,7 @@
                 "${workspaceFolder}/idk_game/h"
             ],
             "defines": [
-                "MACRO_NAME=\"value\""
+                "IDK_ASSETS_DIRNAME=\"assets\""
             ],
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c99",

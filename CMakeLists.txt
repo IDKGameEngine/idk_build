@@ -9,6 +9,8 @@ elseif (NOT DEFINED IDK_CMAKE_DIR)
     message(FATAL_ERROR "IDK_CMAKE_DIR must be defined!")
 elseif (NOT DEFINED IDK_OUTPUT_DIR)
     message(FATAL_ERROR "IDK_OUTPUT_DIR must be defined!")
+elseif (NOT DEFINED IDK_ASSETS_DIRNAME)
+    message(FATAL_ERROR "IDK_ASSETS_DIRNAME must be defined!")
 elseif (NOT DEFINED IDK_TARGET_NAME)
     message(FATAL_ERROR "IDK_TARGET_NAME must be defined!")
 endif()
@@ -16,9 +18,10 @@ endif()
 message(STATUS "IDK_POLY_DIR: ${IDK_POLY_DIR}")
 message(STATUS "IDK_CMAKE_DIR: ${IDK_CMAKE_DIR}")
 message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
+message(STATUS "IDK_ASSETS_DIRNAME: ${IDK_ASSETS_DIRNAME}")
 message(STATUS "IDK_TARGET_NAME: ${IDK_TARGET_NAME}")
 
-
+add_compile_definitions(IDK_ASSETS_DIRNAME="${IDK_ASSETS_DIRNAME}")
 
 # Thirdparty Libraries
 # ----------------------------------------------------------------------------------------------
