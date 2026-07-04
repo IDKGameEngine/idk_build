@@ -46,17 +46,21 @@ message(STATUS "Jolt found at: ${Jolt_DIR}")
 
 # find_package(Jolt REQUIRED PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/cmake" NO_DEFAULT_PATH)
 # ----------------------------------------------------------------------------------------------
-add_compile_options(-Werror -Wall -Wextra -fsanitize=address,undefined)
+add_compile_options(-Werror -Wall -Wextra)
+
+# if (debug)
+add_compile_options(-fsanitize=address,undefined)
 add_link_options(-fsanitize=address,undefined)
+# endif()
 
 add_subdirectory("${IDK_POLY_DIR}/idk_core" "${IDK_CMAKE_DIR}/idk_core")
 add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
 add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")
 add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_CMAKE_DIR}/${IDK_TARGET_NAME}")
 
-target_compile_options(
-    ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra -fsanitize=address,undefined
-)
+# target_compile_options(
+#     ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra -fsanitize=address,undefined
+# )
 
 # set_target_properties(
 #     ${IDK_TARGET_NAME} PROPERTIES
