@@ -53,7 +53,7 @@ add_compile_options(-fsanitize=address,undefined)
 add_link_options(-fsanitize=address,undefined)
 # endif()
 
-add_subdirectory("${IDK_POLY_DIR}/idk_core" "${IDK_CMAKE_DIR}/idk_core")
+add_subdirectory("${IDK_POLY_DIR}/libidk" "${IDK_CMAKE_DIR}/libidk")
 add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
 add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")
 add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_CMAKE_DIR}/${IDK_TARGET_NAME}")

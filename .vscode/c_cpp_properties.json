@@ -5,7 +5,7 @@
             "includePath": [
                 "${default}",
                 "${workspaceFolder}/idk/include",
-                "${workspaceFolder}/idk_core/h",
+                "${workspaceFolder}/libidk/h",
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",
                 "${workspaceFolder}/idk_gfx/external/glad/include",
