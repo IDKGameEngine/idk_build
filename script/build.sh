@@ -6,6 +6,7 @@ export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 export IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_target=""
+opt_gfxmodel="3D"
 opt_c_compiler=gcc
 opt_cxx_compiler=g++
 opt_clean=0
@@ -15,9 +16,12 @@ opt_run=0
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --target)
-            opt_target="$2"
+        --target=*)
+            opt_target="${1#*=}"
             shift
+            ;;
+        --gfxmodel=*)
+            opt_gfxmodel="${1#*=}"
             shift
             ;;
         --c_compiler)
@@ -71,6 +75,7 @@ build_idk()
 
     IDK_TARGET_NAME="${target_name}"
     IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
+    IDK_GFX_MODEL="${opt_gfxmodel}"
     export IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
     export IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
     export IDK_OUTPUT_DIR="${IDK_BUILD_DIR}"
@@ -93,7 +98,8 @@ build_idk()
         -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
         -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
         -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
-        -DIDK_TARGET_NAME="$IDK_TARGET_NAME"
+        -DIDK_TARGET_NAME="$IDK_TARGET_NAME" \
+        -DIDK_GFX_MODEL="$IDK_GFX_MODEL"
     cmake --build . && cmake --install .
 
     cp $IDK_OUTPUT_DIR/version.txt $IDK_POLY_DIR/idk_build/version.txt
