@@ -7,6 +7,7 @@ export IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_target=""
 opt_gfxmodel="3D"
+opt_platform="SDL3GL"
 opt_c_compiler=gcc
 opt_cxx_compiler=g++
 opt_clean=0
@@ -22,6 +23,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --gfxmodel=*)
             opt_gfxmodel="${1#*=}"
+            shift
+            ;;
+        --platform=*)
+            opt_platform="${1#*=}"
             shift
             ;;
         --c_compiler)
@@ -76,6 +81,7 @@ build_idk()
     IDK_TARGET_NAME="${target_name}"
     IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
     IDK_GFX_MODEL="${opt_gfxmodel}"
+    IDK_PLATFORM="${opt_platform}"
     export IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
     export IDK_CMAKE_DIR="${IDK_BUILD_DIR}/cmake"
     export IDK_OUTPUT_DIR="${IDK_BUILD_DIR}"
@@ -99,7 +105,8 @@ build_idk()
         -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
         -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
         -DIDK_TARGET_NAME="$IDK_TARGET_NAME" \
-        -DIDK_GFX_MODEL="$IDK_GFX_MODEL"
+        -DIDK_GFX_MODEL="$IDK_GFX_MODEL" \
+        -DIDK_PLATFORM="$IDK_PLATFORM"
     cmake --build . && cmake --install .
 
     cp $IDK_OUTPUT_DIR/version.txt $IDK_POLY_DIR/idk_build/version.txt

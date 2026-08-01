@@ -98,7 +98,8 @@
         "*.in": "cpp",
         "*.def": "cpp",
         "queue": "cpp",
-        "*.slang": "cpp"
+        "*.slang": "cpp",
+        "cerrno": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,

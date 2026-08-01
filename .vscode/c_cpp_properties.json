@@ -6,6 +6,7 @@
                 "${default}",
                 "${workspaceFolder}/idk/include",
                 "${workspaceFolder}/libidk/h",
+                "${workspaceFolder}/libidk/h/libidk/platform/SDL3",
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",
                 "${workspaceFolder}/idk_gfx/external/glad/include",
