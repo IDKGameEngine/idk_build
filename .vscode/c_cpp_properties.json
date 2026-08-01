@@ -12,7 +12,8 @@
                 "${workspaceFolder}/idk_game/h"
             ],
             "defines": [
-                "IDK_ASSETS_DIRNAME=\"assets\""
+                "IDK_ASSETS_DIRNAME=\"assets\"",
+                "IDK_GFX_MODEL_2D"
             ],
             "compilerPath": "/usr/bin/clang++",
             "cStandard": "c99",
