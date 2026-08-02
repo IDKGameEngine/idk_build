@@ -15,7 +15,7 @@ fi
 declare -A repo_opts=(
     # [asio]=0
     [assimp]=0
-    [glad]=0
+    # [glad]=0
     [glm]=0
     [jolt]=0
     [sdl3]=0
@@ -28,6 +28,15 @@ while [[ $# -gt 0 ]]; do
     key="${1:2}"
     if [[ -v repo_opts[$key] ]]; then
         repo_opts[$key]=1
+        shift
+    elif [[ "$key" == "all" ]]; then
+        repo_opts["assimp"]=1
+        repo_opts["glad"]=1
+        repo_opts["glm"]=1
+        repo_opts["jolt"]=1
+        repo_opts["sdl3"]=1
+        repo_opts["slang"]=1
+        repo_opts["vulkan"]=1
         shift
     else
         echo "Unknown option $1" >&2
