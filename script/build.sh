@@ -92,8 +92,9 @@ build_idk()
     fi
 
     mkdir -p "$IDK_CMAKE_DIR" "$IDK_OUTPUT_DIR"
-    cd "$IDK_CMAKE_DIR"
+    ${THIS_DIR}/version.sh --header --text
 
+    cd "$IDK_CMAKE_DIR"
     cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
         -DCMAKE_C_COMPILER=$opt_c_compiler \
         -DCMAKE_CXX_COMPILER=$opt_cxx_compiler \

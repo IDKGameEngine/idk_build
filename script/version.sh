@@ -15,6 +15,15 @@
 #     "#define IDK_REPO_VERSION \"${1}\"" \
 #     > "${2}"
 
+IDK_REPO_DIRS=(
+    "${IDK_POLY_DIR}/idk_build"
+    "${IDK_POLY_DIR}/idk_engine"
+    "${IDK_POLY_DIR}/idk_game"
+    "${IDK_POLY_DIR}/idk_gfx"
+    "${IDK_POLY_DIR}/libidk"
+)
+
+
 gen_version_header()
 {
     if [[ "$IDK_POLY_DIR" == "" ]]; then
@@ -33,17 +42,10 @@ gen_version_header()
     printf "%s\n" \
         "#pragma once" \
         "" \
-        "#ifndef IDK_VERSION_H" \
-        "#define IDK_VERSION_H" \
-        "" \
         > "${outfile}"
 
     porcelain_fail="0"
-    for path in $IDK_POLY_DIR/idk_*; do
-        if [[ ! -d "$path" ]]; then
-            continue
-        fi
-
+    for path in "${IDK_REPO_DIRS[@]}"; do
         cd $path
 
         name=$(basename "$PWD") && name="${name^^}"
@@ -55,8 +57,8 @@ gen_version_header()
             porcelain_fail="1"
         fi
 
-        printf "%s\t%s\n" \
-            "#define ${name}_REPO_VER" \
+        printf "%-26s %32s\n" \
+            "#define ${name}_VERSION" \
             "\"$hash\" // $porcelain" \
             >> "$outfile"
     done
@@ -65,10 +67,7 @@ gen_version_header()
         printf "\n// #error All repositories must pass git porcelain check!\n" >> "$outfile"
     fi
 
-    printf "%s\n" \
-        "" \
-        "#endif // IDK_VERSION_H" \
-        >> "${outfile}"
+    printf "%s" >> "${outfile}"
 }
 
 
@@ -124,6 +123,7 @@ gen_version_thirdparty_txt()
         "SDL"
         "SDL_image"
         "SDL_mixer"
+        "SDL_net"
         "slang"
     )
     outdir="$IDK_OUTPUT_DIR"

@@ -69,12 +69,6 @@ add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_CMAKE_DIR}/${IDK_TA
 #     BUILD_RPATH "$ORIGIN/lib"
 # )
 
-execute_process(
-    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/script/version.sh" "--header" "--text"
-    WORKING_DIRECTORY "${IDK_POLY_DIR}"
-)
-
-
 # install(
 #     IMPORTED_RUNTIME_ARTIFACTS
 #         SDL3::SDL3-shared
