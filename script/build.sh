@@ -108,8 +108,6 @@ build_idk()
         -DIDK_GFX_MODEL="$IDK_GFX_MODEL" \
         -DIDK_PLATFORM="$IDK_PLATFORM"
     cmake --build . && cmake --install .
-
-    cp $IDK_OUTPUT_DIR/version.txt $IDK_POLY_DIR/idk_build/version.txt
 }
 
 if [[ "$opt_debug" == "0" && "$opt_release" == "0" ]]; then
