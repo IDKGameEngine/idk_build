@@ -10,6 +10,8 @@
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",
                 "${workspaceFolder}/idk_gfx/external/glad/include",
+                "${workspaceFolder}/idk_gfx/external/imgui",
+                "${workspaceFolder}/idk_gfx/external/imgui/backends",
                 "${workspaceFolder}/idk_game/h"
             ],
             "defines": [

@@ -59,6 +59,11 @@ add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
 add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")
 add_subdirectory("${IDK_POLY_DIR}/${IDK_TARGET_NAME}" "${IDK_CMAKE_DIR}/${IDK_TARGET_NAME}")
 
+set_target_properties(
+    ${IDK_TARGET_NAME} PROPERTIES
+    INSTALL_RPATH "$ORIGIN"
+)
+
 # target_compile_options(
 #     ${IDK_TARGET_NAME} PUBLIC -Werror -Wall -Wextra -fsanitize=address,undefined
 # )
