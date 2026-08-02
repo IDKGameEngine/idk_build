@@ -6,7 +6,7 @@
                 "${default}",
                 "${workspaceFolder}/idk/include",
                 "${workspaceFolder}/libidk/h",
-                "${workspaceFolder}/libidk/h/libidk/platform/SDL3",
+                "${workspaceFolder}/libidk/h/libidk/platform/SDL3GL",
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",
                 "${workspaceFolder}/idk_gfx/external/glad/include",
@@ -14,6 +14,7 @@
             ],
             "defines": [
                 "IDK_ASSETS_DIRNAME=\"assets\"",
+                "IDK_PLATFORM=SDL3GL",
                 "IDK_GFX_MODEL_2D"
             ],
             "compilerPath": "/usr/bin/clang++",

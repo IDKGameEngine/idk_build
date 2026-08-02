@@ -198,7 +198,7 @@ build_sdl3()
     # cmake --build build --config $build_type
     # cmake --install build --prefix "$INSTALL_PREFIX"
 
-    cd ../SDL_image
+    cd SDL_image
     cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_SHARED=ON
     cmake --build build --config $build_type
     cmake --install build --prefix "$INSTALL_PREFIX"
