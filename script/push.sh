@@ -11,7 +11,9 @@ REPO_DIRS=(
     "${POLY_DIR}/idk_gfx"
 )
 
-for DIR in "${REPO_DIRS[@]}"; do
-    echo "cd $DIR && git add . && git commit -m \"Automated commit\" && git push"
-    cd $DIR && git add . && git commit -m "Automated commit" && git push
+for REPO_DIR in "${REPO_DIRS[@]}"; do
+    cd $REPO_DIR
+    if [ -n "$(git status --porcelain)" ]; then
+        git add . && git commit -m "Automated commit" && git push
+    fi
 done
