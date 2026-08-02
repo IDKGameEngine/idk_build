@@ -180,9 +180,9 @@ build_assimp()
 build_sdl3()
 {
     cd $THIRDPARTY_DIR
-    if [[ ! -d "SDL" ]]; then
-        git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL.git
-    fi
+    # if [[ ! -d "SDL" ]]; then
+    #     git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL.git
+    # fi
     if [[ ! -d "SDL_image" ]]; then
         git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL_image.git
     fi
@@ -193,10 +193,10 @@ build_sdl3()
         git clone --depth=1 --branch release-3.2.0 --single-branch https://github.com/libsdl-org/SDL_net.git
     fi
 
-    cd SDL
-    cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_SHARED=ON
-    cmake --build build --config $build_type
-    cmake --install build --prefix "$INSTALL_PREFIX"
+    # cd SDL
+    # cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_SHARED=ON
+    # cmake --build build --config $build_type
+    # cmake --install build --prefix "$INSTALL_PREFIX"
 
     cd ../SDL_image
     cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_SHARED=ON
