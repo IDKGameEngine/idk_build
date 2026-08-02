@@ -180,6 +180,7 @@ build_assimp()
 build_sdl3()
 {
     cd $THIRDPARTY_DIR
+    build_type=${repo_opts[build_type]}
     # if [[ ! -d "SDL" ]]; then
     #     git clone --depth=1 --branch release-3.4.0 --single-branch https://github.com/libsdl-org/SDL.git
     # fi
