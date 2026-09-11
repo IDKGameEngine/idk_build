@@ -14,6 +14,7 @@ opt_clean=0
 opt_debug=0
 opt_release=0
 opt_run=0
+cmake_opts=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -54,6 +55,11 @@ while [[ $# -gt 0 ]]; do
         --run)
             opt_run=1
             shift
+            ;;
+        --cmakeopts)
+            shift
+            cmake_opts=("$@")
+            shift $#
             ;;
         *)
             echo "Unknown option $1" >&2
@@ -107,7 +113,7 @@ build_idk()
         -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
         -DIDK_TARGET_NAME="$IDK_TARGET_NAME" \
         -DIDK_GFX_MODEL="$IDK_GFX_MODEL" \
-        -DIDK_PLATFORM="$IDK_PLATFORM"
+        -DIDK_PLATFORM="$IDK_PLATFORM" $cmake_opts
     cmake --build . && cmake --install .
 }
 
