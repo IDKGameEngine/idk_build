@@ -56,7 +56,7 @@ add_compile_options(-fsanitize=address,undefined)
 add_link_options(-fsanitize=address,undefined)
 # endif()
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/submodule/glad")
+include("${CMAKE_CURRENT_SOURCE_DIR}/submodule/CMakeLists.txt")
 add_subdirectory("${IDK_POLY_DIR}/libidk" "${IDK_CMAKE_DIR}/libidk")
 add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
 add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")
