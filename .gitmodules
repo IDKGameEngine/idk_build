@@ -1,3 +1,6 @@
 [submodule "submodule/glad"]
 	path = submodule/glad
 	url = git@github.com:IDKGameEngine/glad.git
+[submodule "submodule/imgui"]
+	path = submodule/imgui
+	url = git@github.com:IDKGameEngine/imgui.git
