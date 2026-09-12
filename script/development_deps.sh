@@ -29,6 +29,22 @@ build_assimp()
     cmake --build . && cmake --install .
 }
 
+build_glm()
+{
+    cd ${REPO_DIR}/submodule/glm
+    cmake -B build . -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DGLM_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF
+    cmake --build build -- all
+    cmake --build build -- install
+}
+
+build_imgui()
+{
+    cd ${REPO_DIR}/submodule/imgui
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DCMAKE_BUILD_TYPE=Release
+    cmake --build build --config Release
+    cmake --install build --config Release
+}
+
 build_jolt()
 {
     cd ${REPO_DIR}/submodule/JoltPhysics/Build
@@ -55,7 +71,7 @@ build_slang()
 build_vulkan()
 {
     cd ${REPO_DIR}/submodule/Vulkan-Headers
-    cmake -S . -B build/
+    cmake -S . -B build
     cmake --install build --prefix ${INSTALL_PREFIX}
 
     cd ${REPO_DIR}/submodule/VulkanMemoryAllocator
@@ -74,6 +90,8 @@ build_vulkan()
 }
 
 # build_assimp
+build_glm
+build_imgui
 # build_jolt
 # build_slang
-build_vulkan
+# build_vulkan
