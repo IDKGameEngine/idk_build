@@ -7,3 +7,7 @@ file(GLOB ASSIMP_FILES "${CMAKE_PREFIX_PATH}/lib/libassimp*.so*")
 install(FILES ${ASSIMP_FILES} DESTINATION "${IDK_OUTPUT_DIR}/lib")
 
 find_package(Jolt REQUIRED)
+
+find_package(volk CONFIG REQUIRED)
+find_package(vk-bootstrap CONFIG REQUIRED)
+find_package(VulkanMemoryAllocator CONFIG REQUIRED)
