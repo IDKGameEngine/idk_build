@@ -16,3 +16,15 @@
 [submodule "submodule/slang"]
 	path = submodule/slang
 	url = https://github.com/shader-slang/slang.git
+[submodule "submodule/vk-bootstrap"]
+	path = submodule/vk-bootstrap
+	url = https://github.com/charles-lunarg/vk-bootstrap.git
+[submodule "submodule/volk"]
+	path = submodule/volk
+	url = https://github.com/zeux/volk.git
+[submodule "submodule/VulkanMemoryAllocator"]
+	path = submodule/VulkanMemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
+[submodule "submodule/Vulkan-Headers"]
+	path = submodule/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers.git
