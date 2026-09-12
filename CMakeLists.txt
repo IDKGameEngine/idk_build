@@ -34,6 +34,9 @@ add_compile_options(-fsanitize=address,undefined)
 add_link_options(-fsanitize=address,undefined)
 # ----------------------------------------------------------------------------------------------
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}")
+set(CMAKE_BUILD_RPATH  "$ORIGIN/lib")
+
 add_subdirectory("${IDK_POLY_DIR}/libidk" "${IDK_CMAKE_DIR}/libidk")
 add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
 add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")

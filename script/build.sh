@@ -79,7 +79,6 @@ build_idk()
     cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
         -DCMAKE_TOOLCHAIN_FILE=/usr/share/steamrt/cmake/gcc-14.cmake \
         -DCMAKE_BUILD_TYPE="$build_type" \
-        -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
         -DJPH_USE_VK=OFF -DJPH_USE_DX12=OFF -DJPH_USE_MTL=OFF \
         -DIDK_APP_NAME="$opt_appname" \
         -DIDK_POLY_DIR="$IDK_POLY_DIR" \
