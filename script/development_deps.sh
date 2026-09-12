@@ -50,7 +50,7 @@ build_jolt()
     cd ${REPO_DIR}/submodule/JoltPhysics/Build
     ./cmake_linux_clang_gcc.sh \
         Release g++ \
-        -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
+        -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=OFF \
         -DJPH_USE_VK=OFF \
@@ -79,22 +79,24 @@ build_vulkan()
     cmake --build build && cmake --install build
 
     cd ${REPO_DIR}/submodule/volk
-    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DVOLK_INSTALL=ON
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DVOLK_INSTALL=ON
     cmake --build build && cmake --install build
 
-    cd ${REPO_DIR}/submodule/vk-bootstrap
+    cd ${REPO_DIR}/submodule/Vulkan-Hpp
     cmake -S . -B build \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-        -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
-        -DVK_BOOTSTRAP_INSTALL=ON \
-        -DVK_BOOTSTRAP_TEST=OFF
+    -DVULKAN_HPP_GENERATOR_BUILD=OFF \
+    -DVULKAN_HPP_RUN_GENERATOR=OFF \
+    -DVULKAN_HPP_SAMPLES_BUILD=OFF \
+    -DVULKAN_HPP_TESTS_BUILD=OFF \
+    -DVULKAN_HPP_INSTALL=ON \
+    -DVulkanHeaders_INCLUDE_DIR="$(pwd)" \
+    -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
 }
 
-build_assimp
-build_glm
-build_imgui
-build_jolt
-build_slang
+# build_assimp
+# build_glm
+# build_imgui
+# build_jolt
+# build_slang
 build_vulkan

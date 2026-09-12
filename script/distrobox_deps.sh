@@ -7,4 +7,5 @@ sudo apt install -y \
     pkg-config \
     cmake \
     ninja-build \
-    mesa-utils
+    mesa-utils \
+    lsb-release gpg wget
