@@ -52,6 +52,28 @@ build_slang()
     cmake --build --preset release --target install
 }
 
-build_assimp
-build_jolt
-build_slang
+build_vulkan()
+{
+    cd ${REPO_DIR}/submodule/Vulkan-Headers
+    cmake -S . -B build/
+    cmake --install build --prefix ${INSTALL_PREFIX}
+
+    cd ${REPO_DIR}/submodule/VulkanMemoryAllocator
+    cmake -S . -B build
+    cmake --install build --prefix ${INSTALL_PREFIX}
+
+    cd ${REPO_DIR}/submodule/volk
+    cmake -S . -B build -DVOLK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}
+    cmake --build build --config Release
+    cmake --install build --config Release
+
+    cd ${REPO_DIR}/submodule/vk-bootstrap
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DVK_BOOTSTRAP_VULKAN_HEADER_DIR="${INSTALL_PREFIX}/include"
+    cmake --build build --config Release
+    cmake --install build --config Release
+}
+
+# build_assimp
+# build_jolt
+# build_slang
+build_vulkan
