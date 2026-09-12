@@ -13,3 +13,6 @@
 [submodule "submodule/assimp"]
 	path = submodule/assimp
 	url = https://github.com/assimp/assimp.git
+[submodule "submodule/slang"]
+	path = submodule/slang
+	url = https://github.com/shader-slang/slang.git
