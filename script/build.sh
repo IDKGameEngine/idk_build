@@ -79,7 +79,7 @@ build_idk()
     cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
         -DCMAKE_TOOLCHAIN_FILE=/usr/share/steamrt/cmake/gcc-14.cmake \
         -DCMAKE_BUILD_TYPE="$build_type" \
-        -DJPH_USE_VK=OFF -DJPH_USE_DX12=OFF -DJPH_USE_MTL=OFF \
+        -DCMAKE_PREFIX_PATH="$IDK_POLY_DIR/idk_build/install" \
         -DIDK_APP_NAME="$opt_appname" \
         -DIDK_POLY_DIR="$IDK_POLY_DIR" \
         -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
@@ -87,9 +87,8 @@ build_idk()
         -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
         -DIDK_GFX_MODEL="$IDK_GFX_MODEL" \
         -DIDK_PLATFORM="$IDK_PLATFORM" $cmake_opts
-        # -DCMAKE_PREFIX_PATH="$IDK_SYSROOT_DIR" \
     cmake --build .
-    # cmake --install .
+    cmake --install .
 }
 
 if [[ "$opt_build_type" == "debug" ]]; then

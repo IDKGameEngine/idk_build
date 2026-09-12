@@ -21,7 +21,6 @@ message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
 message(STATUS "IDK_ASSETS_DIRNAME: ${IDK_ASSETS_DIRNAME}")
 message(STATUS "IDK_GFX_MODEL=${IDK_GFX_MODEL}")
 
-# include("${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty.cmake")
 set(OpenGL_GL_PREFERENCE "GLVND")
 include("${CMAKE_CURRENT_SOURCE_DIR}/submodule/CMakeLists.txt")
 
@@ -35,7 +34,7 @@ add_link_options(-fsanitize=address,undefined)
 # ----------------------------------------------------------------------------------------------
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}")
-set(CMAKE_BUILD_RPATH  "$ORIGIN/lib")
+set(CMAKE_BUILD_RPATH "$ORIGIN/lib")
 
 add_subdirectory("${IDK_POLY_DIR}/libidk" "${IDK_CMAKE_DIR}/libidk")
 add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
