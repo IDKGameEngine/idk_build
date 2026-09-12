@@ -46,7 +46,6 @@ build_jolt()
 build_slang()
 {
     cd ${REPO_DIR}/submodule/slang
-    git submodule update --init
     git fetch https://github.com/shader-slang/slang.git 'refs/tags/*:refs/tags/*'
     cmake --preset default -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}
     cmake --build --preset release
