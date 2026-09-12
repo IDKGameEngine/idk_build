@@ -6,4 +6,5 @@ sudo apt install \
     libgl-dev \
     pkg-config \
     cmake \
-    ninja-build
+    ninja-build \
+    mesa-utils
