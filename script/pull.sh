@@ -12,6 +12,6 @@ REPO_DIRS=(
 )
 
 for DIR in "${REPO_DIRS[@]}"; do
-    echo "cd $DIR && git pull"
-    cd $DIR && git pull
+    echo "cd $DIR && git pull && git submodule update"
+    cd $DIR && git pull && git submodule update
 done

@@ -89,9 +89,9 @@ build_vulkan()
     cmake --install build --config Release
 }
 
-# build_assimp
+build_assimp
 build_glm
 build_imgui
-# build_jolt
+build_jolt
 build_slang
-# build_vulkan
+build_vulkan
