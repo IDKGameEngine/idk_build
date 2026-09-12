@@ -16,9 +16,6 @@
 [submodule "submodule/slang"]
 	path = submodule/slang
 	url = https://github.com/shader-slang/slang.git
-[submodule "submodule/vk-bootstrap"]
-	path = submodule/vk-bootstrap
-	url = https://github.com/charles-lunarg/vk-bootstrap.git
 [submodule "submodule/volk"]
 	path = submodule/volk
 	url = https://github.com/zeux/volk.git
@@ -28,3 +25,6 @@
 [submodule "submodule/Vulkan-Headers"]
 	path = submodule/Vulkan-Headers
 	url = https://github.com/KhronosGroup/Vulkan-Headers.git
+[submodule "submodule/Vulkan-Hpp"]
+	path = submodule/Vulkan-Hpp
+	url = git@github.com:IDKGameEngine/Vulkan-Hpp.git

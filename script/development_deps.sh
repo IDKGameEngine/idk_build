@@ -89,6 +89,7 @@ build_vulkan()
     -DVULKAN_HPP_SAMPLES_BUILD=OFF \
     -DVULKAN_HPP_TESTS_BUILD=OFF \
     -DVULKAN_HPP_INSTALL=ON \
+    -DVULKAN_HPP_VULKAN_HEADERS_SRC_DIR="${REPO_DIR}/submodule/Vulkan-Headers" \
     -DVulkanHeaders_INCLUDE_DIR="$(pwd)" \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
