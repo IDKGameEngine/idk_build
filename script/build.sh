@@ -3,13 +3,11 @@ set -e
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
-export IDK_SYSROOT_DIR="${IDK_POLY_DIR}/idk"
+# export IDK_SYSROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_appname=""
 opt_gfxmodel="3D"
 opt_platform="SDL3GL"
-opt_c_compiler=gcc
-opt_cxx_compiler=g++
 opt_clean=0
 opt_build_type="debug"
 opt_run=0
@@ -27,16 +25,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         --platform=*)
             opt_platform="${1#*=}"
-            shift
-            ;;
-        --c_compiler)
-            opt_c_compiler=$2
-            shift
-            shift
-            ;;
-        --cxx_compiler)
-            opt_cxx_compiler=$2
-            shift
             shift
             ;;
         --clean)
@@ -85,15 +73,14 @@ build_idk()
     fi
 
     mkdir -p "$IDK_CMAKE_DIR" "$IDK_OUTPUT_DIR"
-    ${THIS_DIR}/version.sh --header --text
+    # ${THIS_DIR}/version.sh --header --text
 
     cd "$IDK_CMAKE_DIR"
     cmake -G Ninja "$IDK_POLY_DIR/idk_build" \
-        -DCMAKE_C_COMPILER=$opt_c_compiler \
-        -DCMAKE_CXX_COMPILER=$opt_cxx_compiler \
+        -DCMAKE_TOOLCHAIN_FILE=/usr/share/steamrt/cmake/gcc-14.cmake \
         -DCMAKE_BUILD_TYPE="$build_type" \
-        -DCMAKE_PREFIX_PATH="$IDK_SYSROOT_DIR" \
         -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
+        -DJPH_USE_VK=OFF -DJPH_USE_DX12=OFF -DJPH_USE_MTL=OFF \
         -DIDK_APP_NAME="$opt_appname" \
         -DIDK_POLY_DIR="$IDK_POLY_DIR" \
         -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
@@ -101,7 +88,9 @@ build_idk()
         -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
         -DIDK_GFX_MODEL="$IDK_GFX_MODEL" \
         -DIDK_PLATFORM="$IDK_PLATFORM" $cmake_opts
-    cmake --build . && cmake --install .
+        # -DCMAKE_PREFIX_PATH="$IDK_SYSROOT_DIR" \
+    cmake --build .
+    # cmake --install .
 }
 
 if [[ "$opt_build_type" == "debug" ]]; then

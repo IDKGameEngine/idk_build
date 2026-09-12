@@ -4,3 +4,9 @@
 [submodule "submodule/imgui"]
 	path = submodule/imgui
 	url = git@github.com:IDKGameEngine/imgui.git
+[submodule "submodule/glm"]
+	path = submodule/glm
+	url = git@github.com:IDKGameEngine/glm.git
+[submodule "submodule/JoltPhysics"]
+	path = submodule/JoltPhysics
+	url = https://github.com/jrouwe/JoltPhysics.git

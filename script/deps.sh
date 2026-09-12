@@ -15,11 +15,8 @@ fi
 declare -A repo_opts=(
     # [asio]=0
     [assimp]=0
-    # [glad]=0
-    [glm]=0
     [jolt]=0
     [sdl3]=0
-    [imgui]=0
     [slang]=0
     [vulkan]=0
     [build_type]="Release"
@@ -32,11 +29,8 @@ while [[ $# -gt 0 ]]; do
         shift
     elif [[ "$key" == "all" ]]; then
         repo_opts["assimp"]=1
-        repo_opts["glad"]=1
-        repo_opts["glm"]=1
         repo_opts["jolt"]=1
         repo_opts["sdl3"]=1
-        repo_opts["imgui"]=1
         repo_opts["slang"]=1
         repo_opts["vulkan"]=1
         shift
@@ -97,30 +91,6 @@ woop_boop()
     if [[ ! -d "$repo_name" ]]; then
        git clone $repo_url $args
     fi
-}
-
-
-build_glad()
-{
-    woop_boop Dav1dde glad v2.0.8
-    # cd $THIRDPARTY_DIR
-    # if [[ ! -d "glm" ]]; then
-    #     git clone --depth=1 --branch v2.0.8 https://github.com/Dav1dde/glad.git --recursive
-    # fi
-}
-
-
-build_glm()
-{
-    cd $THIRDPARTY_DIR
-    if [[ ! -d "glm" ]]; then
-        git clone --depth=1 --branch 1.0.3 https://github.com/g-truc/glm.git --recursive
-    fi
-
-    cd glm
-    cmake -B build . -DGLM_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF $COMMON_CMAKE_DEFS
-    cmake --build build -- all
-    cmake --build build -- install
 }
 
 
@@ -215,16 +185,6 @@ build_sdl3()
     cmake -S . -B build ${COMMON_CMAKE_DEFS} -DSDL_SHARED=ON
     cmake --build build
     cmake --install build --prefix "$INSTALL_PREFIX"
-}
-
-
-build_imgui()
-{
-    cd $THIRDPARTY_DIR
-    build_type=${repo_opts[build_type]}
-    if [[ ! -d "imgui" ]]; then
-        git clone --depth=1 --branch v1.92.9b-docking --single-branch https://github.com/ocornut/imgui.git
-    fi
 }
 
 

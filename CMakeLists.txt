@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 3.31)
 
 project(idk_build VERSION 0.0.1)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
@@ -14,16 +14,15 @@ elseif (NOT DEFINED IDK_OUTPUT_DIR)
 elseif (NOT DEFINED IDK_ASSETS_DIRNAME)
     message(FATAL_ERROR "IDK_ASSETS_DIRNAME must be defined!")
 endif()
-set(IDK_SYSROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 message(STATUS "IDK_POLY_DIR: ${IDK_POLY_DIR}")
-message(STATUS "IDK_SYSROOT_DIR: ${IDK_SYSROOT_DIR}")
 message(STATUS "IDK_CMAKE_DIR: ${IDK_CMAKE_DIR}")
 message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
 message(STATUS "IDK_ASSETS_DIRNAME: ${IDK_ASSETS_DIRNAME}")
 message(STATUS "IDK_GFX_MODEL=${IDK_GFX_MODEL}")
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty.cmake")
+# include("${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty.cmake")
+set(OpenGL_GL_PREFERENCE "GLVND")
 include("${CMAKE_CURRENT_SOURCE_DIR}/submodule/CMakeLists.txt")
 
 add_compile_definitions(IDK_ASSETS_DIRNAME="${IDK_ASSETS_DIRNAME}")
