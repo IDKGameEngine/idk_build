@@ -3,23 +3,22 @@ set -e
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
-export IDK_ROOT_DIR="${IDK_POLY_DIR}/idk"
+export IDK_SYSROOT_DIR="${IDK_POLY_DIR}/idk"
 
-opt_target=""
+opt_appname=""
 opt_gfxmodel="3D"
 opt_platform="SDL3GL"
 opt_c_compiler=gcc
 opt_cxx_compiler=g++
 opt_clean=0
-opt_debug=0
-opt_release=0
+opt_build_type="debug"
 opt_run=0
 cmake_opts=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --target=*)
-            opt_target="${1#*=}"
+        --appname=*)
+            opt_appname="${1#*=}"
             shift
             ;;
         --gfxmodel=*)
@@ -44,12 +43,8 @@ while [[ $# -gt 0 ]]; do
             opt_clean=1
             shift
             ;;
-        --debug)
-            opt_debug=1
-            shift
-            ;;
-        --release)
-            opt_release=1
+        --build_type=*)
+            opt_build_type="${1#*=}"
             shift
             ;;
         --run)
@@ -68,24 +63,16 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [[ "${opt_target}" == "" ]]; then
-    echo "Must supply --target"
-    exit
-fi
-
-if [[ ! -d "${IDK_POLY_DIR}/${opt_target}" ]]; then
-    echo "No such target: ${IDK_POLY_DIR}/${opt_target}"
+if [[ "${opt_appname}" == "" ]]; then
+    echo "Must specify --appname"
     exit
 fi
 
 build_idk()
 {
-    target_name="$1"
-    build_type="$2"
-    build_clean="$3"
+    build_type="$1"
+    build_clean="$2"
 
-    IDK_TARGET_NAME="${target_name}"
-    IDK_TARGET_DIR="${IDK_POLY_DIR}/${IDK_TARGET_NAME}"
     IDK_GFX_MODEL="${opt_gfxmodel}"
     IDK_PLATFORM="${opt_platform}"
     export IDK_BUILD_DIR="${IDK_POLY_DIR}/build-${build_type,,}"
@@ -105,27 +92,22 @@ build_idk()
         -DCMAKE_C_COMPILER=$opt_c_compiler \
         -DCMAKE_CXX_COMPILER=$opt_cxx_compiler \
         -DCMAKE_BUILD_TYPE="$build_type" \
-        -DCMAKE_PREFIX_PATH="$IDK_ROOT_DIR" \
+        -DCMAKE_PREFIX_PATH="$IDK_SYSROOT_DIR" \
         -DCMAKE_INSTALL_PREFIX="$IDK_OUTPUT_DIR/install" \
+        -DIDK_APP_NAME="$opt_appname" \
         -DIDK_POLY_DIR="$IDK_POLY_DIR" \
         -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
         -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
         -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" \
-        -DIDK_TARGET_NAME="$IDK_TARGET_NAME" \
         -DIDK_GFX_MODEL="$IDK_GFX_MODEL" \
         -DIDK_PLATFORM="$IDK_PLATFORM" $cmake_opts
     cmake --build . && cmake --install .
 }
 
-if [[ "$opt_debug" == "0" && "$opt_release" == "0" ]]; then
-    opt_release=1
+if [[ "$opt_build_type" == "debug" ]]; then
+    build_idk "Debug" "$opt_clean"
+elif [[ "$opt_build_type" == "release" ]]; then
+    build_idk "Release" "$opt_clean"
+else
+    echo "Must specify --build_type=<debug|release>"
 fi
-
-if [[ "$opt_debug" == "1" ]]; then
-    build_idk "$opt_target" "Debug" "$opt_clean"
-fi
-
-if [[ "$opt_release" == "1" ]]; then
-    build_idk "$opt_target" "Release" "$opt_clean"
-fi
-

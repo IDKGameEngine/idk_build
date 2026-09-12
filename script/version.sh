@@ -29,13 +29,13 @@ gen_version_header()
     if [[ "$IDK_POLY_DIR" == "" ]]; then
         echo "IDK_POLY_DIR must be defined"
         exit 1
-    elif [[ "$IDK_ROOT_DIR" == "" ]]; then
-        echo "IDK_ROOT_DIR must be defined"
+    elif [[ "$IDK_SYSROOT_DIR" == "" ]]; then
+        echo "IDK_SYSROOT_DIR must be defined"
         exit 1
     fi
 
     # outdir=$(cd ${1} && pwd)
-    outdir="${IDK_ROOT_DIR}/include/idk"
+    outdir="${IDK_SYSROOT_DIR}/include/idk"
     outfile="${outdir}/version.h"
     mkdir -p "${outdir}" && touch "${outfile}"
 
