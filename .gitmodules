@@ -10,3 +10,6 @@
 [submodule "submodule/JoltPhysics"]
 	path = submodule/JoltPhysics
 	url = https://github.com/jrouwe/JoltPhysics.git
+[submodule "submodule/assimp"]
+	path = submodule/assimp
+	url = https://github.com/assimp/assimp.git
