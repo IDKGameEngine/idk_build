@@ -4,7 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/idk/include",
+                "${workspaceFolder}/idk_build/install/include",
                 "${workspaceFolder}/libidk/h",
                 "${workspaceFolder}/libidk/h/libidk/platform/SDL3",
                 "${workspaceFolder}/idk_engine/h",
