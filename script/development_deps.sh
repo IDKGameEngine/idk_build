@@ -93,5 +93,5 @@ build_vulkan()
 build_glm
 build_imgui
 # build_jolt
-# build_slang
+build_slang
 # build_vulkan
