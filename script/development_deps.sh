@@ -64,12 +64,12 @@ build_slang()
 {
     mkdir -p $THIRDPARTY_DIR/slang && cd $THIRDPARTY_DIR/slang
     wget -nc https://github.com/shader-slang/slang/releases/download/v2026.17.1/slang-2026.17.1-linux-x86_64.tar.gz
-    tar -xf slang-*.tar.gz -C $INSTALL_PREFIX
+    tar -xf slang-*.tar.gz
 
-    cp -RT bin $INSTALL_PREFIX/bin
-    cp -RT include $INSTALL_PREFIX/include
-    cp -RT lib $INSTALL_PREFIX/lib
-    cp -RT share $INSTALL_PREFIX/share
+    cp -RT ./bin $INSTALL_PREFIX/bin
+    cp -RT ./include $INSTALL_PREFIX/include
+    cp -RT ./lib $INSTALL_PREFIX/lib
+    cp -RT ./share $INSTALL_PREFIX/share
 }
 
 build_steamworks()
