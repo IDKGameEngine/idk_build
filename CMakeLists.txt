@@ -34,20 +34,9 @@ foreach(IDK_REPO_NAME IN LISTS IDK_REPO_NAMES)
     add_subdirectory(
         "${IDK_POLY_DIR}/${IDK_REPO_NAME}" "${CMAKE_BINARY_DIR}/${IDK_REPO_NAME}"
     )
-    # install(
-    #     DIRECTORY "${IDK_POLY_DIR}/${IDK_REPO_NAME}/data"
-    #     DESTINATION "${CMAKE_INSTALL_PREFIX}/"
-    # )
 endforeach()
 
-# add_subdirectory("${IDK_POLY_DIR}/libidk" "${CMAKE_BINARY_DIR}/libidk")
-# add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${CMAKE_BINARY_DIR}/idk_gfx")
-# add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${CMAKE_BINARY_DIR}/idk_engine")
-# add_subdirectory("${IDK_POLY_DIR}/idk_game" "${CMAKE_BINARY_DIR}/idk_game")
-
 install(DIRECTORY "${IDK_POLY_DIR}/idk_gfx/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
-# install(DIRECTORY "${IDK_POLY_DIR}/idk_engine/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
-# install(DIRECTORY "${IDK_POLY_DIR}/idk_game/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
 
 file(GLOB SHARED_LIBRARY_FILES "${CMAKE_PREFIX_PATH}/lib/*.so*")
 install(FILES ${SHARED_LIBRARY_FILES} DESTINATION "${CMAKE_INSTALL_LIBDIR}/")
