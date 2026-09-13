@@ -99,7 +99,8 @@
         "*.def": "cpp",
         "queue": "cpp",
         "*.slang": "cpp",
-        "cerrno": "cpp"
+        "cerrno": "cpp",
+        "valarray": "cpp"
     },
     "files.watcherExclude": {
         "**/.git/objects/**": true,

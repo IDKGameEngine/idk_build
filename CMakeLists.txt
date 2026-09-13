@@ -7,22 +7,16 @@ if (NOT DEFINED IDK_APP_NAME)
     message(FATAL_ERROR "IDK_APP_NAME must be defined!")
 elseif (NOT DEFINED IDK_POLY_DIR)
     message(FATAL_ERROR "IDK_POLY_DIR must be defined!")
-elseif (NOT DEFINED IDK_CMAKE_DIR)
-    message(FATAL_ERROR "IDK_CMAKE_DIR must be defined!")
-elseif (NOT DEFINED IDK_OUTPUT_DIR)
-    message(FATAL_ERROR "IDK_OUTPUT_DIR must be defined!")
-elseif (NOT DEFINED IDK_ASSETS_DIRNAME)
-    message(FATAL_ERROR "IDK_ASSETS_DIRNAME must be defined!")
 endif()
 
-message(STATUS "IDK_CMAKE_DIR: ${IDK_CMAKE_DIR}")
-message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
-message(STATUS "IDK_ASSETS_DIRNAME: ${IDK_ASSETS_DIRNAME}")
+if (DEFINED IDK_RUNTIME_NATIVE)
+    add_compile_definitions(IDK_RUNTIME_NATIVE="1")
+elseif (DEFINED IDK_RUNTIME_STEAMRT4)
+    add_compile_definitions(IDK_RUNTIME_STEAMRT4="1")
+endif()
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
-
-add_compile_definitions(IDK_ASSETS_DIRNAME="${IDK_ASSETS_DIRNAME}")
 add_compile_options(-Werror -Wall -Wextra)
+include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
 
 # ubsan
 # ----------------------------------------------------------------------------------------------
@@ -30,10 +24,9 @@ add_compile_options(-fsanitize=address,undefined)
 add_link_options(-fsanitize=address,undefined)
 # ----------------------------------------------------------------------------------------------
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${IDK_OUTPUT_DIR}")
-set(CMAKE_BUILD_RPATH "$ORIGIN/lib")
+set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
-add_subdirectory("${IDK_POLY_DIR}/libidk" "${IDK_CMAKE_DIR}/libidk")
-add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${IDK_CMAKE_DIR}/idk_gfx")
-add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${IDK_CMAKE_DIR}/idk_engine")
-add_subdirectory("${IDK_POLY_DIR}/idk_game" "${IDK_CMAKE_DIR}/idk_game")
+add_subdirectory("${IDK_POLY_DIR}/libidk" "${CMAKE_BINARY_DIR}/libidk")
+add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${CMAKE_BINARY_DIR}/idk_gfx")
+add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${CMAKE_BINARY_DIR}/idk_engine")
+add_subdirectory("${IDK_POLY_DIR}/idk_game" "${CMAKE_BINARY_DIR}/idk_game")

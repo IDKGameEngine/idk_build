@@ -3,12 +3,9 @@ set -e
 
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
-# export IDK_SYSROOT_DIR="${IDK_POLY_DIR}/idk"
 
 opt_appname=""
-opt_clean=0
-opt_build_type="debug"
-opt_run=0
+opt_preset="native-debug"
 cmake_opts=""
 
 while [[ $# -gt 0 ]]; do
@@ -17,16 +14,8 @@ while [[ $# -gt 0 ]]; do
             opt_appname="${1#*=}"
             shift
             ;;
-        --clean)
-            opt_clean=1
-            shift
-            ;;
-        --build_type=*)
-            opt_build_type="${1#*=}"
-            shift
-            ;;
-        --run)
-            opt_run=1
+        --preset=*)
+            opt_preset="${1#*=}"
             shift
             ;;
         --cmakeopts)
@@ -46,32 +35,7 @@ if [[ "${opt_appname}" == "" ]]; then
     exit
 fi
 
-build_idk()
-{
-    build_type="$1"
-    build_clean="$2"
-
-    export IDK_ASSETS_DIRNAME="data"
-
-    cd ${IDK_POLY_DIR}/idk_build
-
-    cmake --preset native-debug
-
-    cmake -S . -B  -G Ninja . \
-        -DCMAKE_PREFIX_PATH="$IDK_POLY_DIR/idk_build/install" \
-        -DIDK_APP_NAME="$opt_appname" \
-        -DIDK_POLY_DIR="$IDK_POLY_DIR" \
-        -DIDK_CMAKE_DIR="$IDK_CMAKE_DIR" \
-        -DIDK_OUTPUT_DIR="$IDK_OUTPUT_DIR" \
-        -DIDK_ASSETS_DIRNAME="$IDK_ASSETS_DIRNAME" $cmake_opts
-    cmake --build .
-    cmake --install .
-}
-
-if [[ "$opt_build_type" == "debug" ]]; then
-    build_idk "Debug" "$opt_clean"
-elif [[ "$opt_build_type" == "release" ]]; then
-    build_idk "Release" "$opt_clean"
-else
-    echo "Must specify --build_type=<debug|release>"
-fi
+cd ${IDK_POLY_DIR}/idk_build
+cmake --preset ${opt_preset} -DIDK_APP_NAME="$opt_appname" -DIDK_POLY_DIR="$IDK_POLY_DIR" $cmake_opts
+cmake --build --preset ${opt_preset}
+cmake --install build/${opt_preset}/cmake
