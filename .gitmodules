@@ -5,6 +5,7 @@
 [submodule "submodule/glm"]
 	path = thirdparty/glm
 	url = git@github.com:IDKGameEngine/glm.git
+	branch = master
 [submodule "thirdparty/steamworks_sdk"]
 	path = thirdparty/steamworks_sdk
 	url = git@github.com:IDKGameEngine/steamworks_sdk.git
