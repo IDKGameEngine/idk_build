@@ -93,7 +93,7 @@ build_vulkan()
     -DVULKAN_HPP_VULKAN_HEADERS_SRC_DIR="${THDPTY_DIR}/Vulkan-Headers" \
     -DVulkanHeaders_INCLUDE_DIR="$(pwd)" \
     -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-    cmake --build build && cmake --install build
+    cmake --build . && cmake --install .
 }
 
 build_steamworks()

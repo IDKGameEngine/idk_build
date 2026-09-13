@@ -1,0 +1,95 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 31,
+        "patch": 0
+    },
+
+    "configurePresets": [
+        {
+            "name": "native-debug",
+            "displayName": "Native Debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-native-debug",
+            "installDir": "${sourceDir}/build-native-debug",
+        
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+            }
+        },
+
+        {
+            "name": "native-debug",
+            "displayName": "Native Debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/native-debug",
+            "installDir": "${sourceDir}/build/native-debug",
+
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "${sourceDir}/idk_build/install",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/idk_build/install"
+            }
+        },
+
+        {
+            "name": "native-release",
+            "displayName": "Native Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-native-release",
+
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+            }
+        },
+
+        {
+            "name": "steamrt4-debug",
+            "displayName": "Steam Runtime 4 Debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-steamrt4-debug",
+
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+            }
+        },
+
+        {
+            "name": "steamrt4-release",
+            "displayName": "Steam Runtime 4 Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-steamrt4-release",
+
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+            }
+        }
+    ],
+
+    "buildPresets": [
+        {
+            "name": "native-debug",
+            "configurePreset": "native-debug"
+        },
+
+        {
+            "name": "native-release",
+            "configurePreset": "native-release"
+        },
+
+        {
+            "name": "steamrt4-debug",
+            "configurePreset": "steamrt4-debug"
+        },
+
+        {
+            "name": "steamrt4-release",
+            "configurePreset": "steamrt4-release"
+        }
+    ]
+}
