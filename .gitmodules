@@ -5,25 +5,6 @@
 [submodule "submodule/glm"]
 	path = thirdparty/glm
 	url = git@github.com:IDKGameEngine/glm.git
-[submodule "submodule/JoltPhysics"]
-	path = thirdparty/JoltPhysics
-	url = https://github.com/jrouwe/JoltPhysics.git
-[submodule "submodule/assimp"]
-	path = thirdparty/assimp
-	url = https://github.com/assimp/assimp.git
-[submodule "submodule/slang"]
-	path = thirdparty/slang
-	url = https://github.com/shader-slang/slang.git
-[submodule "submodule/VulkanMemoryAllocator"]
-	path = thirdparty/VulkanMemoryAllocator
-	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
-[submodule "submodule/Vulkan-Headers"]
-	path = thirdparty/Vulkan-Headers
-	url = https://github.com/KhronosGroup/Vulkan-Headers.git
-[submodule "submodule/Vulkan-Hpp"]
-	path = thirdparty/Vulkan-Hpp
-	url = git@github.com:IDKGameEngine/Vulkan-Hpp.git
-	branch = vulkan-sdk-1.4.350
 [submodule "thirdparty/steamworks_sdk"]
 	path = thirdparty/steamworks_sdk
 	url = git@github.com:IDKGameEngine/steamworks_sdk.git
