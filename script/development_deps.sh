@@ -82,4 +82,4 @@ build_vulkan-sdk()
     cmake --build build && cmake --install build
 }
 
-build_repos assimp glm imgui jolt slang steamworks-sdk vulkan-sdk
+build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk
