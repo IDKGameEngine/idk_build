@@ -1,30 +1,33 @@
 [submodule "submodule/glad"]
-	path = submodule/glad
+	path = thirdparty/glad
 	url = git@github.com:IDKGameEngine/glad.git
 [submodule "submodule/imgui"]
-	path = submodule/imgui
+	path = thirdparty/imgui
 	url = git@github.com:IDKGameEngine/imgui.git
 [submodule "submodule/glm"]
-	path = submodule/glm
+	path = thirdparty/glm
 	url = git@github.com:IDKGameEngine/glm.git
 [submodule "submodule/JoltPhysics"]
-	path = submodule/JoltPhysics
+	path = thirdparty/JoltPhysics
 	url = https://github.com/jrouwe/JoltPhysics.git
 [submodule "submodule/assimp"]
-	path = submodule/assimp
+	path = thirdparty/assimp
 	url = https://github.com/assimp/assimp.git
 [submodule "submodule/slang"]
-	path = submodule/slang
+	path = thirdparty/slang
 	url = https://github.com/shader-slang/slang.git
 [submodule "submodule/volk"]
-	path = submodule/volk
+	path = thirdparty/volk
 	url = https://github.com/zeux/volk.git
 [submodule "submodule/VulkanMemoryAllocator"]
-	path = submodule/VulkanMemoryAllocator
+	path = thirdparty/VulkanMemoryAllocator
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
 [submodule "submodule/Vulkan-Headers"]
-	path = submodule/Vulkan-Headers
+	path = thirdparty/Vulkan-Headers
 	url = https://github.com/KhronosGroup/Vulkan-Headers.git
 [submodule "submodule/Vulkan-Hpp"]
-	path = submodule/Vulkan-Hpp
+	path = thirdparty/Vulkan-Hpp
 	url = git@github.com:IDKGameEngine/Vulkan-Hpp.git
+[submodule "thirdparty/steamworks_sdk"]
+	path = thirdparty/steamworks_sdk
+	url = git@github.com:IDKGameEngine/steamworks_sdk.git

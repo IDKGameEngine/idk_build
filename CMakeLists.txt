@@ -21,7 +21,7 @@ message(STATUS "IDK_OUTPUT_DIR: ${IDK_OUTPUT_DIR}")
 message(STATUS "IDK_ASSETS_DIRNAME: ${IDK_ASSETS_DIRNAME}")
 message(STATUS "IDK_GFX_MODEL=${IDK_GFX_MODEL}")
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/submodule/CMakeLists.txt")
+include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
 
 add_compile_definitions(IDK_ASSETS_DIRNAME="${IDK_ASSETS_DIRNAME}")
 add_compile_options(-Werror -Wall -Wextra)
