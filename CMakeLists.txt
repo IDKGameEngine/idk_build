@@ -30,3 +30,10 @@ add_subdirectory("${IDK_POLY_DIR}/libidk" "${CMAKE_BINARY_DIR}/libidk")
 add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${CMAKE_BINARY_DIR}/idk_gfx")
 add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${CMAKE_BINARY_DIR}/idk_engine")
 add_subdirectory("${IDK_POLY_DIR}/idk_game" "${CMAKE_BINARY_DIR}/idk_game")
+
+
+if (DEFINED IDK_RUNTIME_STEAMRT4)
+    find_package(Steamworks CONFIG REQUIRED)
+    target_link_libraries(${IDK_APP_NAME} PRIVATE Steamworks::Steamworks)
+endif()
+

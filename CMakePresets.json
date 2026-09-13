@@ -11,13 +11,13 @@
             "name": "native-debug",
             "displayName": "Native Debug",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/native-debug",
-            "installDir": "${sourceDir}/../build-native/debug",
-            "environment": {},
+            "binaryDir": "${sourceDir}/../build/native-debug/cmake",
+            "installDir": "${sourceDir}/../build/native-debug",
+
             "cacheVariables": {
                 "IDK_RUNTIME_NATIVE": "1",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+                "CMAKE_PREFIX_PATH": "${sourceDir}/thirdparty/.prefix"
             }
         },
 
@@ -25,13 +25,13 @@
             "name": "native-release",
             "displayName": "Native Release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/native-release",
-            "installDir": "${sourceDir}/../build-native/release",
+            "binaryDir": "${sourceDir}/../build/native-release/cmake",
+            "installDir": "${sourceDir}/../build/native-release",
 
             "cacheVariables": {
                 "IDK_RUNTIME_NATIVE": "1",
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+                "CMAKE_PREFIX_PATH": "${sourceDir}/thirdparty/.prefix"
             }
         },
 
@@ -39,13 +39,13 @@
             "name": "steamrt4-debug",
             "displayName": "Steam Runtime 4 Debug",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/steamrt4-debug",
-            "installDir": "${sourceDir}/../build-steamrt4/debug",
-        
+            "binaryDir": "${sourceDir}/../build/steamrt4-debug/cmake",
+            "installDir": "${sourceDir}/../build/steamrt4-debug",
+
             "cacheVariables": {
                 "IDK_RUNTIME_STEAMRT4": "1",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+                "CMAKE_PREFIX_PATH": "${sourceDir}/thirdparty/.prefix"
             }
         },
 
@@ -53,13 +53,13 @@
             "name": "steamrt4-release",
             "displayName": "Steam Runtime 4 Release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/steamrt4-release",
-            "installDir": "${sourceDir}/../build-steamrt4/release",
-        
+            "binaryDir": "${sourceDir}/../build/steamrt4-release/cmake",
+            "installDir": "${sourceDir}/../build/steamrt4-release",
+
             "cacheVariables": {
                 "IDK_RUNTIME_STEAMRT4": "1",
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/install"
+                "CMAKE_PREFIX_PATH": "${sourceDir}/thirdparty/.prefix"
             }
         }
     ],
