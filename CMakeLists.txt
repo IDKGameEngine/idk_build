@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.31)
 
 project(idk_build VERSION 0.0.1)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
+set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
 if (NOT DEFINED IDK_APP_NAME)
     message(FATAL_ERROR "IDK_APP_NAME must be defined!")
@@ -9,19 +10,14 @@ elseif (NOT DEFINED IDK_POLY_DIR)
     message(FATAL_ERROR "IDK_POLY_DIR must be defined!")
 endif()
 
-add_compile_options(-Werror -Wall -Wextra)
+include(GNUInstallDirs)
 include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
 
-# ubsan
-# ----------------------------------------------------------------------------------------------
+add_compile_options(-Werror -Wall -Wextra)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_options(-fsanitize=address,undefined)
     add_link_options(-fsanitize=address,undefined)
 endif()
-
-# ----------------------------------------------------------------------------------------------
-
-set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
 set(IDK_REPO_NAMES 
     libidk

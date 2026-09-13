@@ -68,65 +68,18 @@ build_jolt()
     cd Linux_Release && make -j$(nproc) && ./UnitTests && make install
 }
 
-build_slang()
+build_steamworks-sdk()
 {
-    mkdir -p $THIRDPARTY_DIR/slang && cd $THIRDPARTY_DIR/slang
-    wget -nc https://github.com/shader-slang/slang/releases/download/v2026.17.1/slang-2026.17.1-linux-x86_64.tar.gz
-    tar -xf slang-*.tar.gz
-
-    cp -RT ./bin $INSTALL_PREFIX/bin
-    cp -RT ./include $INSTALL_PREFIX/include
-    cp -RT ./lib $INSTALL_PREFIX/lib
-    cp -RT ./share $INSTALL_PREFIX/share
-}
-
-build_steamworks()
-{
-    cd ${THIRDPARTY_DIR}/steamworks_sdk
-    ./install.sh 165
+    cd ${THIRDPARTY_DIR}/steamworks-sdk
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
 }
 
-build_vulkan()
+build_vulkan-sdk()
 {
-    build_vk_headers()
-    {
-        cd ${THIRDPARTY_DIR}/Vulkan-Headers
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-        cmake --build build && cmake --install build
-    }
-
-    build_vk_hpp()
-    {
-        cd ${THIRDPARTY_DIR}/Vulkan-Hpp
-        cmake -S . -B build -G Ninja \
-        -DVULKAN_HPP_GENERATOR_BUILD=OFF \
-        -DVULKAN_HPP_RUN_GENERATOR=OFF \
-        -DVULKAN_HPP_SAMPLES_BUILD=OFF \
-        -DVULKAN_HPP_TESTS_BUILD=OFF \
-        -DVULKAN_HPP_INSTALL=ON \
-        -DVULKAN_HPP_VULKAN_HEADERS_SRC_DIR="${THIRDPARTY_DIR}/Vulkan-Headers" \
-        -DVulkanHeaders_INCLUDE_DIR="$(pwd)" \
-        -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-        cmake --build build -j $(nproc) && cmake --install build
-    }
-
-    build_volk()
-    {
-        cd ${THIRDPARTY_DIR}/volk
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DVOLK_INSTALL=ON
-        cmake --build build && cmake --install build
-    }
-
-    build_vma()
-    {
-        cd ${THIRDPARTY_DIR}/VulkanMemoryAllocator
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-        cmake --build build && cmake --install build
-    }
-
-    build_repos vk_headers vk_hpp volk vma
+    cd $THIRDPARTY_DIR/vulkan-sdk
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+    cmake --build build && cmake --install build
 }
 
-build_repos assimp glm imgui jolt slang steamworks vulkan
+build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk
