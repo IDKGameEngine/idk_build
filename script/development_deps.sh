@@ -19,7 +19,7 @@ fi
 build_assimp()
 {
     cd ${THIRDPARTY_DIR}/assimp
-    cmake CMakeLists.txt -G Ninja \
+    cmake CMakeLists.txt \
         -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -65,7 +65,7 @@ build_slang()
     cd ${THIRDPARTY_DIR}/slang
     git fetch https://github.com/shader-slang/slang.git 'refs/tags/*:refs/tags/*'
     cmake --preset default -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-    cmake --build . --preset release
+    cmake --build . -j $(nproc) --preset release
     cmake --install build
 }
 
@@ -104,10 +104,12 @@ build_steamworks()
     cmake --build build && cmake --install build
 }
 
-build_assimp
-build_glm
-build_imgui
-build_jolt
-build_slang
-build_vulkan
-build_steamworks
+build_repos()
+{
+    for REPO_NAME in "$@"; do
+        printf "\n\n-------------------------------- Building ${REPO_NAME} --------------------------------\n"
+        build_$REPO_NAME
+    done
+}
+
+build_repos assimp glm imgui jolt slang vulkan steamworks

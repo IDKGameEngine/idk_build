@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+THIS_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 
-opt_appname=""
+opt_appname="game"
 opt_preset="native-debug"
 cmake_opts=""
 
@@ -38,4 +38,4 @@ fi
 cd ${IDK_POLY_DIR}/idk_build
 cmake --preset ${opt_preset} -DIDK_APP_NAME="$opt_appname" -DIDK_POLY_DIR="$IDK_POLY_DIR" $cmake_opts
 cmake --build --preset ${opt_preset}
-cmake --install ../build/${opt_preset}/cmake
+cmake --install ../build/cmake/${opt_preset}

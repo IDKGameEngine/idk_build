@@ -11,7 +11,7 @@
             "name": "native-debug",
             "displayName": "Native Debug",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/../build/native-debug/cmake",
+            "binaryDir": "${sourceDir}/../build/cmake/native-debug",
             "installDir": "${sourceDir}/../build/native-debug",
 
             "cacheVariables": {
@@ -25,7 +25,7 @@
             "name": "native-release",
             "displayName": "Native Release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/../build/native-release/cmake",
+            "binaryDir": "${sourceDir}/../build/cmake/native-release",
             "installDir": "${sourceDir}/../build/native-release",
 
             "cacheVariables": {
@@ -39,7 +39,7 @@
             "name": "steamrt4-debug",
             "displayName": "Steam Runtime 4 Debug",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/../build/steamrt4-debug/cmake",
+            "binaryDir": "${sourceDir}/../build/cmake/steamrt4-debug",
             "installDir": "${sourceDir}/../build/steamrt4-debug",
 
             "cacheVariables": {
@@ -53,7 +53,7 @@
             "name": "steamrt4-release",
             "displayName": "Steam Runtime 4 Release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/../build/steamrt4-release/cmake",
+            "binaryDir": "${sourceDir}/../build/cmake/steamrt4-release",
             "installDir": "${sourceDir}/../build/steamrt4-release",
 
             "cacheVariables": {

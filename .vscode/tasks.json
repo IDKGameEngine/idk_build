@@ -1,0 +1,31 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Git Pull All",
+            "type": "shell",
+            "command": "git pullall",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/idk_build"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Git Push All",
+            "type": "shell",
+            "command": "git pushall",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/idk_build"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

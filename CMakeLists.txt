@@ -26,14 +26,28 @@ add_link_options(-fsanitize=address,undefined)
 
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
-add_subdirectory("${IDK_POLY_DIR}/libidk" "${CMAKE_BINARY_DIR}/libidk")
-add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${CMAKE_BINARY_DIR}/idk_gfx")
-add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${CMAKE_BINARY_DIR}/idk_engine")
-add_subdirectory("${IDK_POLY_DIR}/idk_game" "${CMAKE_BINARY_DIR}/idk_game")
+set(IDK_REPO_NAMES 
+    libidk
+    idk_gfx
+    idk_engine
+    idk_game
+)
 
+foreach(IDK_REPO_NAME IN LISTS IDK_REPO_NAMES)
+    add_subdirectory(
+        "${IDK_POLY_DIR}/${IDK_REPO_NAME}" "${CMAKE_BINARY_DIR}/${IDK_REPO_NAME}"
+    )
+    # install(
+    #     DIRECTORY "${IDK_POLY_DIR}/${IDK_REPO_NAME}/data"
+    #     DESTINATION "${CMAKE_INSTALL_PREFIX}/"
+    # )
+endforeach()
 
-if (DEFINED IDK_RUNTIME_STEAMRT4)
-    find_package(Steamworks CONFIG REQUIRED)
-    target_link_libraries(${IDK_APP_NAME} PRIVATE Steamworks::Steamworks)
-endif()
+# add_subdirectory("${IDK_POLY_DIR}/libidk" "${CMAKE_BINARY_DIR}/libidk")
+# add_subdirectory("${IDK_POLY_DIR}/idk_gfx" "${CMAKE_BINARY_DIR}/idk_gfx")
+# add_subdirectory("${IDK_POLY_DIR}/idk_engine" "${CMAKE_BINARY_DIR}/idk_engine")
+# add_subdirectory("${IDK_POLY_DIR}/idk_game" "${CMAKE_BINARY_DIR}/idk_game")
 
+install(DIRECTORY "${IDK_POLY_DIR}/idk_gfx/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
+# install(DIRECTORY "${IDK_POLY_DIR}/idk_engine/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
+# install(DIRECTORY "${IDK_POLY_DIR}/idk_game/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")

@@ -3,6 +3,10 @@
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 
+# for dir in $POLY_DIR/idk_build/thirdparty/*; do
+#     echo "Directory: $dir"
+# done
+
 REPO_DIRS=(
     "${POLY_DIR}/libidk"
     "${POLY_DIR}/idk_build"
