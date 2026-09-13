@@ -9,19 +9,16 @@ elseif (NOT DEFINED IDK_POLY_DIR)
     message(FATAL_ERROR "IDK_POLY_DIR must be defined!")
 endif()
 
-if (DEFINED IDK_RUNTIME_NATIVE)
-    add_compile_definitions(IDK_RUNTIME_NATIVE="1")
-elseif (DEFINED IDK_RUNTIME_STEAMRT4)
-    add_compile_definitions(IDK_RUNTIME_STEAMRT4="1")
-endif()
-
 add_compile_options(-Werror -Wall -Wextra)
 include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
 
 # ubsan
 # ----------------------------------------------------------------------------------------------
-add_compile_options(-fsanitize=address,undefined)
-add_link_options(-fsanitize=address,undefined)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_compile_options(-fsanitize=address,undefined)
+    add_link_options(-fsanitize=address,undefined)
+endif()
+
 # ----------------------------------------------------------------------------------------------
 
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")

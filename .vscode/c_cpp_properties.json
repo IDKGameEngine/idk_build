@@ -4,14 +4,11 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/idk_build/install/include",
+                "${workspaceFolder}/idk_build/thirdparty/.prefix/include",
                 "${workspaceFolder}/libidk/h",
                 "${workspaceFolder}/libidk/h/libidk/platform/SDL3",
                 "${workspaceFolder}/idk_engine/h",
                 "${workspaceFolder}/idk_gfx/h",
-                "${workspaceFolder}/idk_gfx/external/glad/include",
-                "${workspaceFolder}/idk_gfx/external/imgui",
-                "${workspaceFolder}/idk_gfx/external/imgui/backends",
                 "${workspaceFolder}/idk_game/h"
             ],
             "defines": [

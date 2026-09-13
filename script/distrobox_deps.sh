@@ -8,4 +8,5 @@ sudo apt install -y \
     cmake \
     ninja-build \
     mesa-utils \
-    lsb-release gpg wget
+    lsb-release gpg wget \
+    python3-gi gir1.2-gtk-3.0
