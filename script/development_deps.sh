@@ -68,22 +68,9 @@ build_jolt()
     cd Linux_Release && make -j$(nproc) && ./UnitTests && make install
 }
 
-build_slang()
-{
-    mkdir -p $THIRDPARTY_DIR/slang && cd $THIRDPARTY_DIR/slang
-    wget -nc https://github.com/shader-slang/slang/releases/download/v2026.17.1/slang-2026.17.1-linux-x86_64.tar.gz
-    tar -xf slang-*.tar.gz
-
-    cp -RT ./bin $INSTALL_PREFIX/bin
-    cp -RT ./include $INSTALL_PREFIX/include
-    cp -RT ./lib $INSTALL_PREFIX/lib
-    cp -RT ./share $INSTALL_PREFIX/share
-}
-
 build_steamworks-sdk()
 {
-    cd ${THIRDPARTY_DIR}/steamworks_sdk
-    ./unpack.sh
+    cd ${THIRDPARTY_DIR}/steamworks-sdk
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
 }
