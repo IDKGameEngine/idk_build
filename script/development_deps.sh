@@ -80,20 +80,15 @@ build_steamworks()
     cmake --build build && cmake --install build
 }
 
-build_vulkan()
+build_vk_headers()
 {
-    # cd ${THIRDPARTY_DIR}/Vulkan-Headers
-    # cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-    # cmake --build build && cmake --install build
-
-    cd ${THIRDPARTY_DIR}/VulkanMemoryAllocator
+    cd ${THIRDPARTY_DIR}/Vulkan-Headers
     cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
+}
 
-    cd ${THIRDPARTY_DIR}/volk
-    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DVOLK_INSTALL=ON
-    cmake --build build && cmake --install build
-
+build_vk_hpp()
+{
     cd ${THIRDPARTY_DIR}/Vulkan-Hpp
     cmake -S . -B build -G Ninja \
     -DVULKAN_HPP_GENERATOR_BUILD=OFF \
@@ -107,6 +102,20 @@ build_vulkan()
     cmake --build build -j $(nproc) && cmake --install build
 }
 
+build_volk()
+{
+    cd ${THIRDPARTY_DIR}/volk
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DVOLK_INSTALL=ON
+    cmake --build build && cmake --install build
+}
+
+build_vma()
+{
+    cd ${THIRDPARTY_DIR}/VulkanMemoryAllocator
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+    cmake --build build && cmake --install build
+}
+
 build_repos()
 {
     for REPO_NAME in "$@"; do
@@ -115,4 +124,5 @@ build_repos()
     done
 }
 
-build_repos assimp glm imgui jolt slang steamworks vulkan
+# build_repos assimp glm imgui jolt slang steamworks vulkan
+build_repos vk_headers vk_hpp volk vma
