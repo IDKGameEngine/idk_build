@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
+                "~/.local/share/containers/storage/overlay/4ba3cf89b3fe99a77056211770ff74fb34483fdc9d95ebe7ae004a219493d6b6/diff/usr/include",
                 "${workspaceFolder}/idk_build/thirdparty/.prefix/include",
                 "${workspaceFolder}/libidk/h",
                 "${workspaceFolder}/libidk/h/libidk/platform/SDL3",
