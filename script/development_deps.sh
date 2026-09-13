@@ -100,12 +100,14 @@ build_steamworks()
 {
     cd ${THDPTY_DIR}/steamworks_sdk
     ./install.sh 165
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+    cmake --build build && cmake --install build
 }
 
-build_assimp
-build_glm
-build_imgui
-build_jolt
-build_slang
-build_vulkan
-# build_steamworks
+# build_assimp
+# build_glm
+# build_imgui
+# build_jolt
+# build_slang
+# build_vulkan
+build_steamworks
