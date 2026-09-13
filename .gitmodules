@@ -1,6 +1,3 @@
-[submodule "submodule/glad"]
-	path = thirdparty/glad
-	url = git@github.com:IDKGameEngine/glad.git
 [submodule "submodule/imgui"]
 	path = thirdparty/imgui
 	url = git@github.com:IDKGameEngine/imgui.git
@@ -17,9 +14,6 @@
 [submodule "submodule/slang"]
 	path = thirdparty/slang
 	url = https://github.com/shader-slang/slang.git
-[submodule "submodule/volk"]
-	path = thirdparty/volk
-	url = https://github.com/zeux/volk.git
 [submodule "submodule/VulkanMemoryAllocator"]
 	path = thirdparty/VulkanMemoryAllocator
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
