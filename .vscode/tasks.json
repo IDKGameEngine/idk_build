@@ -2,30 +2,19 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Git Pull All",
+            "label": "Build IDK Project (Native Runtime)",
             "type": "shell",
-            "command": "git pullall",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "cwd": "${workspaceFolder}/idk_build"
-            },
-            "problemMatcher": []
+            "command": "./idk_build/script/build.sh --preset=native-debug",
+            "group": { "kind": "build" },
+            "options": { "cwd": "${workspaceFolder}" }
         },
         {
-            "label": "Git Push All",
+            "label": "Build IDK Project (Steam Runtime)",
             "type": "shell",
-            "command": "git pushall",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "cwd": "${workspaceFolder}/idk_build"
-            },
-            "problemMatcher": []
+            "command": "./idk_build/script/build.sh",
+            "args": [ "--preset=steamrt4-debug" ],
+            "group": { "kind": "build" },
+            "options": { "cwd": "${workspaceFolder}" }
         }
     ]
 }
