@@ -10,3 +10,6 @@
 	path = thirdparty/steamworks_sdk
 	url = git@github.com:IDKGameEngine/steamworks_sdk.git
 	branch = main
+[submodule "thirdparty/vulkan-sdk"]
+	path = thirdparty/vulkan-sdk
+	url = git@github.com:IDKGameEngine/vulkan-sdk.git
