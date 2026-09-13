@@ -62,18 +62,29 @@ build_jolt()
 
 build_slang()
 {
-    cd ${THIRDPARTY_DIR}/slang
-    git fetch https://github.com/shader-slang/slang.git 'refs/tags/*:refs/tags/*'
-    cmake --preset default -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-    cmake --build . -j $(nproc) --preset release
-    cmake --install build
+    mkdir -p $THIRDPARTY_DIR/slang && cd $THIRDPARTY_DIR/slang
+    wget -nc https://github.com/shader-slang/slang/releases/download/v2026.17.1/slang-2026.17.1-linux-x86_64.tar.gz
+    tar -xf slang-*.tar.gz -C $INSTALL_PREFIX
+
+    cp -RT bin $INSTALL_PREFIX/bin
+    cp -RT include $INSTALL_PREFIX/include
+    cp -RT lib $INSTALL_PREFIX/lib
+    cp -RT share $INSTALL_PREFIX/share
+}
+
+build_steamworks()
+{
+    cd ${THIRDPARTY_DIR}/steamworks_sdk
+    ./install.sh 165
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+    cmake --build build && cmake --install build
 }
 
 build_vulkan()
 {
-    cd ${THIRDPARTY_DIR}/Vulkan-Headers
-    cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-    cmake --build build && cmake --install build
+    # cd ${THIRDPARTY_DIR}/Vulkan-Headers
+    # cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
+    # cmake --build build && cmake --install build
 
     cd ${THIRDPARTY_DIR}/VulkanMemoryAllocator
     cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
@@ -96,14 +107,6 @@ build_vulkan()
     cmake --build build -j $(nproc) && cmake --install build
 }
 
-build_steamworks()
-{
-    cd ${THIRDPARTY_DIR}/steamworks_sdk
-    ./install.sh 165
-    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
-    cmake --build build && cmake --install build
-}
-
 build_repos()
 {
     for REPO_NAME in "$@"; do
@@ -112,4 +115,4 @@ build_repos()
     done
 }
 
-build_repos assimp glm imgui jolt slang vulkan steamworks
+build_repos assimp glm imgui jolt slang steamworks vulkan
