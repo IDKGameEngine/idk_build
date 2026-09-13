@@ -9,3 +9,4 @@
 [submodule "thirdparty/steamworks_sdk"]
 	path = thirdparty/steamworks_sdk
 	url = git@github.com:IDKGameEngine/steamworks_sdk.git
+	branch = main
