@@ -7,7 +7,7 @@
 	url = git@github.com:IDKGameEngine/glm.git
 	branch = master
 [submodule "thirdparty/steamworks_sdk"]
-	path = thirdparty/steamworks_sdk
+	path = thirdparty/steamworks-sdk
 	url = git@github.com:IDKGameEngine/steamworks_sdk.git
 	branch = main
 [submodule "thirdparty/vulkan-sdk"]
