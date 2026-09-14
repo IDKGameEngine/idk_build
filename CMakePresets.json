@@ -15,7 +15,7 @@
             "installDir": "${sourceDir}/../build-debug",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/thirdparty/.prefix"
+                "CMAKE_PREFIX_PATH": "${sourceDir}/prefix"
             }
         },
         {
@@ -26,7 +26,7 @@
             "installDir": "${sourceDir}/../build-release",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/thirdparty/.prefix"
+                "CMAKE_PREFIX_PATH": "${sourceDir}/prefix"
             }
         }
     ],
