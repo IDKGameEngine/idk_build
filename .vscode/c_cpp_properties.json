@@ -5,11 +5,11 @@
             "includePath": [
                 "${default}",
                 "~/.local/share/containers/storage/overlay/4ba3cf89b3fe99a77056211770ff74fb34483fdc9d95ebe7ae004a219493d6b6/diff/usr/include",
-                "${workspaceFolder}/idk_build/prefix/include",
-                "${workspaceFolder}/idk_engine/h",
-                "${workspaceFolder}/idk_game/h",
-                "${workspaceFolder}/idk_gfx/h",
-                "${workspaceFolder}/libidk/h"
+                "${workspaceFolder}/idk_build/local/include",
+                "${workspaceFolder}/idk_engine/include",
+                "${workspaceFolder}/idk_game/include",
+                "${workspaceFolder}/idk_gfx/include",
+                "${workspaceFolder}/libidk/include"
             ],
             "defines": [
                 "IDK_ASSETS_DIRNAME=\"assets\""

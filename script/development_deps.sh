@@ -4,7 +4,7 @@ set -e
 THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REPO_DIR=$(cd ${THIS_DIR}/.. && pwd)
 THIRDPARTY_DIR=${REPO_DIR}/thirdparty
-INSTALL_PREFIX=${THIRDPARTY_DIR}/.prefix
+INSTALL_PREFIX=${REPO_DIR}/local
 
 PLATFORM=$(uname -s)
 if [ "$PLATFORM" == "Linux" ]; then
