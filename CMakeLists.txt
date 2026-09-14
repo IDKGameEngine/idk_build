@@ -12,6 +12,7 @@ endif()
 
 include(GNUInstallDirs)
 include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
+include_directories("${CMAKE_PREFIX_PATH}/include")
 
 add_compile_options(-Werror -Wall -Wextra)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -20,10 +21,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 set(IDK_REPO_NAMES 
-    idk_engine
-    idk_game
-    idk_gfx
     libidk
+    idk_engine
+    idk_gfx
+    idk_game
 )
 
 foreach(REPO_NAME IN LISTS IDK_REPO_NAMES)
