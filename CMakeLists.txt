@@ -20,16 +20,14 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 set(IDK_REPO_NAMES 
-    libidk
-    idk_gfx
     idk_engine
     idk_game
+    idk_gfx
+    libidk
 )
 
-foreach(IDK_REPO_NAME IN LISTS IDK_REPO_NAMES)
-    add_subdirectory(
-        "${IDK_POLY_DIR}/${IDK_REPO_NAME}" "${CMAKE_BINARY_DIR}/${IDK_REPO_NAME}"
-    )
+foreach(REPO_NAME IN LISTS IDK_REPO_NAMES)
+    add_subdirectory("${IDK_POLY_DIR}/${REPO_NAME}" "${CMAKE_BINARY_DIR}/${REPO_NAME}")
 endforeach()
 
 install(DIRECTORY "${IDK_POLY_DIR}/idk_gfx/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
