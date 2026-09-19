@@ -1,2 +1,3 @@
 local
+thirdparty
 !thirdparty/CMakeLists.txt
