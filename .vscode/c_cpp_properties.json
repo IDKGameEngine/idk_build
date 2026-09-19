@@ -12,7 +12,7 @@
                 "${workspaceFolder}/libidk/include"
             ],
             "defines": [
-                "IDK_ASSETS_DIRNAME=\"assets\""
+                "IDK_CONTENT_BASEPATH=\"content\""
             ],
             "compilerPath": "/usr/bin/clang++",
             "cStandard": "c99",

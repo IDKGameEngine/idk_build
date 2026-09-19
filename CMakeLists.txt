@@ -8,6 +8,8 @@ if (NOT DEFINED IDK_APP_NAME)
     message(FATAL_ERROR "IDK_APP_NAME must be defined!")
 elseif (NOT DEFINED IDK_POLY_DIR)
     message(FATAL_ERROR "IDK_POLY_DIR must be defined!")
+elseif (NOT DEFINED IDK_CONTENT_BASEPATH)
+    message(FATAL_ERROR "IDK_CONTENT_BASEPATH must be defined!")
 endif()
 
 include(GNUInstallDirs)
@@ -18,6 +20,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_options(-fsanitize=address,undefined)
     add_link_options(-fsanitize=address,undefined)
 endif()
+add_compile_definitions(IDK_CONTENT_BASEPATH="${IDK_CONTENT_BASEPATH}")
 
 set(IDK_REPO_NAMES 
     idk_engine

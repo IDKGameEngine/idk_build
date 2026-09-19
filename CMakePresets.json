@@ -8,25 +8,30 @@
 
     "configurePresets": [
         {
-            "name": "debug",
-            "displayName": "Debug",
+            "name": "base-config",
+            "hidden": true,
             "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_PREFIX_PATH": "${sourceDir}/local",
+                "IDK_CONTENT_BASEPATH": "content"
+            }
+        },
+        {
+            "name": "debug",
+            "inherits": "base-config",
             "binaryDir": "${sourceDir}/../build-debug/cmake",
             "installDir": "${sourceDir}/../build-debug",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/local"
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
             "name": "release",
-            "displayName": "Release",
-            "generator": "Ninja",
+            "inherits": "base-config",
             "binaryDir": "${sourceDir}/../build-release/cmake",
             "installDir": "${sourceDir}/../build-release",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_PREFIX_PATH": "${sourceDir}/local"
+                "CMAKE_BUILD_TYPE": "Release"
             }
         }
     ],
