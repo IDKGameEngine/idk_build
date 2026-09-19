@@ -28,7 +28,7 @@ get_repo()
 
 build_assimp()
 {
-    cd $(get_repo v6.0.5 https://github.com/assimp/assimp)
+    cd $(get_repo v6.0.5 https://github.com/assimp/assimp.git)
 
     cd ${THIRDPARTY_DIR}/assimp
     cmake CMakeLists.txt \
@@ -52,7 +52,7 @@ build_glm()
 
 build_imgui()
 {
-    cd $(get_repo docking git@github.com:IDKGameEngine/imgui.git)
+    cd $(get_repo docking https://github.com/IDKGameEngine/imgui.git)
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DCMAKE_BUILD_TYPE=Release
     cmake --build build --config Release
     cmake --install build --config Release
@@ -75,14 +75,14 @@ build_jolt()
 
 build_steamworks-sdk()
 {
-    cd $(get_repo main git@github.com:IDKGameEngine/steamworks-sdk.git)
+    cd $(get_repo main https://github.com/IDKGameEngine/steamworks-sdk.git)
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
 }
 
 build_vulkan-sdk()
 {
-    cd $(get_repo main git@github.com:IDKGameEngine/vulkan-sdk.git)
+    cd $(get_repo main https://github.com/IDKGameEngine/vulkan-sdk.git)
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
 }
