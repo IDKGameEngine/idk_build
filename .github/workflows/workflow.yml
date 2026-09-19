@@ -1,11 +1,10 @@
 name: Build IDKGameEngine
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
-  build-game:
+  build project:
     runs-on: ubuntu-latest
     container:
       # This is the SDK image used by idk_build/script/distrobox_create.sh.
@@ -81,10 +80,20 @@ jobs:
       - name: Build third-party dependencies
         run: ./idk_build/script/local.sh
 
-      - name: Build release game
+      - name: Build Debug
+        run: ./idk_build/script/build.sh --preset=debug
+
+      - name: Build Release
         run: ./idk_build/script/build.sh --preset=release
 
-      - name: Upload SteamRT release bundle
+      - name: Upload Debug Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-debug
+          path: build-debug/
+          if-no-files-found: error
+
+      - name: Upload Release Build
         uses: actions/upload-artifact@v4
         with:
           name: build-release

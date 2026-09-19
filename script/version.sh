@@ -18,10 +18,15 @@
 IDK_REPO_DIRS=(
     "${IDK_POLY_DIR}/idk_build"
     "${IDK_POLY_DIR}/idk_engine"
+    "${IDK_POLY_DIR}/idk_content"
     "${IDK_POLY_DIR}/idk_game"
     "${IDK_POLY_DIR}/idk_gfx"
     "${IDK_POLY_DIR}/libidk"
 )
+
+THIS_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
+IDK_BUILD_DIR="${IDK_POLY_DIR}/${1}"
 
 
 gen_version_header()
@@ -76,15 +81,13 @@ gen_version_txt()
     if [[ "$IDK_POLY_DIR" == "" ]]; then
         echo "IDK_POLY_DIR must be defined"
         exit 1
-    elif [[ "$IDK_OUTPUT_DIR" == "" ]]; then
-        echo "IDK_OUTPUT_DIR must be defined"
+    elif [[ "$IDK_BUILD_DIR" == "" ]]; then
+        echo "IDK_BUILD_DIR must be defined"
         exit 1
     fi
 
     # outdir=$(cd ${1} && pwd)
-    outdir="$IDK_OUTPUT_DIR"
-    outfile="${outdir}/version.txt"
-    mkdir -p "${outdir}" && touch "${outfile}"
+    outfile="${IDK_BUILD_DIR}/version.txt"
 
     printf "" > "$outfile"
     for path in $IDK_POLY_DIR/idk_*; do
@@ -100,67 +103,64 @@ gen_version_txt()
             porcelain="clean"
         fi
 
-        printf "%s %s\n" \
-            "$name" "$hash $porcelain" \
-            >> "$outfile"
+        printf "%s %s\n" "$name" "$hash $porcelain" >> "$outfile"
     done
 }
 
-gen_version_thirdparty_txt()
-{
-    if [[ "$IDK_POLY_DIR" == "" ]]; then
-        echo "IDK_POLY_DIR must be defined"
-        exit 1
-    elif [[ "$IDK_OUTPUT_DIR" == "" ]]; then
-        echo "IDK_OUTPUT_DIR must be defined"
-        exit 1
-    fi
+# gen_version_thirdparty_txt()
+# {
+#     if [[ "$IDK_POLY_DIR" == "" ]]; then
+#         echo "IDK_POLY_DIR must be defined"
+#         exit 1
+#     elif [[ "$IDK_BUILD_DIR" == "" ]]; then
+#         echo "IDK_BUILD_DIR must be defined"
+#         exit 1
+#     fi
 
-    thirdparty_repo_names=(
-        "assimp"
-        "glm"
-        "JoltPhysics"
-        "SDL"
-        "SDL_image"
-        "SDL_mixer"
-        "SDL_net"
-        "slang"
-    )
-    outdir="$IDK_OUTPUT_DIR"
-    outfile="${outdir}/version.txt"
+#     thirdparty_repo_names=(
+#         "assimp"
+#         "glm"
+#         "JoltPhysics"
+#         "SDL"
+#         "SDL_image"
+#         "SDL_mixer"
+#         "SDL_net"
+#         "slang"
+#     )
+#     outdir="$IDK_BUILD_DIR"
+#     outfile="${outdir}/version.txt"
 
-    printf "" >> "$outfile"
-    for name in "${thirdparty_repo_names[@]}"; do
-        cd $IDK_POLY_DIR/idk_build/thirdparty/$name
+#     printf "" >> "$outfile"
+#     for name in "${thirdparty_repo_names[@]}"; do
+#         cd $IDK_POLY_DIR/idk_build/thirdparty/$name
 
-        hash="$(git rev-parse HEAD)"
-        porcelain="dirty"
-        if [[ -z "$(git status --porcelain)" ]]; then
-            porcelain="clean"
-        fi
+#         hash="$(git rev-parse HEAD)"
+#         porcelain="dirty"
+#         if [[ -z "$(git status --porcelain)" ]]; then
+#             porcelain="clean"
+#         fi
 
-        printf "%s %s\n" \
-            "$name" "$hash $porcelain" \
-            >> "$outfile"
-    done
-}
+#         printf "%s %s\n" \
+#             "$name" "$hash $porcelain" \
+#             >> "$outfile"
+#     done
+# }
 
+# while [[ $# -gt 0 ]]; do
+#     case $1 in
+#         --header)
+#             gen_version_header
+#             shift
+#             ;;
+#         --text)
+#             gen_version_txt
+#             shift
+#             ;;
+#         *)
+#             echo "Unknown option $1" >&2
+#             exit 1
+#             ;;
+#     esac
+# done
 
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --header)
-            gen_version_header
-            shift
-            ;;
-        --text)
-            gen_version_txt
-            gen_version_thirdparty_txt
-            shift
-            ;;
-        *)
-            echo "Unknown option $1" >&2
-            exit 1
-            ;;
-    esac
-done
-
+gen_version_txt
