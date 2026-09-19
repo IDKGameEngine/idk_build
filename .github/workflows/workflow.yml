@@ -1,6 +1,7 @@
 name: Build IDKGameEngine
 
 on:
+  push:
   workflow_dispatch:
 
 jobs:
