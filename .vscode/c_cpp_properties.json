@@ -9,8 +9,7 @@
                 "${workspaceFolder}/idk_engine/include",
                 "${workspaceFolder}/idk_game/include",
                 "${workspaceFolder}/idk_gfx/include",
-                "${workspaceFolder}/libidk/include",
-                "${workspaceFolder}/libidk/src/platform/platform-sdl3/include"
+                "${workspaceFolder}/libidk/include"
             ],
             "defines": [
                 "IDK_ASSETS_DIRNAME=\"assets\""
