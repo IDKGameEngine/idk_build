@@ -39,3 +39,6 @@ cd ${IDK_POLY_DIR}/idk_build
 cmake --preset ${opt_preset} -DIDK_APP_NAME="$opt_appname" -DIDK_POLY_DIR="$IDK_POLY_DIR" $cmake_opts
 cmake --build --preset ${opt_preset}
 cmake --install ../build-${opt_preset}/cmake
+
+cd ${IDK_POLY_DIR}
+${THIS_DIR}/version.sh build-${opt_preset}
