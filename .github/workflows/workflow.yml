@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build project:
+  build-project:
     runs-on: ubuntu-latest
     container:
       # This is the SDK image used by idk_build/script/distrobox_create.sh.
