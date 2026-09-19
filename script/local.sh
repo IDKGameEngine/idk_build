@@ -24,18 +24,30 @@ build_repos()
     done
 }
 
+clone_repo()
+{
+    REPO_NAME="$1"
+    REPO_BRANCH="$2"
+    REPO_URL="$3"
+    [ ! -d "${THIRDPARTY_DIR}/${REPO_NAME}" ] && \
+        git clone --depth 1 -b ${REPO_BRANCH} "${REPO_URL}" "${THIRDPARTY_DIR}/${REPO_NAME}"
+}
+
 build_assimp()
 {
+    clone_repo assimp v6.0.5 https://github.com/assimp/assimp
     cd ${THIRDPARTY_DIR}/assimp
-    cmake CMakeLists.txt \
-        -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
-        -DASSIMP_NO_EXPORT=ON \
-        -DASSIMP_BUILD_TESTS=OFF \
-        -DASSIMP_BUILD_ZLIB=ON \
-        -DASSIMP_USE_HUNTER=ON
-    cmake --build . -j $(nproc) && cmake --install .
+
+    # cd ${THIRDPARTY_DIR}/assimp
+    # cmake CMakeLists.txt \
+    #     -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
+    #     -DCMAKE_BUILD_TYPE=Release \
+    #     -DBUILD_SHARED_LIBS=ON \
+    #     -DASSIMP_NO_EXPORT=ON \
+    #     -DASSIMP_BUILD_TESTS=OFF \
+    #     -DASSIMP_BUILD_ZLIB=ON \
+    #     -DASSIMP_USE_HUNTER=ON
+    # cmake --build . -j $(nproc) && cmake --install .
 }
 
 build_glm()
@@ -56,7 +68,9 @@ build_imgui()
 
 build_jolt()
 {
+    clone_repo JoltPhysics v5.6.0 https://github.com/jrouwe/JoltPhysics.git
     cd ${THIRDPARTY_DIR}/JoltPhysics/Build
+
     ./cmake_linux_clang_gcc.sh \
         Release g++ \
         -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
@@ -70,6 +84,7 @@ build_jolt()
 
 build_steamworks-sdk()
 {
+    clone_repo steamworks-sdk main git@github.com:IDKGameEngine/steamworks-sdk.git
     cd ${THIRDPARTY_DIR}/steamworks-sdk
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
@@ -77,9 +92,10 @@ build_steamworks-sdk()
 
 build_vulkan-sdk()
 {
+    clone_repo vulkan-sdk main git@github.com:IDKGameEngine/vulkan-sdk.git
     cd $THIRDPARTY_DIR/vulkan-sdk
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}"
     cmake --build build && cmake --install build
 }
 
-build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk
+build_repos assimp # glm imgui jolt steamworks-sdk vulkan-sdk
