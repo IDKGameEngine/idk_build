@@ -21,6 +21,7 @@ endif()
 
 set(IDK_REPO_NAMES 
     idk_engine
+    idk_content
     idk_game
     idk_gfx
     libidk
@@ -29,8 +30,6 @@ set(IDK_REPO_NAMES
 foreach(REPO_NAME IN LISTS IDK_REPO_NAMES)
     add_subdirectory("${IDK_POLY_DIR}/${REPO_NAME}" "${CMAKE_BINARY_DIR}/${REPO_NAME}")
 endforeach()
-
-install(DIRECTORY "${IDK_POLY_DIR}/idk_gfx/data" DESTINATION "${CMAKE_INSTALL_PREFIX}/")
 
 file(GLOB SHARED_LIBRARY_FILES "${CMAKE_PREFIX_PATH}/lib/*.so*")
 install(FILES ${SHARED_LIBRARY_FILES} DESTINATION "${CMAKE_INSTALL_LIBDIR}/")
