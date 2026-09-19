@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+THIS_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 REPO_DIR=$(cd ${THIS_DIR}/.. && pwd)
 THIRDPARTY_DIR=${REPO_DIR}/thirdparty
 INSTALL_PREFIX=${REPO_DIR}/local

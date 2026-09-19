@@ -5,7 +5,7 @@ THIS_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 export IDK_POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 
 opt_appname="game"
-opt_preset="native-debug"
+opt_preset="debug"
 cmake_opts=""
 
 while [[ $# -gt 0 ]]; do

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-THIS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+THIS_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 POLY_DIR=$(cd ${THIS_DIR}/../../ && pwd)
 
 REPO_DIRS=(
