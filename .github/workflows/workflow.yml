@@ -83,18 +83,18 @@ jobs:
       - name: Build third-party dependencies
         run: ./idk_build/script/local.sh
 
-      - name: Build Debug
-        run: ./idk_build/script/build.sh --preset=debug
+      # - name: Build Debug
+      #   run: ./idk_build/script/build.sh --preset=debug
 
       - name: Build Release
         run: ./idk_build/script/build.sh --preset=release
 
-      - name: Upload Debug Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-debug
-          path: build-debug/
-          if-no-files-found: error
+      # - name: Upload Debug Build
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: build-debug
+      #     path: build-debug/
+      #     if-no-files-found: error
 
       - name: Upload Release Build
         uses: actions/upload-artifact@v4
