@@ -26,7 +26,6 @@ set(IDK_REPO_NAMES
     idk_engine
     idk_content
     idk_game
-    idk_gfx
     libidk
 )
 
