@@ -10,10 +10,12 @@
                 "${workspaceFolder}/idk_engine/editor/include",
                 "${workspaceFolder}/idk_engine/engine/include",
                 "${workspaceFolder}/idk_engine/gfx/include",
+                "${workspaceFolder}/idk_engine/gfx/vk-bootstrap",
                 "${workspaceFolder}/idk_engine/platform/include",
                 "${workspaceFolder}/libidk/include"
             ],
             "defines": [
+                "IDK_DEBUG",
                 "IDK_CONTENT_BASEPATH=\"content\""
             ],
             "compilerPath": "/usr/bin/clang++",
