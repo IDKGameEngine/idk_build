@@ -2,17 +2,16 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build IDK Project (Native Runtime)",
+            "label": "Build Project (Debug)",
             "type": "shell",
-            "command": "./idk_build/script/build.sh --preset=native-debug",
+            "command": "distrobox enter steamrt4 -- ./idk_build/script/build.sh --preset=debug",
             "group": { "kind": "build" },
             "options": { "cwd": "${workspaceFolder}" }
         },
         {
-            "label": "Build IDK Project (Steam Runtime)",
+            "label": "Run Project (Debug)",
             "type": "shell",
-            "command": "./idk_build/script/build.sh",
-            "args": [ "--preset=steamrt4-debug" ],
+            "command": "distrobox enter steamrt4 -- ./build-debug/game",
             "group": { "kind": "build" },
             "options": { "cwd": "${workspaceFolder}" }
         }
