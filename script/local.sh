@@ -87,6 +87,13 @@ build_vulkan-sdk()
     cmake --build build && cmake --install build
 }
 
+build_vulkan-vma()
+{
+    cd $(get_repo v3.4.0 https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git)
+    cmake -S . -B build
+    cmake --install build --prefix ${INSTALL_PREFIX}
+}
+
 
 build_repos()
 {
@@ -96,4 +103,5 @@ build_repos()
     done
 }
 
-build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk
+build_repos vulkan-vma
+# build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk vulkan-vma
