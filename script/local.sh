@@ -87,24 +87,6 @@ build_vulkan-sdk()
     cmake --build build && cmake --install build
 }
 
-build_vk-bootstrap()
-{
-    cd $(get_repo v1.4.357 https://github.com/charles-lunarg/vk-bootstrap.git)
-    cmake -S . -B build \
-        -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-        -DVK_BOOTSTRAP_INSTALL=ON
-        # -DVK_BOOTSTRAP_VULKAN_HEADER_DIR="${INSTALL_PREFIX}/include" \
-    cmake --build build && cmake --install build
-}
-
-build_vulkan-vma()
-{
-    cd $(get_repo v3.4.0 https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git)
-    cmake -S . -B build
-    cmake --install build --prefix ${INSTALL_PREFIX}
-}
-
-
 build_repos()
 {
     for REPO_NAME in "$@"; do
@@ -113,6 +95,4 @@ build_repos()
     done
 }
 
-# build_repos vulkan-sdk
-# build_repos vk-bootstrap
-# build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk vk-bootstrap vulkan-vma
+build_repos assimp glm imgui jolt steamworks-sdk # vulkan-sdk
