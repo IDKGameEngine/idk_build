@@ -6,6 +6,8 @@
                 "${default}",
                 "~/.local/share/containers/storage/overlay/4ba3cf89b3fe99a77056211770ff74fb34483fdc9d95ebe7ae004a219493d6b6/diff/usr/include",
                 "${workspaceFolder}/idk_build/local/include",
+                "${workspaceFolder}/idk_build/thirdparty/imgui",
+                "${workspaceFolder}/idk_build/thirdparty/imgui/backends",
                 "${workspaceFolder}/idk_engine/common/include",
                 "${workspaceFolder}/idk_engine/editor/include",
                 "${workspaceFolder}/idk_engine/engine/include",

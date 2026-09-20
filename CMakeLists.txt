@@ -13,15 +13,16 @@ elseif (NOT DEFINED IDK_CONTENT_BASEPATH)
 endif()
 
 include(GNUInstallDirs)
-include("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/CMakeLists.txt")
+include_directories("${CMAKE_PREFIX_PATH}/include")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty")
 
 add_compile_definitions(IDK_CONTENT_BASEPATH="${IDK_CONTENT_BASEPATH}")
 add_compile_options(-Werror -Wall -Wextra)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_definitions(IDK_DEBUG="1")
-    add_compile_options(-fsanitize=address,undefined)
-    add_link_options(-fsanitize=address,undefined)
+    # add_compile_options(-fsanitize=address,undefined)
+    # add_link_options(-fsanitize=address,undefined)
 endif()
 
 

@@ -42,10 +42,16 @@ build_assimp()
     cmake --build . -j $(nproc) && cmake --install .
 }
 
+build_glad()
+{
+    cd $(get_repo main https://github.com/IDKGameEngine/glad.git)
+    cp -r ./include/* ${INSTALL_PREFIX}/include/
+}
+
 build_glm()
 {
     cd $(get_repo master https://github.com/g-truc/glm.git)
-    cmake -S . -B build -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DGLM_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DGLM_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF
     cmake --build build -- all
     cmake --build build -- install
 }
@@ -53,15 +59,14 @@ build_glm()
 build_imgui()
 {
     cd $(get_repo docking https://github.com/IDKGameEngine/imgui.git)
-    cmake -S . -B build -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DCMAKE_BUILD_TYPE=Release
-    cmake --build build --config Release
-    cmake --install build --config Release
+    # cmake -S . -B build -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DCMAKE_BUILD_TYPE=Release
+    # cmake --build build --config Release
+    # cmake --install build --config Release
 }
 
 build_jolt()
 {
     cd $(get_repo v5.6.0 https://github.com/jrouwe/JoltPhysics.git)/Build
-
     ./cmake_linux_clang_gcc.sh \
         Release g++ \
         -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
@@ -95,4 +100,4 @@ build_repos()
     done
 }
 
-build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk
+build_repos assimp glad glm imgui jolt steamworks-sdk vulkan-sdk
