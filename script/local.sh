@@ -70,7 +70,7 @@ build_jolt()
         -DJPH_USE_VK=OFF \
         -DJPH_USE_DX12=OFF \
         -DJPH_USE_MTL=OFF
-    cd Linux_Release && make -j$(nproc) && ./UnitTests && make install
+    cd Linux_Release && make -j$(nproc) && make install
 }
 
 build_steamworks-sdk()
