@@ -95,4 +95,4 @@ build_repos()
     done
 }
 
-build_repos assimp glm imgui jolt steamworks-sdk # vulkan-sdk
+build_repos assimp glm imgui jolt steamworks-sdk vulkan-sdk
