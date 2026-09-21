@@ -1,5 +1,23 @@
 {
-    "files.associations": {
+    "git.ignoreLimitWarning": true,
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++",
+    "slang.additionalSearchPaths": [
+        "/home/michael/devel/idk/idk_gfx/h"
+    ],
+    "files.exclude": {
+        "**/.git": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.hg/store/**": true,
+        "${workspaceFolder}/build-debug/**": true,
+        "${workspaceFolder}/build-release/**": true,
+        "${workspaceFolder}/idk/**": true,
+        "${workspaceFolder}/idk_build/thirdparty/**": true,
+    },
+    "files.participants.timeout": 100,
+        "files.associations": {
         "*.vs.p": "glsl",
         "*.vert.p": "glsl",
         "*.fs.p": "glsl",
@@ -101,20 +119,5 @@
         "*.slang": "cpp",
         "cerrno": "cpp",
         "valarray": "cpp"
-    },
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/.hg/store/**": true,
-        "${workspaceFolder}/build-debug/**": true,
-        "${workspaceFolder}/build-release/**": true,
-        "${workspaceFolder}/idk/**": true,
-        "${workspaceFolder}/idk_build/thirdparty/**": true,
-    },
-    "files.participants.timeout": 100,
-    "slang.additionalSearchPaths": [
-        "/home/michael/devel/idk/idk_gfx/h"
-    ],
-    "C_Cpp.default.compilerPath": "/usr/bin/clang++",
-    "git.ignoreLimitWarning": true
+    }
 }

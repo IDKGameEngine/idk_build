@@ -14,7 +14,6 @@ endif()
 
 include(GNUInstallDirs)
 include_directories("${CMAKE_PREFIX_PATH}/include")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty")
 
 add_compile_definitions(IDK_CONTENT_BASEPATH="${IDK_CONTENT_BASEPATH}")
 add_compile_options(-Werror -Wall -Wextra)
@@ -25,14 +24,9 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     # add_link_options(-fsanitize=address,undefined)
 endif()
 
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/thirdparty")
 
-set(IDK_REPO_NAMES 
-    idk_engine
-    idk_content
-    idk_game
-    libidk
-)
-
+set(IDK_REPO_NAMES idk_engine idk_content idk_game libidk)
 foreach(REPO_NAME IN LISTS IDK_REPO_NAMES)
     add_subdirectory("${IDK_POLY_DIR}/${REPO_NAME}" "${CMAKE_BINARY_DIR}/${REPO_NAME}")
 endforeach()
