@@ -33,7 +33,7 @@ build_assimp()
         -DASSIMP_BUILD_TESTS=OFF \
         -DASSIMP_BUILD_ZLIB=ON \
         -DASSIMP_USE_HUNTER=ON
-    cmake --build build -j $(nproc) && cmake --install build
+    cmake --build . -j $(nproc) && cmake --install .
 }
 
 build_jolt()
