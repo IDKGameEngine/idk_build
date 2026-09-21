@@ -1,0 +1,28 @@
+[submodule "thirdparty/assimp"]
+	path = thirdparty/assimp
+	url = git@github.com:IDKGameEngine-ThirdParty/assimp.git
+	branch = master
+[submodule "thirdparty/JoltPhysics"]
+	path = thirdparty/JoltPhysics
+	url = git@github.com:IDKGameEngine-ThirdParty/JoltPhysics.git
+	branch = master
+[submodule "thirdparty/glm"]
+	path = thirdparty/glm
+	url = git@github.com:IDKGameEngine-ThirdParty/glm.git
+	branch = master
+[submodule "thirdparty/imgui"]
+	path = thirdparty/imgui
+	url = git@github.com:IDKGameEngine-ThirdParty/imgui.git
+	branch = docking
+[submodule "thirdparty/glad"]
+	path = thirdparty/glad
+	url = git@github.com:IDKGameEngine-ThirdParty/glad.git
+	branch = main
+[submodule "thirdparty/steamworks-sdk"]
+	path = thirdparty/steamworks-sdk
+	url = git@github.com:IDKGameEngine-ThirdParty/steamworks-sdk.git
+	branch = main
+[submodule "thirdparty/vulkan-sdk"]
+	path = thirdparty/vulkan-sdk
+	url = git@github.com:IDKGameEngine-ThirdParty/vulkan-sdk.git
+	branch = main
