@@ -31,6 +31,14 @@ build_assimp()
     cmake --build . -j $(nproc) && cmake --install .
 }
 
+build_glm()
+{
+    cd ${THIRDPARTY_DIR}/glm
+    cmake -S . -B build ${CMAKE_FLAGS} -DGLM_BUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF
+    cmake --build build -- all
+    cmake --build build -- install
+}
+
 build_jolt()
 {
     cd $THIRDPARTY_DIR/JoltPhysics/Build
@@ -66,4 +74,4 @@ build_repos()
     done
 }
 
-build_repos assimp jolt steamworks-sdk # vulkan-sdk
+build_repos assimp glm jolt steamworks-sdk # vulkan-sdk
