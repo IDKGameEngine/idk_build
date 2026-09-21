@@ -11,6 +11,7 @@ jobs:
       # This is the SDK image used by idk_build/script/distrobox_create.sh.
       # Pin this to an immutable digest once a SteamRT SDK version is selected.
       image: registry.gitlab.steamos.cloud/steamrt/steamrt4/sdk
+
     defaults:
       run:
         shell: bash
@@ -18,11 +19,27 @@ jobs:
       contents: read
     env:
       IDK_BRANCH: ${{ github.head_ref || github.ref_name }}
+
     steps:
+      - name: container dependencies
+        run: |
+          apt-get update
+          apt-get install -y \
+            libgl-dev \
+            pkg-config \
+            cmake \
+            ninja-build \
+            mesa-utils \
+            lsb-release \
+            gpg \
+            wget \
+            python3-gi \
+            gir1.2-gtk-3.0
+
       # The build script expects these repositories to be siblings of idk_build.
       # For private repositories, create IDK_REPO_READ_TOKEN: a fine-grained PAT
       # with Contents: Read permission on each of them.
-      - name: Check out build configuration
+      - name: checkout idk_build
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_build
@@ -31,7 +48,7 @@ jobs:
           submodules: recursive
           token: ${{ secrets.IDK_REPO_READ_TOKEN || github.token }}
 
-      - name: Check out engine
+      - name: checkout idk_engine
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_engine
@@ -39,7 +56,7 @@ jobs:
           path: idk_engine
           token: ${{ secrets.IDK_REPO_READ_TOKEN || github.token }}
 
-      - name: Check out content
+      - name: checkout idk_content
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_content
@@ -47,7 +64,7 @@ jobs:
           path: idk_content
           token: ${{ secrets.IDK_REPO_READ_TOKEN || github.token }}
 
-      - name: Check out game
+      - name: checkout idk_game
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/idk_game
@@ -55,15 +72,7 @@ jobs:
           path: idk_game
           token: ${{ secrets.IDK_REPO_READ_TOKEN || github.token }}
 
-      - name: Check out graphics module
-        uses: actions/checkout@v4
-        with:
-          repository: IDKGameEngine/idk_gfx
-          ref: ${{ env.IDK_BRANCH }}
-          path: idk_gfx
-          token: ${{ secrets.IDK_REPO_READ_TOKEN || github.token }}
-
-      - name: Check out core library
+      - name: checkout libidk
         uses: actions/checkout@v4
         with:
           repository: IDKGameEngine/libidk
@@ -81,20 +90,10 @@ jobs:
             pkg-config
 
       - name: Build third-party dependencies
-        run: ./idk_build/script/local.sh
-
-      # - name: Build Debug
-      #   run: ./idk_build/script/build.sh --preset=debug
+        run: ./idk_build/script/dep-build.sh
 
       - name: Build Release
         run: ./idk_build/script/build.sh --preset=release
-
-      # - name: Upload Debug Build
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: build-debug
-      #     path: build-debug/
-      #     if-no-files-found: error
 
       - name: Upload Release Build
         uses: actions/upload-artifact@v4
