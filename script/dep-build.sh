@@ -6,16 +6,16 @@ REPO_DIR=$(cd ${THIS_DIR}/.. && pwd)
 THIRDPARTY_DIR=${REPO_DIR}/thirdparty
 
 INSTALL_PREFIX=""
-CMAKE_FLAGS=""
+CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=Release"
 PLATFORM=$(uname -s)
 if [ "$PLATFORM" == "Linux" ]; then
     echo "Linux environment detected"
     INSTALL_PREFIX=${REPO_DIR}/local
-    CMAKE_FLAGS="-DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
+    CMAKE_FLAGS="${CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX}"
 elif [[ "$PLATFORM" == *"Windows"* ]]; then
     echo "Windows environment detected"
     INSTALL_PREFIX=${REPO_DIR}/local-win
-    CMAKE_FLAGS="-DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DCMAKE_TOOLCHAIN_FILE=${REPO_DIR}/cmake/mingw-toolchain.cmake"
+    CMAKE_FLAGS="${CMAKE_FLAGS} -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} -DCMAKE_TOOLCHAIN_FILE=${REPO_DIR}/cmake/mingw-toolchain.cmake"
 else
     echo "Unknown platform: $PLATFORM"
     exit 1
@@ -28,7 +28,6 @@ build_assimp()
     cd ${THIRDPARTY_DIR}/assimp
     cmake CMakeLists.txt \
         ${CMAKE_FLAGS} \
-        -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DASSIMP_NO_EXPORT=ON \
         -DASSIMP_BUILD_TESTS=OFF \
@@ -43,7 +42,6 @@ build_jolt()
     ./cmake_linux_clang_gcc.sh \
         Release g++ \
         ${CMAKE_FLAGS} \
-        -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=OFF \
         -DJPH_USE_VK=OFF \
         -DJPH_USE_DX12=OFF \
