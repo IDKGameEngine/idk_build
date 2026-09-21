@@ -6,7 +6,7 @@ REPO_DIR=$(cd ${THIS_DIR}/.. && pwd)
 THIRDPARTY_DIR=${REPO_DIR}/thirdparty
 
 INSTALL_PREFIX=""
-CMAKE_FLAGS="-DCMAKE_BUILD_TYPE=Release"
+CMAKE_FLAGS=""
 PLATFORM=$(uname -s)
 if [ "$PLATFORM" == "Linux" ]; then
     echo "Linux environment detected"
@@ -26,13 +26,8 @@ echo "CMAKE_FLAGS: \"$CMAKE_FLAGS\""
 build_assimp()
 {
     cd ${THIRDPARTY_DIR}/assimp
-    cmake CMakeLists.txt \
-        ${CMAKE_FLAGS} \
-        -DBUILD_SHARED_LIBS=ON \
-        -DASSIMP_NO_EXPORT=ON \
-        -DASSIMP_BUILD_TESTS=OFF \
-        -DASSIMP_BUILD_ZLIB=ON \
-        -DASSIMP_USE_HUNTER=ON
+    mkdir -p build && cd build 
+    cmake .. ${CMAKE_FLAGS} -DBUILD_SHARED_LIBS=ON -DASSIMP_BUILD_TESTS=OFF -DASSIMP_BUILD_ZLIB=ON
     cmake --build . -j $(nproc) && cmake --install .
 }
 
@@ -71,4 +66,4 @@ build_repos()
     done
 }
 
-build_repos assimp jolt steamworks-sdk vulkan-sdk
+build_repos assimp jolt steamworks-sdk # vulkan-sdk
