@@ -121,10 +121,9 @@ jobs:
             -czf idk-linux-x86_64-release.tar.gz build-release
 
       - name: Upload Release artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
-          name: idk-linux-x86_64-release
           path: idk-linux-x86_64-release.tar.gz
+          archive: false
           if-no-files-found: error
-          compression-level: 0
           retention-days: 30
