@@ -61,9 +61,10 @@ build_steamworks-sdk()
 
 build_vulkan-sdk()
 {
-    cd $THIRDPARTY_DIR/vulkan-sdk
-    cmake -S . -B build ${CMAKE_FLAGS}
-    cmake --build build && cmake --install build
+    # Keep packaging rules here: the SDK submodule's installer strips tool
+    # executable bits, which prevents CMake from discovering slangc.
+    cmake -S "${REPO_DIR}/cmake/vulkan-sdk" -B "${THIRDPARTY_DIR}/vulkan-sdk/build/idk" ${CMAKE_FLAGS}
+    cmake --build "${THIRDPARTY_DIR}/vulkan-sdk/build/idk" && cmake --install "${THIRDPARTY_DIR}/vulkan-sdk/build/idk"
 }
 
 build_repos()
@@ -74,4 +75,19 @@ build_repos()
     done
 }
 
-build_repos assimp glm jolt steamworks-sdk vulkan-sdk
+if [[ $# -eq 0 ]]; then
+    set -- assimp glm jolt steamworks-sdk vulkan-sdk
+fi
+
+for dependency in "$@"; do
+    case "$dependency" in
+        assimp|glm|jolt|steamworks-sdk|vulkan-sdk) ;;
+        *)
+            echo "Unknown dependency: $dependency" >&2
+            echo "Available dependencies: assimp glm jolt steamworks-sdk vulkan-sdk" >&2
+            exit 1
+            ;;
+    esac
+done
+
+build_repos "$@"
