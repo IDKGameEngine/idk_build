@@ -31,7 +31,8 @@ chmod u+x idk_build/local/bin/slangc
 ```
 
 After updating this repo and its submodules, `./dep-build.sh vulkan-sdk`
-reinstalls SDK tools while preserving their source permissions. Errors while
+uses the SDK submodule's existing CMake installer, which preserves the tools'
+source permissions. Errors while
 preparing the SDK stop dependency configuration instead of installing partial
 results. A Slang installation outside the preset prefix can be selected with
 `./build.sh --cmakeopts -DIDK_SLANGC=/absolute/path/to/slangc`.

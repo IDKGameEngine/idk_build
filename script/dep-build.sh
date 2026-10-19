@@ -61,10 +61,9 @@ build_steamworks-sdk()
 
 build_vulkan-sdk()
 {
-    # Keep packaging rules here: the SDK submodule's installer strips tool
-    # executable bits, which prevents CMake from discovering slangc.
-    cmake -S "${REPO_DIR}/cmake/vulkan-sdk" -B "${THIRDPARTY_DIR}/vulkan-sdk/build/idk" ${CMAKE_FLAGS}
-    cmake --build "${THIRDPARTY_DIR}/vulkan-sdk/build/idk" && cmake --install "${THIRDPARTY_DIR}/vulkan-sdk/build/idk"
+    cd $THIRDPARTY_DIR/vulkan-sdk
+    cmake -S . -B build ${CMAKE_FLAGS}
+    cmake --build build && cmake --install build
 }
 
 build_repos()
