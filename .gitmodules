@@ -33,3 +33,8 @@
 	url = git@github.com:IDKGameEngine-ThirdParty/vulkan-sdk.git
 	branch = main
 	shallow = true
+[submodule "thirdparty/ImGuizmo"]
+	path = thirdparty/ImGuizmo
+	url = git@github.com:IDKGameEngine-ThirdParty/ImGuizmo.git
+	branch = master
+	shallow = true
