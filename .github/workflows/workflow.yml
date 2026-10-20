@@ -110,8 +110,6 @@ jobs:
       - name: Package ${{ matrix.preset }}
         run: |
           build_dir="build-${IDK_PRESET}"
-          mkdir -p "$build_dir/lib"
-          cp -a idk_build/local/lib/*.so* "$build_dir/lib/"
 
           for binary in game editor mapedit mapc; do
             test -x "$build_dir/$binary"
