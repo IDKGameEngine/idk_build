@@ -1,5 +1,8 @@
 {
     "git.ignoreLimitWarning": true,
+    "workbench.editorAssociations": {
+        "*.md": "default"
+    },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++",
     "slang.additionalSearchPaths": [
         "/home/michael/devel/idk/idk_gfx/h"

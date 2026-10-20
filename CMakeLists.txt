@@ -31,7 +31,8 @@ foreach(REPO_NAME IN LISTS IDK_REPO_NAMES)
     add_subdirectory("${IDK_POLY_DIR}/${REPO_NAME}" "${CMAKE_BINARY_DIR}/${REPO_NAME}")
 endforeach()
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    file(GLOB SHARED_LIBRARY_FILES "${CMAKE_PREFIX_PATH}/lib/*.so*")
-    install(FILES ${SHARED_LIBRARY_FILES} DESTINATION "${CMAKE_INSTALL_LIBDIR}/")
-endif()
+# Install runtime dependencies explicitly; local/lib also contains build tools.
+install(
+    IMPORTED_RUNTIME_ARTIFACTS Steamworks::steam_api
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+)
