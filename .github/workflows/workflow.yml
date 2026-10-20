@@ -1,4 +1,4 @@
-name: Build Release
+name: Build Debug and Release
 
 on:
   push:
@@ -13,14 +13,18 @@ permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: build-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-release:
-    name: Linux x86_64 Release
+  build:
+    name: Linux x86_64 ${{ matrix.preset }}
     runs-on: ubuntu-24.04
     timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [debug, release]
     container:
       image: registry.gitlab.steamos.cloud/steamrt/steamrt4/sdk
 
@@ -30,6 +34,7 @@ jobs:
 
     env:
       IDK_SOURCE_REF: ${{ inputs.source-ref || github.ref_name }}
+      IDK_PRESET: ${{ matrix.preset }}
 
     steps:
       - name: Install build tools
@@ -99,31 +104,31 @@ jobs:
       - name: Build third-party dependencies
         run: ./idk_build/script/dep-build.sh
 
-      - name: Build and install Release
-        run: ./idk_build/script/build.sh --preset=release
+      - name: Build and install ${{ matrix.preset }}
+        run: ./idk_build/script/build.sh --preset="$IDK_PRESET"
 
-      - name: Package Release
+      - name: Package ${{ matrix.preset }}
         run: |
-          # Release install rules omit the shared libraries from the local prefix.
-          mkdir -p build-release/lib
-          cp -a idk_build/local/lib/*.so* build-release/lib/
+          build_dir="build-${IDK_PRESET}"
+          mkdir -p "$build_dir/lib"
+          cp -a idk_build/local/lib/*.so* "$build_dir/lib/"
 
           for binary in game editor mapedit mapc; do
-            test -x "build-release/$binary"
+            test -x "$build_dir/$binary"
           done
-          test -d build-release/content
-          test -s build-release/version.txt
-          test -s build-release/steam_appid.txt
+          test -d "$build_dir/content"
+          test -s "$build_dir/version.txt"
+          test -s "$build_dir/steam_appid.txt"
 
           # Exclude intermediate build files. Tar preserves executable bits and
           # library symlinks when the artifact is downloaded and extracted.
-          tar --exclude=build-release/cmake \
-            -czf idk-linux-x86_64-release.tar.gz build-release
+          tar --exclude="$build_dir/cmake" \
+            -czf "idk-linux-x86_64-${IDK_PRESET}.tar.gz" "$build_dir"
 
-      - name: Upload Release artifact
+      - name: Upload ${{ matrix.preset }} artifact
         uses: actions/upload-artifact@v7
         with:
-          path: idk-linux-x86_64-release.tar.gz
+          path: idk-linux-x86_64-${{ matrix.preset }}.tar.gz
           archive: false
           if-no-files-found: error
           retention-days: 30
